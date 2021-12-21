@@ -1,18 +1,20 @@
 @echo off
 
+set tag=ghcr.io/mylab-log/agent
+
 IF [%1]==[] goto noparam
 
 echo "Copy sources ..."
 xcopy /E /I /Y ..\src .\src\
 
-echo "Build image '%1' and 'latest'..."
-docker build -t mylabtools/promtail:%1 -t mylabtools/promtail:latest .
+echo "Build image '%tag%:%1' and '%tag%:latest'..."
+docker build -t %tag%:%1 -t %tag%:latest .
 
 echo "Publish image '%1' ..."
-docker push mylabtools/promtail:%1
+docker push %tag%:%1
 
 echo "Publish image 'latest' ..."
-docker push mylabtools/promtail:latest
+docker push %tag%:latest
 
 goto done
 
