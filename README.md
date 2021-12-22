@@ -147,7 +147,6 @@ systemctl restart docker
 
 * подключить директорию с лог-файлами контейнеров в `/var/lib/mylab-logagent/src/containers`
 * подключить или оставить по умолчанию директорию данных сервиса `/var/lib/mylab-logagent/data`
-
 * определить параметры взаимодействия с `Elasticsearch` через переменные окружения:
   * `MLAGENT_ES_HOST` - IP или хост, `127.0.0.1` - по умолчанию
   * `MLAGENT_ES_PORT` - tcp порт, `9200` - по умолчанию
@@ -156,3 +155,11 @@ systemctl restart docker
 * определить параметры окружения через переменные окружения:
   * `MLAGENT_HOST` - имя хостовой машины, `undefined` - по умолчанию
   * `MLAGENT_ENV` - имя контура, `undefined` - по умолчанию
+* определить настройки сервиса через переменные окружения:
+  * `MLAGENT_LOGLEVEL` - уровень логирования ([подробнее про log_level](https://docs.fluentbit.io/manual/administration/configuring-fluent-bit/configuration-file)), возможные значения:
+    * `off`
+    * `error`
+    * `warn`
+    * `nfo` (по умолчанию)
+    * `debug`
+    * `trace`

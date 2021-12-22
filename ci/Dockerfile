@@ -6,6 +6,7 @@ ENV MLAGENT_ES_PATH=
 ENV MLAGENT_ES_INDEX=logs
 ENV MLAGENT_HOST=undefined
 ENV MLAGENT_ENV=undefined
+ENV MLAGENT_LOGLEVEL=info
 
 ADD ./src/config.conf /fluent-bit/etc/fluent-bit.conf
 ADD ./src/includes /fluent-bit/etc/includes
