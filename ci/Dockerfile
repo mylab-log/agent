@@ -6,6 +6,7 @@ ENV MLAGENT_ES_PATH=
 ENV MLAGENT_ES_INDEX=logs
 
 ADD ./src/config.conf /fluent-bit/etc/fluent-bit.conf
+ADD ./src/includes /fluent-bit/etc/includes
 ADD ./src/parsers.conf /fluent-bit/etc/parsers.conf
 
 VOLUME ["/var/lib/mylab-logagent/data"]
