@@ -1,5 +1,7 @@
 # MyLab.Log.Agent
 
+[![Docker image](https://img.shields.io/static/v1?label=docker&style=flat&logo=docker&message=image&color=blue)](https://github.com/mylab-log/agent/pkgs/container/agent) [![License](https://img.shields.io/github/license/mylab-search-fx/delegate)](./LICENSE)
+
 ## Обзор
 
 `MyLab.Log.Agent` собирает логи из файлов логов docker-контейнеров, разбирает их и  отправляет в `Elasticsearch`. 
@@ -29,9 +31,15 @@
   * `warning`
   * `info`
   * `debug`
-* `hst` - имя сервера, устанавливается через переменную окружения `MLAGENT_HOST`
+* `host_name` - имя сервера, устанавливается через переменную окружения `MLAGENT_HOST`
 * `env` - имя контура, устанавливается через переменную окружения `MLAGENT_ENV`
 * `message` - содержательная часть лог-сообщения. По умолчанию соответствует полю `log`
+* `format` - определённый формат лога:
+  * `net` - стандарьные консольные логи `.NETCore` и `.NET5+`
+  * `mylab` - `yaml`-формат логов от [форматтера логов mylab](https://github.com/mylab-log/log#formatter-overview) 
+  * `nginx` - `nginx`-логи в формате по умолчанию
+  * `default` - не удаось определить.
+
 
 ### Формат `net`
 
@@ -111,13 +119,9 @@ Facts:
 
 ## Индексация
 
-При индексации в `Elasticsearch` будут создаваться ежедневные индексы, имя которых будет состоять из префикса из настроек и текущей даты в формате:
+Для отправки записей в `Elasticsearch` формируется имя индекса на основании переменной из настроек в формате `logs-${MLAGENT_ES_INDEX}`. 
 
-`[prefix]-yyyy.MM.dd`
-
-Например: 
-
-`test-logs-2021.10.11`
+Таким образом будет задействовать встроенный шаблон индексов для логов.
 
 ## Развёртывание
 
@@ -171,7 +175,7 @@ systemctl restart docker
   * `MLAGENT_ES_HOST` - IP или хост, `127.0.0.1` - по умолчанию
   * `MLAGENT_ES_PORT` - tcp порт, `9200` - по умолчанию
   * `MLAGENT_ES_PATH` - относительный путь http запроса, пустая строка по умолчанию
-  * `MLAGENT_ES_INDEX` - префикс имени индекса, `logs` - по умолчанию
+  * `MLAGENT_ES_INDEX` - префикс имени индекса, `mlagent` - по умолчанию
 * определить параметры окружения через переменные окружения:
   * `MLAGENT_HOST` - имя хостовой машины, `undefined` - по умолчанию
   * `MLAGENT_ENV` - имя контура, `undefined` - по умолчанию
@@ -183,3 +187,28 @@ systemctl restart docker
     * `nfo` (по умолчанию)
     * `debug`
     * `trace`
+
+Пример:
+
+```yaml
+version: '3.2'
+
+services: 
+    log-agent:
+        container_name: log-agent
+        image: ghcr.io/mylab-log/agent:latest
+        environment:
+          MLAGENT_ES_HOST: 192.168.80.198
+          MLAGENT_ES_INDEX: my-app
+          MLAGENT_HOST: dev-app
+          MLAGENT_ENV: dev
+          MLAGENT_LOGLEVEL: debug
+        volumes:
+          - /etc/localtime:/etc/localtime:ro
+          - /var/lib/docker/containers:/var/lib/mylab-logagent/src/containers
+          - log_agent_data:/var/lib/mylab-logagent/data
+      
+volumes:
+  log_agent_data: {}
+```
+
