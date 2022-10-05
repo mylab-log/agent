@@ -1,4 +1,4 @@
-FROM fluent/fluent-bit:1.8.8
+FROM fluent/fluent-bit:1.9.9
 
 ENV MLAGENT_ES_HOST=127.0.0.1
 ENV MLAGENT_ES_PORT=9200
