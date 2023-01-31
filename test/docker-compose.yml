@@ -1,0 +1,28 @@
+version: "3.7"
+
+services:
+
+  logagent-fluent-bit:
+    image: fluent/fluent-bit:2.0.8
+    container_name: logagent-fluent-bit
+    volumes:
+      - ../src/config.conf:/fluent-bit/etc/fluent-bit.conf
+      - ./input.conf:/fluent-bit/etc/input.conf
+      - ../src/includes:/fluent-bit/etc/includes
+      - ../src/parsers.conf:/fluent-bit/etc/parsers.conf
+      - ./test-logs:/var/lib/mylab-logagent/src/test-logs
+    depends_on:
+      - logagent-elasticsearch
+    environment:
+      MLAGENT_ES_HOST: logagent-elasticsearch
+      MLAGENT_ES_INDEX: test
+      MLAGENT_HOST: test
+      MLAGENT_ENV: test
+
+  logagent-elasticsearch:
+    container_name: logagent-elasticsearch
+    image: elasticsearch:7.6.2
+    ports:
+      - "9201:9200"
+    environment:
+      - discovery.type=single-node
