@@ -74,12 +74,13 @@ Heartbeat took longer than "00:00:01" at "12/20/2021 07:02:26 +00:00". This coul
 ```yaml
 Message: Alarm!
 Time: 2021-11-17T15:58:09.807
+Labels:
+  log-level: error
 Facts:
   log-category: foo
-  log_level: error
 ```
 
-Поле `level` определяется по факту `log_level`:
+Поле `level` определяется по факту `log-level`:
 
 * `error` = `error`
 * `warning` = `warning`
