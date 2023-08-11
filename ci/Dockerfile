@@ -8,9 +8,9 @@ ENV MLAGENT_HOST=undefined
 ENV MLAGENT_ENV=undefined
 ENV MLAGENT_LOGLEVEL=info
 
-ADD ./src/config.conf /fluent-bit/etc/fluent-bit.conf
-ADD ./src/input.conf /fluent-bit/etc/input.conf
-ADD ./src/includes /fluent-bit/etc/includes
-ADD ./src/parsers.conf /fluent-bit/etc/parsers.conf
+ADD ./src/fluent-bit-config/config.conf /fluent-bit/etc/fluent-bit.conf
+ADD ./src/fluent-bit-config/input.conf /fluent-bit/etc/input.conf
+ADD ./src/fluent-bit-config/includes /fluent-bit/etc/includes
+ADD ./src/fluent-bit-config/parsers.conf /fluent-bit/etc/parsers.conf
 
 VOLUME ["/var/lib/mylab-logagent/data"]
