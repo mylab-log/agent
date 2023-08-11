@@ -26,3 +26,4 @@ services:
       - "9201:9200"
     environment:
       - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
