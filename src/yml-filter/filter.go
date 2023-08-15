@@ -10,7 +10,7 @@ import (
 
 //export go_filter
 func go_filter(tag *uint8, tag_len uint, time_sec uint, time_nsec uint, record *uint8, record_len uint) *uint8 {
-	btag := unsafe.Slice(tag, tag_len)  // Note, requires Go 1.17 (tinygo 0.20)
+	btag := unsafe.Slice(tag, tag_len) // Note, requires Go 1.17 (tinygo 0.20)
 	brecord := unsafe.Slice(record, record_len)
 	now := time.Unix(int64(time_sec), int64(time_nsec))
 
@@ -38,4 +38,5 @@ func go_filter(tag *uint8, tag_len uint, time_sec uint, time_nsec uint, record *
 	return &rv[0]
 }
 
-func main() {}
+func main() {
+}
