@@ -1,11 +1,13 @@
+ARG FLUENT_BIT_VER=2.1.8
+
 FROM tinygo/tinygo:0.28.1 AS build
 WORKDIR /home/tinygo/src
 COPY ./yml-filter .
 RUN mkdir /home/tinygo/output
-RUN tinygo build -target=wasi -o /home/tinygo/output/yml-filter.wasm filter.go
+RUN tinygo build -target=wasi -o /home/tinygo/output/mylab-yml-filter.wasm filter.go
 
 # final stage/image
-FROM fluent/fluent-bit:2.0.8
+FROM fluent/fluent-bit:${FLUENT_BIT_VER}
 
 WORKDIR /usr/lib/fluent-bit/filters
 COPY --from=build /home/tinygo/output /usr/lib/fluent-bit/filters
@@ -19,7 +21,6 @@ ENV MLAGENT_ENV=undefined
 ENV MLAGENT_LOGLEVEL=info
 
 ADD ./fluent-bit-config/config.conf /fluent-bit/etc/fluent-bit.conf
-ADD ./fluent-bit-config/input.conf /fluent-bit/etc/input.conf
 ADD ./fluent-bit-config/includes /fluent-bit/etc/includes
 ADD ./fluent-bit-config/parsers.conf /fluent-bit/etc/parsers.conf
 

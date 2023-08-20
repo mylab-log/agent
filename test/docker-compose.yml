@@ -2,14 +2,14 @@ version: "3.7"
 
 services:
 
-  logagent-fluent-bit:
-    image: fluent/fluent-bit:2.0.8
-    container_name: logagent-fluent-bit
+  logagent-test:
+    image: mylab-log/agent:debug
+    container_name: logagent-test
     volumes:
-      - ../src/fluent-bit-config/config.conf:/fluent-bit/etc/fluent-bit.conf
-      - ./input.conf:/fluent-bit/etc/input.conf
+      - ../src/fluent-bit-config/config.conf:/fluent-bit/etc/fluent-bit.conf:ro
+      - ./input.conf:/fluent-bit/etc/input.conf:ro
       - ../src/fluent-bit-config/includes:/fluent-bit/etc/includes
-      - ../src/fluent-bit-config/parsers.conf:/fluent-bit/etc/parsers.conf
+      - ../src/fluent-bit-config/parsers.conf:/fluent-bit/etc/parsers.conf:ro
       - ./test-logs:/var/lib/mylab-logagent/src/test-logs
     depends_on:
       - logagent-elasticsearch
