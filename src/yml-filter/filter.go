@@ -25,23 +25,15 @@ func go_filter(tag *uint8, tag_len uint, time_sec uint, time_nsec uint, record *
 }
 
 func test_filter(content string) {
-
 	fileContent := []byte(content)
-
 	tag := []byte("test-tag")
-
 	result := go_filter_logic(&tag[0], uint(len(tag)), 0, 0, &fileContent[0], uint(len(fileContent)))
-
 	fmt.Println(*result)
 }
 
 func main() {
 
-	fmt.Println("This is MyLab YAML filter for Fluent-Bit")
-
 	if len(os.Args) == 2 {
-
-		fmt.Println("Args[1]: " + os.Args[1])
 
 		test_filter(strings.ReplaceAll(os.Args[1], "[quotes]", "\""))
 	}
@@ -55,81 +47,47 @@ func go_filter_logic(tag *uint8, tag_len uint, time_sec uint, time_nsec uint, re
 		}
 	}()
 
-	fmt.Println("---1")
 	brecord := unsafe.Slice(record, record_len)
 
-	fmt.Println("---2")
 	br := string(brecord)
 
-	fmt.Println("---3: ", br)
 	var p fastjson.Parser
 	value, err := p.Parse(br)
 	if err != nil {
-		fmt.Println("[json-parse] - ", err)
 		return nil
 	}
 
-	fmt.Println("---4")
 	obj, err := value.Object()
 	if err != nil {
-		fmt.Println("[json-toobj] - ", err)
 		return nil
 	}
 
-	fmt.Println("---5")
 	ymlValue := obj.Get("log")
 
-	fmt.Println("---6")
 	ymlBin, err := ymlValue.StringBytes()
 	if err != nil {
 		fmt.Println("[log-tostr] - ", err)
 		return nil
 	}
 
-	fmt.Println("---7")
-
-	fmt.Println("---7.1")
 	ymlMap := make(map[interface{}]interface{})
-	fmt.Println("---7.2")
-
-	if ymlBin == nil {
-		fmt.Println("ymlBin is nil")
-	}
-	if ymlMap == nil {
-		fmt.Println("ymlMap is nil")
-	}
-
 	err = yaml.Unmarshal(ymlBin, ymlMap)
-	fmt.Println("---7.3")
 	if err != nil {
-		fmt.Println("---7.4")
 		fmt.Println("[unmarsh-bin] - ", err)
 		return nil
 	}
 
-	fmt.Println("---8")
 	labels := ymlMap["Labels"].(map[string]interface{})
 
-	fmt.Println("---9")
 	extract_message(obj, ymlMap)
-
-	fmt.Println("---10")
 	extract_level(obj, labels)
-
-	fmt.Println("---11")
 	extract_another_labels(obj, labels)
-
-	fmt.Println("---11.1")
 	extract_exception(obj, ymlMap)
-
-	fmt.Println("---11.2")
 	extract_facts(obj, ymlMap)
 
-	fmt.Println("---12")
 	s := obj.String()
 	s += string(rune(0)) // Note: explicit null terminator.
 
-	fmt.Println("---13")
 	return &s
 }
 
