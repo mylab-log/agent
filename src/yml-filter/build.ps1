@@ -1,1 +1,0 @@
-tinygo build -target=wasi -o mylab-yml-filter.wasm filter.go
