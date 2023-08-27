@@ -3,12 +3,12 @@
 {"log":"Labels:\n","stream":"stdout","attrs":{"log_format":"mylab","tag":"infonot-subscription-backoffice-act-sender-task"},"time":"2023-01-31T13:17:00.833778772Z"}
 {"log":"  log-level: error\n","stream":"stdout","attrs":{"log_format":"mylab","tag":"infonot-subscription-backoffice-act-sender-task"},"time":"2023-01-31T13:17:00.833782623Z"}
 {"log":"  test-label: value\n","stream":"stdout","attrs":{"log_format":"mylab","tag":"infonot-subscription-backoffice-act-sender-task"},"time":"2023-01-31T13:17:00.833782623Z"}
+{"log":"  trace-id: 487689e025eb18904b4791576c22e843\n","stream":"stdout","attrs":{"log_format":"mylab","tag":"infonot-subscription-backoffice-act-sender-task"},"time":"2023-01-31T13:17:00.833815719Z"}
 {"log":"Facts:\n","stream":"stdout","attrs":{"log_format":"mylab","tag":"infonot-subscription-backoffice-act-sender-task"},"time":"2023-01-31T13:17:00.833786466Z"}
 {"log":"  sub.id: 22608\n","stream":"stdout","attrs":{"log_format":"mylab","tag":"infonot-subscription-backoffice-act-sender-task"},"time":"2023-01-31T13:17:00.833790029Z"}
 {"log":"  sub.size: 500\n","stream":"stdout","attrs":{"log_format":"mylab","tag":"infonot-subscription-backoffice-act-sender-task"},"time":"2023-01-31T13:17:00.833793703Z"}
 {"log":"  log-category: BackofficeActSender.Services.ActSenderTask\n","stream":"stdout","attrs":{"log_format":"mylab","tag":"infonot-subscription-backoffice-act-sender-task"},"time":"2023-01-31T13:17:00.833797444Z"}
 {"log":"  req-id: 0HMO30UHTLUVL:00000001\n","stream":"stdout","attrs":{"log_format":"mylab","tag":"infonot-subscription-backoffice-act-sender-task"},"time":"2023-01-31T13:17:00.833811757Z"}
-{"log":"  trace-id: 487689e025eb18904b4791576c22e843\n","stream":"stdout","attrs":{"log_format":"mylab","tag":"infonot-subscription-backoffice-act-sender-task"},"time":"2023-01-31T13:17:00.833815719Z"}
 {"log":"Exception:\n","stream":"stdout","attrs":{"log_format":"mylab","tag":"infonot-subscription-backoffice-act-sender-task"},"time":"2023-01-31T13:17:00.833819339Z"}
 {"log":"  Message: 400(BadRequest). Bad Request.\n","stream":"stdout","attrs":{"log_format":"mylab","tag":"infonot-subscription-backoffice-act-sender-task"},"time":"2023-01-31T13:17:00.833822741Z"}
 {"log":"  Type: MyLab.ApiClient.ResponseCodeException\n","stream":"stdout","attrs":{"log_format":"mylab","tag":"infonot-subscription-backoffice-act-sender-task"},"time":"2023-01-31T13:17:00.833826221Z"}
