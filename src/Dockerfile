@@ -3,6 +3,7 @@ ARG FLUENT_BIT_VER=[undefined]
 FROM fluent/fluent-bit:${FLUENT_BIT_VER}
 
 COPY ./lua-filter/yaml-filter.lua /usr/lib/mylab-logagent/filters/yaml-filter.lua
+COPY ./lua-filter/json.lua /usr/local/share/lua/5.1/json.lua
 
 ENV MLAGENT_ES_HOST=127.0.0.1
 ENV MLAGENT_ES_PORT=9200
