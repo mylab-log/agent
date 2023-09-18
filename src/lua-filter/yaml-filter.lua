@@ -70,7 +70,7 @@ local function extract_labels(labels, record)
 
 end
 
-function extract_all(tag, timestamp, record)
+local function extract_all_core(tag, timestamp, record)
     
     local log_rec = record["log"]
 
@@ -78,8 +78,13 @@ function extract_all(tag, timestamp, record)
         return 0, timestamp, record
     end
 
-    local doc = lyaml.load(log_rec)
+    local ok, doc_or_error = pcall(lyaml.load, log_rec)
     
+    if not ok then
+        error({msg="'log' parsing error", inner=doc_or_error, log_origin=log_rec})
+    end
+
+    local doc = doc_or_error
     if doc == nil then 
         return 0, timestamp, record
     end
@@ -95,4 +100,17 @@ function extract_all(tag, timestamp, record)
     end
 
     return 2, timestamp, record
+end
+
+function extract_all(tag, timestamp, record)
+    
+    local ok, result_tag_or_error, result_timestamp,result_record = pcall(extract_all_core,tag, timestamp, record)
+
+    if not ok then
+        local raw_error_str = lyaml.dump( {result_tag_or_error} )
+        record["log-agent:parsing-error"] = cleanup_yml(raw_error_str)
+        return 2, timestamp, record
+    end
+
+    return result_tag_or_error, result_timestamp,result_record
 end
