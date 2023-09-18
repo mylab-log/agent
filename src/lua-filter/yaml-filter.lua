@@ -3,8 +3,11 @@ local json = require "json"
 
 local function cleanup_yml(yml)
 
-    local tmp_str = string.sub(yml, 1, -8)
-    return string.sub(tmp_str, 5, -1)
+    if string.len(yml) < 11 then
+        return yml
+    end
+    
+    return string.sub(yml, 5, -6)
 
 end
 
