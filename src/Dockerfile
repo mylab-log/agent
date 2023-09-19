@@ -1,4 +1,6 @@
 ARG FLUENT_BIT_VER=[undefined]
+ARG MLAGNET_VER=[undefined]
+
 
 FROM fluent/fluent-bit:${FLUENT_BIT_VER}
 
@@ -12,7 +14,7 @@ ENV MLAGENT_ES_INDEX=mlagent
 ENV MLAGENT_HOST=undefined
 ENV MLAGENT_ENV=undefined
 ENV MLAGENT_LOGLEVEL=info
-ENV MLAGENT_VER=1.1.0-beta2
+ENV MLAGENT_VER=${MLAGNET_VER}
 
 #install system packages
 RUN apt-get update -y  &&\
