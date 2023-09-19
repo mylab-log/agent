@@ -1,11 +1,9 @@
 ARG FLUENT_BIT_VER=[undefined]
-ARG MLAGNET_VER=[undefined]
-
+ARG MLAGENT_VER=[undefined]
 
 FROM fluent/fluent-bit:${FLUENT_BIT_VER}
 
-COPY ./lua-filter/yaml-filter.lua /usr/lib/mylab-logagent/filters/yaml-filter.lua
-COPY ./lua-filter/json.lua /usr/local/share/lua/5.1/json.lua
+LABEL "ru.mylab.logagent.ver"=$MLAGENT_VER
 
 ENV MLAGENT_ES_HOST=127.0.0.1
 ENV MLAGENT_ES_PORT=9200
@@ -14,11 +12,11 @@ ENV MLAGENT_ES_INDEX=mlagent
 ENV MLAGENT_HOST=undefined
 ENV MLAGENT_ENV=undefined
 ENV MLAGENT_LOGLEVEL=info
-ENV MLAGENT_VER=${MLAGNET_VER}
+ENV MLAGENT_VER=$MLAGENT_VER
 
 #install system packages
 RUN apt-get update -y  &&\
-    apt-get install -y wget unzip build-essential libreadline-dev
+    apt-get install -y wget unzip build-essential libreadline-dev libyaml-dev
 
 WORKDIR /tmp/install
 
@@ -45,8 +43,11 @@ RUN rm -rf /tmp/install
 #Install lua packages
 RUN luarocks --server=http://rocks.moonscript.org install lyaml
 
-ADD ./fluent-bit-config/config.conf /fluent-bit/etc/fluent-bit.conf
-ADD ./fluent-bit-config/includes /fluent-bit/etc/includes
-ADD ./fluent-bit-config/parsers.conf /fluent-bit/etc/parsers.conf
+COPY ./lua-filter/yaml-filter.lua /usr/lib/mylab-logagent/filters/yaml-filter.lua
+COPY ./lua-filter/json.lua /usr/local/share/lua/5.1/json.lua
+
+COPY ./fluent-bit-config/config.conf /fluent-bit/etc/fluent-bit.conf
+COPY ./fluent-bit-config/includes /fluent-bit/etc/includes
+COPY ./fluent-bit-config/parsers.conf /fluent-bit/etc/parsers.conf
 
 VOLUME ["/var/lib/mylab-logagent/data"]
