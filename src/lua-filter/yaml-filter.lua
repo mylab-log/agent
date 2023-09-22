@@ -109,6 +109,7 @@ function extract_all(tag, timestamp, record)
     if not ok then
         local raw_error_str = lyaml.dump( {result_tag_or_error} )
         record["log-agent:parsing-error"] = cleanup_yml(raw_error_str)
+        record["message"] = '[log parsing error]'
         return 2, timestamp, record
     end
 
