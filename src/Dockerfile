@@ -1,7 +1,8 @@
 ARG FLUENT_BIT_VER=[undefined]
-ARG MLAGENT_VER=[undefined]
 
 FROM fluent/fluent-bit:${FLUENT_BIT_VER}
+
+ARG MLAGENT_VER=[undefined]
 
 LABEL "ru.mylab.logagent.ver"=$MLAGENT_VER
 
