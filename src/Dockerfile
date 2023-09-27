@@ -46,6 +46,7 @@ RUN luarocks --server=http://rocks.moonscript.org install lyaml
 
 COPY ./lua-libs/json.lua /usr/local/share/lua/5.1/json.lua
 COPY ./lua-libs/yaml-filter.lua /usr/lib/mylab-logagent/filters/yaml-filter.lua
+COPY ./lua-libs/tools-filter.lua /usr/lib/mylab-logagent/filters/tools-filter.lua
 
 COPY ./fluent-bit-config/config.conf /fluent-bit/etc/fluent-bit.conf
 COPY ./fluent-bit-config/includes /fluent-bit/etc/includes
