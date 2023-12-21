@@ -1,0 +1,6 @@
+@MyLab.LogAgent_HostAddress = http://localhost:5274
+
+GET {{MyLab.LogAgent_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
