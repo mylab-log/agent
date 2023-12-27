@@ -1,20 +1,14 @@
 ﻿using Docker.DotNet;
 using Docker.DotNet.Models;
 using Microsoft.Extensions.Options;
+using MyLab.LogAgent.Model;
 using MyLab.LogAgent.Options;
 
 namespace MyLab.LogAgent.Services
 {
-    interface IDockerContainerProvider
+    public interface IDockerContainerProvider
     {
         Task<IEnumerable<DockerContainerInfo>> ProvideContainersAsync(CancellationToken cancellationToken);
-    }
-
-    class DockerContainerInfo
-    {
-        public string? Id { get; init; }
-        public string? Name { get; init; }
-        public string? LogFormat { get; init; }
     }
 
     class DockerContainerProvider(IOptions<LogAgentOptions> opts) : IDockerContainerProvider
@@ -41,7 +35,7 @@ namespace MyLab.LogAgent.Services
                     LogFormat = c.Labels
                         .Where(kv => kv.Key == "log-format")
                         .Select(kv => kv.Value)
-                        .FirstOrDefault("default")
+                        .FirstOrDefault()
                 });
         }
     }

@@ -8,6 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services
     .AddHostedService<LogMonitorBackgroundService>()
     .AddSingleton<IDockerContainerProvider, DockerContainerProvider>()
+    .AddSingleton<IDockerLogMonitor, DockerLogMonitor>()
+    .AddSingleton<IDockerContainerFilesProvider, DockerContainerFilesProvider>()
+    .AddSingleton<ILogRegistrar, LogRegistrar>()
+    .AddSingleton<ILogRegistrationTransport, LogRegistrationTransport>()
     .Configure<LogAgentOptions>(builder.Configuration.GetSection("LogAgent"));
 
 var app = builder.Build();
