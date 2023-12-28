@@ -1,7 +1,6 @@
 ﻿using MyLab.Log.Dsl;
 using MyLab.Log.Scopes;
 using MyLab.LogAgent.LogFormats;
-using MyLab.LogAgent.Model;
 using MyLab.LogAgent.Tools;
 
 namespace MyLab.LogAgent.Services

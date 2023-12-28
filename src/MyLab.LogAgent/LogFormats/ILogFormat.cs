@@ -7,6 +7,6 @@ namespace MyLab.LogAgent.LogFormats
     {
         ILogBuilder? CreateBuilder();
 
-        LogRecord? Deserialize(string logText);
+        LogRecord? Parse(string logText);
     }
 }

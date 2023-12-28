@@ -6,15 +6,16 @@ namespace MyLab.LogAgent.LogFormats
     {
         public ILogBuilder CreateBuilder()
         {
-            return new DefaultMultilineLogBuilder();
+            return new MultilineLogBuilder();
         }
 
-        public LogRecord? Deserialize(string logText)
+        public LogRecord? Parse(string logText)
         {
             return string.IsNullOrWhiteSpace(logText) 
                 ? null
                 : new LogRecord
                 {
+                    Time = DateTime.Now,
                     Message = logText
                 };
         }

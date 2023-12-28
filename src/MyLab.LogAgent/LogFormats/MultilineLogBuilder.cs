@@ -2,7 +2,7 @@
 
 namespace MyLab.LogAgent.LogFormats;
 
-class DefaultMultilineLogBuilder : ILogBuilder
+class MultilineLogBuilder : ILogBuilder
 {
     readonly StringBuilder _sb = new ();
 

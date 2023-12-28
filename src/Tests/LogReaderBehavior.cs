@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using MyLab.LogAgent.LogFormats;
+using MyLab.LogAgent.Model;
 using MyLab.LogAgent.Tools;
 
 namespace Tests;
@@ -138,5 +139,36 @@ public class LogReaderBehavior
         //Assert
         Assert.NotNull(readLogRecord);
         Assert.Equal("Start log-2", readLogRecord.Message);
+    }
+
+    [Fact]
+    public async Task ShouldProvideErrorLogRecord()
+    {
+        //Arrange
+        var sourceString = "Start log-1";
+        var memStream = new MemoryStream(Encoding.UTF8.GetBytes(sourceString));
+        var streamReader = new StreamReader(memStream);
+        var reader = new LogReader(new BadLogFormat(), streamReader, null);
+        
+        //Act
+        var readLogRecord = await reader.ReadLogAsync(default);
+
+        //Assert
+        Assert.NotNull(readLogRecord);
+        Assert.Equal("Log parsing error", readLogRecord.Message);
+        Assert.NotNull(readLogRecord.Exception);
+    }
+
+    class BadLogFormat : ILogFormat
+    {
+        public ILogBuilder? CreateBuilder()
+        {
+            return new SingleLineLogBuilder();
+        }
+
+        public LogRecord Parse(string logText)
+        {
+            throw new FormatException();
+        }
     }
 }

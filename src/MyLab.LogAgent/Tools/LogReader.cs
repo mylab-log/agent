@@ -1,4 +1,5 @@
-﻿using MyLab.LogAgent.LogFormats;
+﻿using MyLab.Log;
+using MyLab.LogAgent.LogFormats;
 using MyLab.LogAgent.Model;
 
 namespace MyLab.LogAgent.Tools
@@ -54,12 +55,26 @@ namespace MyLab.LogAgent.Tools
         LogRecord? GetLogRecord()
         {
             var logString = _logBuilder.BuildString();
-            if (logString == null)
+            if (string.IsNullOrWhiteSpace(logString))
                 return null;
 
-            return logFormat.Deserialize(logString);
+            try
+            {
+                return logFormat.Parse(logString);
+            }
+            catch (Exception e)
+            {
+                return new LogRecord
+                {
+                    Time = DateTime.Now,
+                    Message = "Log parsing error",
+                    Exception = ExceptionDto.Create(e).ToYaml(),
+                    Properties = new []
+                    {
+                        new KeyValuePair<string, string>("log-string", logString)
+                    }
+                };
+            }
         }
-
-
     }
 }
