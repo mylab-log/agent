@@ -63,18 +63,18 @@ namespace Tests
             Assert.Equal("Something wrong!", logRecord.Message);
             Assert.Equal(new DateTime(2023, 12,28, 13,38,0), logRecord.Time.ToUniversalTime());
             Assert.NotNull(logRecord.Properties);
-            Assert.Contains(logRecord.Properties, p => p is { Key: "log-category", Value: "KeslService" });
-            Assert.Contains(logRecord.Properties, p => p is { Key: "exception-trace", Value: "07ec3acc398533dd64f43420afda50c5" });
-            Assert.Contains(logRecord.Properties, p => p is { Key: "response-dump"} && p.Value.Contains("Transfer-Encoding: chunked"));
-            Assert.Contains(logRecord.Properties, p => p is { Key: LogPropertyNames.Exception } && p.Value.Contains("Name not known"));
-            Assert.Contains(logRecord.Properties, p => p is { Key: LogPropertyNames.Exception } && p.Value.Contains("Service not known"));
+            Assert.Contains(logRecord.Properties, p => p is { Name: "log-category", Value: "KeslService" });
+            Assert.Contains(logRecord.Properties, p => p is { Name: "exception-trace", Value: "07ec3acc398533dd64f43420afda50c5" });
+            Assert.Contains(logRecord.Properties, p => p is { Name: "response-dump"} && p.Value.Contains("Transfer-Encoding: chunked"));
+            Assert.Contains(logRecord.Properties, p => p is { Name: LogPropertyNames.Exception } && p.Value.Contains("Name not known"));
+            Assert.Contains(logRecord.Properties, p => p is { Name: LogPropertyNames.Exception } && p.Value.Contains("Service not known"));
             
             output.WriteLine("PROPERTIES:");
             output.WriteLine("");
             foreach (var logRecordProperty in logRecord.Properties)
             {
                 output.WriteLine("");
-                output.WriteLine($"KEY => {logRecordProperty.Key}");
+                output.WriteLine($"NAME => {logRecordProperty.Name}");
                 output.WriteLine($"VALUE => {logRecordProperty.Value}");
                 output.WriteLine("");
             }

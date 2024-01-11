@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using MyLab.LogAgent;
 using MyLab.LogAgent.LogFormats;
+using MyLab.LogAgent.LogSourceReaders;
 using MyLab.LogAgent.Model;
 using MyLab.LogAgent.Tools;
 
@@ -22,9 +23,10 @@ public class LogReaderBehavior
         var sourceString = string.Join(Environment.NewLine, lines);
         var memStream = new MemoryStream(Encoding.UTF8.GetBytes(sourceString));
         var streamReader = new StreamReader(memStream);
+        var srcReader = new AsIsLogSourceReader(streamReader);
         var logFormat = new DefaultLogFormat();
 
-        var reader = new LogReader(logFormat, streamReader, null);
+        var reader = new LogReader(logFormat, srcReader, null);
 
         //Act
         var readLogRecord = await reader.ReadLogAsync(default);
@@ -53,11 +55,12 @@ public class LogReaderBehavior
 
         var memStream = new MemoryStream(Encoding.UTF8.GetBytes(sourceString));
         var streamReader = new StreamReader(memStream);
+        var srcReader = new AsIsLogSourceReader(streamReader);
         var logFormat = new DefaultLogFormat();
 
-        var buff = new List<string>();
+        var buff = new List<LogSourceLine>();
 
-        var reader = new LogReader(logFormat, streamReader, buff);
+        var reader = new LogReader(logFormat, srcReader, buff);
 
         //Act
         var readLogRecord = await reader.ReadLogAsync(default);
@@ -66,7 +69,7 @@ public class LogReaderBehavior
         Assert.NotNull(readLogRecord);
         Assert.Equal(fullLog1String, readLogRecord.Message);
         Assert.Single(buff);
-        Assert.Equal("Start log-2", buff[0]);
+        Assert.Equal("Start log-2", buff[0].Text);
     }
 
     [Fact]
@@ -89,14 +92,15 @@ public class LogReaderBehavior
 
         var memStream = new MemoryStream(Encoding.UTF8.GetBytes(sourceString));
         var streamReader = new StreamReader(memStream);
+        var srcReader = new AsIsLogSourceReader(streamReader);
         var logFormat = new DefaultLogFormat();
 
-        var buff = new List<string>
+        var buff = new List<LogSourceLine>
         {
-            stringInBuff
+            new (stringInBuff)
         };
 
-        var reader = new LogReader(logFormat, streamReader, buff);
+        var reader = new LogReader(logFormat, srcReader, buff);
 
         //Act
         var readLogRecord = await reader.ReadLogAsync(default);
@@ -126,11 +130,12 @@ public class LogReaderBehavior
 
         var memStream = new MemoryStream(Encoding.UTF8.GetBytes(sourceString));
         var streamReader = new StreamReader(memStream);
+        var srcReader = new AsIsLogSourceReader(streamReader);
         var logFormat = new DefaultLogFormat();
 
-        var buff = new List<string>();
+        var buff = new List<LogSourceLine>();
 
-        var reader = new LogReader(logFormat, streamReader, buff);
+        var reader = new LogReader(logFormat, srcReader, buff);
 
         await reader.ReadLogAsync(default);
 
@@ -149,7 +154,8 @@ public class LogReaderBehavior
         var sourceString = "Start log-1";
         var memStream = new MemoryStream(Encoding.UTF8.GetBytes(sourceString));
         var streamReader = new StreamReader(memStream);
-        var reader = new LogReader(new BadLogFormat(), streamReader, null);
+        var srcReader = new AsIsLogSourceReader(streamReader);
+        var reader = new LogReader(new BadLogFormat(), srcReader, null);
         
         //Act
         var readLogRecord = await reader.ReadLogAsync(default);
@@ -158,7 +164,7 @@ public class LogReaderBehavior
         Assert.NotNull(readLogRecord);
         Assert.Equal("Log parsing error", readLogRecord.Message);
         Assert.NotNull(readLogRecord.Properties);
-        Assert.Contains(readLogRecord.Properties, p => p.Key == LogPropertyNames.Exception);
+        Assert.Contains(readLogRecord.Properties, p => p.Name == LogPropertyNames.Exception);
     }
 
     class BadLogFormat : ILogFormat

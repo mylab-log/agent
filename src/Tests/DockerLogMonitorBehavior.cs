@@ -143,7 +143,8 @@ namespace Tests
             (
                 containerProvider.Object,
                 filesProvider.Object,
-                registrar.Object
+                registrar.Object,
+                new EmptyContextPropertiesProvider()
             );
 
             await monitor.ProcessLogsAsync(default);
@@ -209,7 +210,8 @@ namespace Tests
             (
                 containerProvider.Object,
                 filesProvider.Object,
-                registrar.Object
+                registrar.Object,
+                new EmptyContextPropertiesProvider()
             );
 
             await monitor.ProcessLogsAsync(default);
@@ -272,7 +274,8 @@ namespace Tests
             (
                 containerProvider.Object,
                 filesProvider.Object,
-                registrar.Object
+                registrar.Object,
+                new EmptyContextPropertiesProvider()
             );
 
             //Act
@@ -315,9 +318,18 @@ namespace Tests
             (
                 containerProvider.Object,
                 filesProvider.Object,
-                registrar.Object
+                registrar.Object,
+                new EmptyContextPropertiesProvider()
             );
             return monitor;
+        }
+
+        class EmptyContextPropertiesProvider : IContextPropertiesProvider
+        {
+            public IEnumerable<LogProperty> ProvideProperties()
+            {
+                return Enumerable.Empty<LogProperty>();
+            }
         }
     }
 }

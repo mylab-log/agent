@@ -1,6 +1,8 @@
 ﻿using MyLab.Log.Dsl;
 using MyLab.Log.Scopes;
 using MyLab.LogAgent.LogFormats;
+using MyLab.LogAgent.LogSourceReaders;
+using MyLab.LogAgent.Model;
 using MyLab.LogAgent.Tools;
 
 namespace MyLab.LogAgent.Services
@@ -10,18 +12,12 @@ namespace MyLab.LogAgent.Services
         Task ProcessLogsAsync(CancellationToken cancellationToken);
     }
 
-    class DockerLogMonitor
-        (
-            IDockerContainerProvider containerProvider, 
-            IDockerContainerFilesProvider containerFilesProvider, 
-            ILogRegistrar logRegistrar,
-            ILogger<DockerLogMonitor>? logger = null
-        ) : IDockerLogMonitor
+    class DockerLogMonitor : IDockerLogMonitor
     {
-        private readonly IDockerContainerProvider _containerProvider = containerProvider ?? throw new ArgumentNullException(nameof(containerProvider));
-        private readonly IDockerContainerFilesProvider _containerFilesProvider = containerFilesProvider ?? throw new ArgumentNullException(nameof(containerFilesProvider));
+        private readonly IDockerContainerProvider _containerProvider;
+        private readonly IDockerContainerFilesProvider _containerFilesProvider;
         private readonly LogContainerRegistry _registry = new();
-        private readonly IDslLogger? _log = logger?.Dsl();
+        private readonly IDslLogger? _log;
 
         private readonly ILogFormat _defaultLogFormat = new DefaultLogFormat();
 
@@ -29,6 +25,22 @@ namespace MyLab.LogAgent.Services
         {
 
         };
+
+        private readonly ILogRegistrar _logRegistrar;
+        private readonly IContextPropertiesProvider _contextPropertiesProvider;
+
+        public DockerLogMonitor(IDockerContainerProvider containerProvider, 
+            IDockerContainerFilesProvider containerFilesProvider, 
+            ILogRegistrar logRegistrar,
+            IContextPropertiesProvider contextPropertiesProvider,
+            ILogger<DockerLogMonitor>? logger = null)
+        {
+            _logRegistrar = logRegistrar;
+            _contextPropertiesProvider = contextPropertiesProvider ?? throw new ArgumentNullException(nameof(contextPropertiesProvider));
+            _containerProvider = containerProvider ?? throw new ArgumentNullException(nameof(containerProvider));
+            _containerFilesProvider = containerFilesProvider ?? throw new ArgumentNullException(nameof(containerFilesProvider));
+            _log = logger?.Dsl();
+        }
 
         public async Task ProcessLogsAsync(CancellationToken cancellationToken)
         {
@@ -97,15 +109,26 @@ namespace MyLab.LogAgent.Services
             using var fileReader = _containerFilesProvider.OpenContainerFileRead(cEntity.Container.Id, lastLogFilename);
             fileReader.BaseStream.Seek(cEntity.Shift, SeekOrigin.Begin);
 
-            var logReader = new LogReader(format, fileReader, cEntity.LineBuff);
+            var srcReader = new DockerLogSourceReader(fileReader);
+
+            var logReader = new LogReader(format, srcReader, cEntity.LineBuff);
 
             while (await logReader.ReadLogAsync(cancellationToken) is { } nextLogRecord)
             {
-                await logRegistrar.RegisterAsync(nextLogRecord);
+                if (nextLogRecord.Properties != null)
+                {
+                    nextLogRecord.Properties.AddRange(_contextPropertiesProvider.ProvideProperties());
+                }
+                else
+                {
+                    nextLogRecord.Properties =
+                        new List<LogProperty>(_contextPropertiesProvider.ProvideProperties());
+                }
+                await _logRegistrar.RegisterAsync(nextLogRecord);
             }
 
             cEntity.Shift = fileReader.BaseStream.Position;
-            await logRegistrar.FlushAsync();
+            await _logRegistrar.FlushAsync();
         }
 
         private string? GetLastLogFilename(LogContainerRegistry.Entity cEntity)

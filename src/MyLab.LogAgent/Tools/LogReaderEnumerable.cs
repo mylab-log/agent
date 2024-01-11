@@ -1,20 +1,28 @@
-﻿using System.Collections;
+﻿using MyLab.LogAgent.LogSourceReaders;
+using System.Collections;
 
 namespace MyLab.LogAgent.Tools;
 
-class LogReaderEnumerable(StreamReader streamReader, IEnumerable<string>? leaderLines) : IAsyncEnumerable<string>
+class LogReaderEnumerable : IAsyncEnumerable<LogSourceLine?>
 {
-    private readonly StreamReader _streamReader = streamReader ?? throw new ArgumentNullException(nameof(streamReader));
+    private readonly ILogSourceReader _logSourceReader;
+    private readonly IEnumerable<LogSourceLine>? _leaderLines;
 
-    public IAsyncEnumerator<string> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+    public LogReaderEnumerable(ILogSourceReader logSourceReader, IEnumerable<LogSourceLine>? leaderLines)
     {
-        return new LogReaderEnumerator(_streamReader, leaderLines, cancellationToken);
+        _logSourceReader = logSourceReader;
+        _leaderLines = leaderLines;
     }
 
-    class LogReaderEnumerator(StreamReader streamReader, IEnumerable<string>? leaderLines, CancellationToken cancellationToken = default) : IAsyncEnumerator<string>
+    public IAsyncEnumerator<LogSourceLine?> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+    {
+        return new LogReaderEnumerator(_logSourceReader, _leaderLines, cancellationToken);
+    }
+
+    class LogReaderEnumerator(ILogSourceReader logSourceReader, IEnumerable<LogSourceLine>? leaderLines, CancellationToken cancellationToken = default) : IAsyncEnumerator<LogSourceLine?>
     {
         private bool _readFromStream = leaderLines == null;
-        private readonly IEnumerator<string>? _leaderLinesEnumerator = leaderLines?.GetEnumerator();
+        private readonly IEnumerator<LogSourceLine>? _leaderLinesEnumerator = leaderLines?.GetEnumerator();
         
         public async ValueTask<bool> MoveNextAsync()
         {
@@ -31,7 +39,7 @@ class LogReaderEnumerable(StreamReader streamReader, IEnumerable<string>? leader
                 }
             }
 
-            var readLine = await streamReader.ReadLineAsync(cancellationToken);
+            var readLine = await logSourceReader.ReadLineAsync(cancellationToken);
 
             if (readLine == null) return false;
 
@@ -39,7 +47,7 @@ class LogReaderEnumerable(StreamReader streamReader, IEnumerable<string>? leader
             return true;
         }
 
-        public string Current { get; private set; } = String.Empty;
+        public LogSourceLine? Current { get; private set; } 
         
         public ValueTask DisposeAsync()
         {

@@ -24,14 +24,20 @@ namespace MyLab.LogAgent.LogFormats
         {
             var logEntity = ParseYaml(logText);
 
-            var props = new List<KeyValuePair<string, string>>();
+            var props = new List<LogProperty>();
 
             if (logEntity[nameof(LogEntity.Labels)] is YamlMappingNode { NodeType: YamlNodeType.Mapping } logLabels)
             {
                 
                 foreach (var logEntityLabel in logLabels.Children)
                 {
-                    props.Add(new KeyValuePair<string, string>(logEntityLabel.Key.ToString(), logEntityLabel.Value.ToString()));
+                    props.Add(
+                        new LogProperty
+                        {
+                            Name = logEntityLabel.Key.ToString(),
+                            Value = logEntityLabel.Value.ToString()
+                        }
+                    );
                 }
             }
 
@@ -40,7 +46,13 @@ namespace MyLab.LogAgent.LogFormats
 
                 foreach (var logEntityFact in logFacts.Children)
                 {
-                    props.Add(new KeyValuePair<string, string>(logEntityFact.Key.ToString(), logEntityFact.Value.ToString()));
+                    props.Add(
+                        new LogProperty
+                        {
+                            Name = logEntityFact.Key.ToString(),
+                            Value = logEntityFact.Value.ToString()
+                        }
+                    );
                 }
             }
 
@@ -51,7 +63,12 @@ namespace MyLab.LogAgent.LogFormats
 
             if (logEntity[nameof(LogEntity.Exception)] is { } exceptionNode)
             {
-                props.Add(new KeyValuePair<string, string>(LogPropertyNames.Exception, ParseException(exceptionNode)));
+                props.Add(
+                    new LogProperty
+                    {
+                        Name = LogPropertyNames.Exception,
+                        Value = ParseException(exceptionNode)
+                    });
             }
 
             return new LogRecord

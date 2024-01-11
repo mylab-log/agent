@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using MyLab.Log;
+using MyLab.LogAgent.LogSourceReaders;
 using MyLab.LogAgent.Model;
 using MyLab.LogAgent.Services;
 
@@ -47,7 +48,7 @@ namespace MyLab.LogAgent.Tools
         {
             public required DockerContainerInfo Container { get; init; }
             public long Shift { get; set; }
-            public List<string> LineBuff { get; } = new();
+            public List<LogSourceLine> LineBuff { get; } = new();
             public string? LastLogFilename { get; set; }
             public ExceptionDto? LastError { get; set; }
 

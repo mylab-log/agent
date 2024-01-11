@@ -1,28 +1,40 @@
 ﻿using MyLab.Log;
 using MyLab.LogAgent.LogFormats;
+using MyLab.LogAgent.LogSourceReaders;
 using MyLab.LogAgent.Model;
 
 namespace MyLab.LogAgent.Tools
 {
-    class LogReader(ILogFormat logFormat, StreamReader streamReader, List<string>? buff)
+    class LogReader
     {
-        private readonly ILogBuilder _logBuilder = logFormat.CreateBuilder() ?? new SingleLineLogBuilder();
-        
+        private readonly ILogBuilder _logBuilder;
+        private readonly ILogFormat _logFormat;
+        private readonly ILogSourceReader _logSourceReader;
+        private readonly List<LogSourceLine>? _buff;
+
+        public LogReader(ILogFormat logFormat, ILogSourceReader logSourceReader, List<LogSourceLine>? buff)
+        {
+            _logFormat = logFormat;
+            _logSourceReader = logSourceReader ?? throw new ArgumentNullException(nameof(logSourceReader));
+            _buff = buff;
+            _logBuilder = logFormat.CreateBuilder() ?? new SingleLineLogBuilder();
+        }
+
         public async Task<LogRecord?> ReadLogAsync(CancellationToken cancellationToken)
         {
             _logBuilder.Cleanup();
         
-            var logEnum = new LogReaderEnumerable(streamReader, buff);
+            var logEnum = new LogReaderEnumerable(_logSourceReader, _buff);
 
             bool payloadDetected = false;
             LogRecord? readyLogRecord;
 
             await foreach (var nextLine in logEnum.WithCancellation(cancellationToken))
             {
-                if(!payloadDetected && string.IsNullOrWhiteSpace(nextLine))
+                if(!payloadDetected && string.IsNullOrWhiteSpace(nextLine!.Text))
                     continue;
 
-                var applyResult = _logBuilder.ApplyNexLine(nextLine);
+                var applyResult = _logBuilder.ApplyNexLine(nextLine!.Text);
                 switch (applyResult)
                 {
                     case LogReaderResult.Accepted:
@@ -30,14 +42,14 @@ namespace MyLab.LogAgent.Tools
                     case LogReaderResult.CompleteRecord:
                     {
                         readyLogRecord = GetLogRecord();
-                        buff?.Clear();
+                        _buff?.Clear();
                         return readyLogRecord;
                     }
                     case LogReaderResult.NewRecordDetected:
                     {
                         readyLogRecord = GetLogRecord();
-                        buff?.Clear();
-                        buff?.Add(nextLine);
+                        _buff?.Clear();
+                        _buff?.Add(nextLine);
                         return readyLogRecord;
                     }
                     default:
@@ -47,7 +59,7 @@ namespace MyLab.LogAgent.Tools
 
             readyLogRecord = GetLogRecord();
 
-            buff?.Clear();
+            _buff?.Clear();
 
             return readyLogRecord;
         }
@@ -60,7 +72,7 @@ namespace MyLab.LogAgent.Tools
 
             try
             {
-                return logFormat.Parse(logString);
+                return _logFormat.Parse(logString);
             }
             catch (Exception e)
             {
@@ -68,11 +80,19 @@ namespace MyLab.LogAgent.Tools
                 {
                     Time = DateTime.Now,
                     Message = "Log parsing error",
-                    Properties = new []
-                    {
-                        new KeyValuePair<string, string>("log-string", logString),
-                        new KeyValuePair<string, string>(LogPropertyNames.Exception, ExceptionDto.Create(e).ToYaml()!)
-                    }
+                    Properties =
+                    [
+                        new LogProperty
+                        {
+                            Name = "log-string", 
+                            Value = logString
+                        },
+                        new LogProperty
+                        {
+                            Name = LogPropertyNames.Exception, 
+                            Value = ExceptionDto.Create(e).ToYaml()!
+                        }
+                    ]
                 };
             }
         }

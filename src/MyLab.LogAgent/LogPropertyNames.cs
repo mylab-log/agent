@@ -3,5 +3,6 @@
     public static class LogPropertyNames
     {
         public const string Exception = "exception";
+        public const string AgentVersion = "agent-ver";
     }
 }

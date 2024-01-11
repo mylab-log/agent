@@ -12,6 +12,7 @@ builder.Services
     .AddSingleton<IDockerContainerFilesProvider, DockerContainerFilesProvider>()
     .AddSingleton<ILogRegistrar, LogRegistrar>()
     .AddSingleton<ILogRegistrationTransport, LogRegistrationTransport>()
+    .AddSingleton<IContextPropertiesProvider, ContextPropertiesProvider>()
     .Configure<LogAgentOptions>(builder.Configuration.GetSection("LogAgent"));
 
 var app = builder.Build();
