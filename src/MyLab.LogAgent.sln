@@ -5,7 +5,9 @@ VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyLab.LogAgent", "MyLab.LogAgent\MyLab.LogAgent.csproj", "{3CC6EC7E-83AA-49E9-817D-BFEB2CE1C826}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{CF2A79F3-B393-4243-B4C8-40ADAEAE7F79}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{CF2A79F3-B393-4243-B4C8-40ADAEAE7F79}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{DC8DD864-EA91-44A3-9F41-B6C1E362A0E3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{CF2A79F3-B393-4243-B4C8-40ADAEAE7F79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF2A79F3-B393-4243-B4C8-40ADAEAE7F79}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF2A79F3-B393-4243-B4C8-40ADAEAE7F79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC8DD864-EA91-44A3-9F41-B6C1E362A0E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC8DD864-EA91-44A3-9F41-B6C1E362A0E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC8DD864-EA91-44A3-9F41-B6C1E362A0E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC8DD864-EA91-44A3-9F41-B6C1E362A0E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,19 +1,11 @@
-using MyLab.LogAgent.Options;
-using MyLab.LogAgent.Services;
+using MyLab.LogAgent;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services
-    .AddHostedService<LogMonitorBackgroundService>()
-    .AddSingleton<IDockerContainerProvider, DockerContainerProvider>()
-    .AddSingleton<IDockerLogMonitor, DockerLogMonitor>()
-    .AddSingleton<IDockerContainerFilesProvider, DockerContainerFilesProvider>()
-    .AddSingleton<ILogRegistrar, LogRegistrar>()
-    .AddSingleton<ILogRegistrationTransport, LogRegistrationTransport>()
-    .AddSingleton<IContextPropertiesProvider, ContextPropertiesProvider>()
-    .Configure<LogAgentOptions>(builder.Configuration.GetSection("LogAgent"));
+builder.Services.AddLogAgentLogic()
+    .ConfigureLogAgentLogic(builder.Configuration);
 
 var app = builder.Build();
 
