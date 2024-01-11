@@ -49,19 +49,16 @@ namespace MyLab.LogAgent.LogFormats
             if (logEntity[nameof(LogEntity.Message)] is not { } messageNode)
                 throw new FormatException("Message node not found");
 
-            string? exceptionDto = null;
-
             if (logEntity[nameof(LogEntity.Exception)] is { } exceptionNode)
             {
-                exceptionDto = ParseException(exceptionNode);
+                props.Add(new KeyValuePair<string, string>(LogPropertyNames.Exception, ParseException(exceptionNode)));
             }
 
             return new LogRecord
             {
                 Time = DateTime.Parse(timeNode.ToString()),
                 Message = messageNode.ToString(),
-                Properties = props,
-                Exception = exceptionDto
+                Properties = props
             };
         }
 

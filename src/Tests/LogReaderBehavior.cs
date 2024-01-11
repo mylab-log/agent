@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using MyLab.LogAgent;
 using MyLab.LogAgent.LogFormats;
 using MyLab.LogAgent.Model;
 using MyLab.LogAgent.Tools;
@@ -156,7 +157,8 @@ public class LogReaderBehavior
         //Assert
         Assert.NotNull(readLogRecord);
         Assert.Equal("Log parsing error", readLogRecord.Message);
-        Assert.NotNull(readLogRecord.Exception);
+        Assert.NotNull(readLogRecord.Properties);
+        Assert.Contains(readLogRecord.Properties, p => p.Key == LogPropertyNames.Exception);
     }
 
     class BadLogFormat : ILogFormat

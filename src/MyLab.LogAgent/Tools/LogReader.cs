@@ -68,10 +68,10 @@ namespace MyLab.LogAgent.Tools
                 {
                     Time = DateTime.Now,
                     Message = "Log parsing error",
-                    Exception = ExceptionDto.Create(e).ToYaml(),
                     Properties = new []
                     {
-                        new KeyValuePair<string, string>("log-string", logString)
+                        new KeyValuePair<string, string>("log-string", logString),
+                        new KeyValuePair<string, string>(LogPropertyNames.Exception, ExceptionDto.Create(e).ToYaml()!)
                     }
                 };
             }

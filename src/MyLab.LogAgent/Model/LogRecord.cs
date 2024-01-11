@@ -6,7 +6,6 @@ namespace MyLab.LogAgent.Model
     {
         public DateTime Time { get; set; } = DateTime.Now;
         public required string Message { get; init; }
-        public string? Exception { get; init; }
         public IEnumerable<KeyValuePair<string, string>>? Properties { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using MyLab.LogAgent.LogFormats;
+﻿using MyLab.LogAgent;
+using MyLab.LogAgent.LogFormats;
 using Xunit.Abstractions;
 
 namespace Tests
@@ -61,19 +62,13 @@ namespace Tests
             Assert.NotNull(logRecord);
             Assert.Equal("Something wrong!", logRecord.Message);
             Assert.Equal(new DateTime(2023, 12,28, 13,38,0), logRecord.Time.ToUniversalTime());
-            Assert.NotNull(logRecord.Exception);
-            Assert.Contains("Name not known", logRecord.Exception);
-            Assert.Contains("Service not known", logRecord.Exception);
             Assert.NotNull(logRecord.Properties);
             Assert.Contains(logRecord.Properties, p => p is { Key: "log-category", Value: "KeslService" });
             Assert.Contains(logRecord.Properties, p => p is { Key: "exception-trace", Value: "07ec3acc398533dd64f43420afda50c5" });
             Assert.Contains(logRecord.Properties, p => p is { Key: "response-dump"} && p.Value.Contains("Transfer-Encoding: chunked"));
-
-            output.WriteLine("EXCEPTION:");
-            output.WriteLine("");
-            output.WriteLine(logRecord.Exception);
-            output.WriteLine("");
-
+            Assert.Contains(logRecord.Properties, p => p is { Key: LogPropertyNames.Exception } && p.Value.Contains("Name not known"));
+            Assert.Contains(logRecord.Properties, p => p is { Key: LogPropertyNames.Exception } && p.Value.Contains("Service not known"));
+            
             output.WriteLine("PROPERTIES:");
             output.WriteLine("");
             foreach (var logRecordProperty in logRecord.Properties)
