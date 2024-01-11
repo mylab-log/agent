@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Formatters;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using MyLab.LogAgent.Model;
 using MyLab.LogAgent.Options;
 
@@ -12,16 +11,23 @@ namespace MyLab.LogAgent.Services
         Task FlushAsync();
     }
 
-    class LogRegistrar(ILogRegistrationTransport registrationTransport, IOptions<LogAgentOptions> opts) : ILogRegistrar
+    class LogRegistrar : ILogRegistrar
     {
         private readonly List<LogRecord> _buff = new ();
         private readonly object _sync = new ();
+        private readonly ILogRegistrationTransport _registrationTransport;
+        private readonly IOptions<LogAgentOptions> _opts;
+
+        public LogRegistrar(ILogRegistrationTransport registrationTransport, IOptions<LogAgentOptions> opts)
+        {
+            _registrationTransport = registrationTransport ?? throw new ArgumentNullException(nameof(registrationTransport));
+            _opts = opts ?? throw new ArgumentNullException(nameof(opts));
+        }
 
         public async Task RegisterAsync(LogRecord logRecord)
         {
-            if (logRecord == null) 
-                throw new ArgumentNullException(nameof(logRecord));
-
+            ArgumentNullException.ThrowIfNull(logRecord, nameof(logRecord));
+            
             Monitor.Enter(_sync);
 
             try
@@ -38,14 +44,14 @@ namespace MyLab.LogAgent.Services
 
         public Task FlushAsync()
         {
-            return TryRegisterLogsFromBufferAsync();
+            return TryRegisterLogsFromBufferAsync(force: true);
         }
 
-        private async Task TryRegisterLogsFromBufferAsync()
+        private async Task TryRegisterLogsFromBufferAsync(bool force = false)
         {
-            if (opts.Value.OutgoingBufferSize <= _buff.Count)
+            if (force || _opts.Value.OutgoingBufferSize <= _buff.Count)
             {
-                await registrationTransport.RegisterLogsAsync(_buff);
+                await _registrationTransport.RegisterLogsAsync(_buff);
                 _buff.Clear();
             }
         }
