@@ -1,0 +1,23 @@
+@host=http://localhost:9200
+
+### Get indices
+GET /_cat/indices
+
+### Get index tempaltes
+GET /_template
+
+### Get streams
+GET /_data_stream
+
+### Get componetn templates
+GET /_component_template
+
+### Get logs
+GET /logs-test/_search
+Content-Type: application/json
+
+{
+  "query": {
+    "match_all": {}
+  }
+}

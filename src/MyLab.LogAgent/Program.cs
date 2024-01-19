@@ -1,11 +1,15 @@
 using MyLab.LogAgent;
+using MyLab.Search.EsAdapter;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddLogAgentLogic()
-    .ConfigureLogAgentLogic(builder.Configuration);
+builder.Services
+    .AddLogAgentLogic()
+    .AddEsTools()
+    .ConfigureLogAgentLogic(builder.Configuration)
+    .ConfigureEsTools(builder.Configuration);
 
 var app = builder.Build();
 

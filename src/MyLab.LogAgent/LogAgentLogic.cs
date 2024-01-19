@@ -1,5 +1,6 @@
 ﻿using MyLab.LogAgent.Options;
 using MyLab.LogAgent.Services;
+using MyLab.Search.EsAdapter;
 
 namespace MyLab.LogAgent
 {

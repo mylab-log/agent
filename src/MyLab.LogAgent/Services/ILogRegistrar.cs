@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using MyLab.LogAgent.Model;
 using MyLab.LogAgent.Options;
+using System.Linq;
 
 namespace MyLab.LogAgent.Services
 {
@@ -14,9 +15,10 @@ namespace MyLab.LogAgent.Services
     class LogRegistrar : ILogRegistrar
     {
         private readonly List<LogRecord> _buff = new ();
-        private readonly object _sync = new ();
         private readonly ILogRegistrationTransport _registrationTransport;
         private readonly IOptions<LogAgentOptions> _opts;
+        private bool _registering;
+        private readonly object _buffLock = new ();
 
         public LogRegistrar(ILogRegistrationTransport registrationTransport, IOptions<LogAgentOptions> opts)
         {
@@ -27,19 +29,10 @@ namespace MyLab.LogAgent.Services
         public async Task RegisterAsync(LogRecord logRecord)
         {
             ArgumentNullException.ThrowIfNull(logRecord, nameof(logRecord));
-            
-            Monitor.Enter(_sync);
 
-            try
-            {
-                _buff.Add(logRecord);
-                await TryRegisterLogsFromBufferAsync();
-            }
-            finally
-            {
-                Monitor.Exit(_sync);
-            }
-            
+            _buff.Add(logRecord);
+            await TryRegisterLogsFromBufferAsync();
+
         }
 
         public Task FlushAsync()
@@ -49,10 +42,27 @@ namespace MyLab.LogAgent.Services
 
         private async Task TryRegisterLogsFromBufferAsync(bool force = false)
         {
-            if (force || _opts.Value.OutgoingBufferSize <= _buff.Count)
+            if (!_registering && _buff.Count != 0 && (force || _opts.Value.OutgoingBufferSize <= _buff.Count))
             {
-                await _registrationTransport.RegisterLogsAsync(_buff);
-                _buff.Clear();
+                _registering = true;
+
+                try
+                {
+                    var buffClone = _buff.ToArray();
+                    await _registrationTransport.RegisterLogsAsync(buffClone);
+
+                    lock (_buffLock)
+                    {
+                        foreach (var cloneRec in buffClone)
+                        {
+                            _buff.Remove(cloneRec);
+                        }
+                    }
+                }
+                finally
+                {
+                    _registering = false;
+                }
             }
         }
     }

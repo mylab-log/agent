@@ -13,12 +13,7 @@ namespace MyLab.LogAgent.Services
     class DockerContainerFilesProvider(IOptions<LogAgentOptions> options) : IDockerContainerFilesProvider
     {
         private readonly LogAgentOptions _opts = options.Value;
-
-        public StreamReader OpenLogFileRead(string containerId, string filename)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public IEnumerable<string> EnumerateContainerFiles(string containerId)
         {
             var containerDirPath = Path.Combine(_opts.DockerContainersPath, containerId);

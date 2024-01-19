@@ -63,6 +63,7 @@ namespace MyLab.LogAgent.Tools
 
             return readyLogRecord;
         }
+        
 
         LogRecord? GetLogRecord()
         {
