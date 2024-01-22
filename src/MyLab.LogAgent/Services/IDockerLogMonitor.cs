@@ -107,12 +107,13 @@ namespace MyLab.LogAgent.Services
             }
 
             using var fileReader = _containerFilesProvider.OpenContainerFileRead(cEntity.Container.Id, lastLogFilename);
-            fileReader.BaseStream.Seek(cEntity.Shift, SeekOrigin.Begin);
+            //fileReader.BaseStream.Seek(cEntity.Shift, SeekOrigin.Begin);
+            fileReader.BaseStream.Position = cEntity.Shift;
 
             var srcReader = new DockerLogSourceReader(fileReader);
 
             var logReader = new LogReader(format, srcReader, cEntity.LineBuff);
-
+            
             while (await logReader.ReadLogAsync(cancellationToken) is { } nextLogRecord)
             {
                 if (nextLogRecord.Properties != null)
@@ -130,7 +131,7 @@ namespace MyLab.LogAgent.Services
             cEntity.Shift = fileReader.BaseStream.Position;
             await _logRegistrar.FlushAsync();
         }
-
+        
         private string? GetLastLogFilename(LogContainerRegistry.Entity cEntity)
         {
             var foundLogFiles = _containerFilesProvider

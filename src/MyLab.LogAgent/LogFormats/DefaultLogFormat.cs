@@ -15,7 +15,6 @@ namespace MyLab.LogAgent.LogFormats
                 ? null
                 : new LogRecord
                 {
-                    Time = DateTime.Now,
                     Message = logText
                 };
         }

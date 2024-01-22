@@ -26,28 +26,31 @@ namespace MyLab.LogAgent.Tools
         
             var logEnum = new LogReaderEnumerable(_logSourceReader, _buff);
 
-            bool payloadDetected = false;
             LogRecord? readyLogRecord;
+            DateTime? contextDateTime = null;
 
             await foreach (var nextLine in logEnum.WithCancellation(cancellationToken))
             {
-                if(!payloadDetected && string.IsNullOrWhiteSpace(nextLine!.Text))
+                if(string.IsNullOrWhiteSpace(nextLine!.Text))
                     continue;
 
                 var applyResult = _logBuilder.ApplyNexLine(nextLine!.Text);
                 switch (applyResult)
                 {
                     case LogReaderResult.Accepted:
+                    {
+                        contextDateTime ??= nextLine.Time ?? DateTime.Now;
+                    }
                         break;
                     case LogReaderResult.CompleteRecord:
                     {
-                        readyLogRecord = GetLogRecord();
+                        readyLogRecord = GetLogRecord(contextDateTime);
                         _buff?.Clear();
                         return readyLogRecord;
                     }
                     case LogReaderResult.NewRecordDetected:
                     {
-                        readyLogRecord = GetLogRecord();
+                        readyLogRecord = GetLogRecord(contextDateTime);
                         _buff?.Clear();
                         _buff?.Add(nextLine);
                         return readyLogRecord;
@@ -57,7 +60,7 @@ namespace MyLab.LogAgent.Tools
                 }
             }
 
-            readyLogRecord = GetLogRecord();
+            readyLogRecord = GetLogRecord(contextDateTime);
 
             _buff?.Clear();
 
@@ -65,7 +68,7 @@ namespace MyLab.LogAgent.Tools
         }
         
 
-        LogRecord? GetLogRecord()
+        LogRecord? GetLogRecord(DateTime? contextDateTime)
         {
             var logString = _logBuilder.BuildString();
             if (string.IsNullOrWhiteSpace(logString))
@@ -73,7 +76,10 @@ namespace MyLab.LogAgent.Tools
 
             try
             {
-                return _logFormat.Parse(logString);
+                var lr = _logFormat.Parse(logString);
+                if (lr != null && lr.Time == default)
+                    lr.Time = contextDateTime ?? DateTime.Now;
+                return lr;
             }
             catch (Exception e)
             {

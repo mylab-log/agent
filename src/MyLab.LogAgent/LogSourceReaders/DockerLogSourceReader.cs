@@ -16,10 +16,14 @@ namespace MyLab.LogAgent.LogSourceReaders
         {
             if (_streamReader.EndOfStream) return null;
 
-            var line = await _streamReader.ReadLineAsync(cancellationToken);
+            string? line;
+            do
+            {
+                line = await _streamReader.ReadLineAsync(cancellationToken);
+            } while (!_streamReader.EndOfStream && string.IsNullOrWhiteSpace(line));
 
             if (string.IsNullOrWhiteSpace(line))
-                throw new FormatException("Empty log string");
+                return null;
 
             var dockerLine = JsonConvert.DeserializeObject<DockerLogLine>(line);
 

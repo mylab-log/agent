@@ -82,10 +82,18 @@ namespace IntegrationTests
 
             //Assert
             Assert.Equal(4, searchRes.Count);
-            //Assert.Contains(searchRes, rec => 
-            //    rec.Any(p => p is { Key: "message", Value: "InstrumentationLibrarySpans #0" } &&
-            //    rec.Any(p => p is { Key: "time", Value: "" }
-            //) );
+            Assert.Contains(searchRes, rec =>
+                rec.Any(p => p is { Key: "message", Value: "InstrumentationLibrarySpans #0" }) &&
+                rec.Any(p => p is { Key: "time", Value: "2023-08-29T20:15:41.3045559Z" })
+            );
+            Assert.Contains(searchRes, rec =>
+                rec.Any(p => p is { Key: "message", Value: "InstrumentationLibrary OpenTelemetry.Instrumentation.AspNetCore 1.0.0.0" }) && 
+                rec.Any(p => p is { Key: "time", Value: "2023-08-29T20:15:41.3045745Z" })
+            );
+            Assert.Contains(searchRes, rec =>
+                rec.Any(p => p.Key == "message" && p.Value.Contains("Trace ID       : f15bcb09a61119c219067946020cd5a1")) && 
+                rec.Any(p => p is { Key: "time", Value: "2023-08-29T20:15:41.3045815Z" })
+            );
         }
 
         public Task InitializeAsync()
