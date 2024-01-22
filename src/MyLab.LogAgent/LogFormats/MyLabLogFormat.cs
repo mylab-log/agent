@@ -4,20 +4,15 @@ using MyLab.Log;
 using MyLab.LogAgent.Model;
 using YamlDotNet.RepresentationModel;
 using YamlDotNet.Serialization;
+using LogLevel = MyLab.LogAgent.Model.LogLevel;
 
 namespace MyLab.LogAgent.LogFormats
 {
     class MyLabLogFormat : ILogFormat
     {
-        private readonly IDeserializer _deserializer = new DeserializerBuilder()
-            .Build();
-        private readonly ISerializer _serializer = new SerializerBuilder()
-            .WithIndentedSequences()
-            .Build();
-
         public ILogBuilder? CreateBuilder()
         {
-            return new MultilineLogBuilder();
+            return new YamlLogBuilder();
         }
 
         public LogRecord? Parse(string logText)
@@ -26,57 +21,118 @@ namespace MyLab.LogAgent.LogFormats
 
             var props = new List<LogProperty>();
 
-            if (logEntity[nameof(LogEntity.Labels)] is YamlMappingNode { NodeType: YamlNodeType.Mapping } logLabels)
+            string? logLevel = null;
+
+            foreach (var logEntityChild in logEntity.Children)
             {
-                
-                foreach (var logEntityLabel in logLabels.Children)
+                var chKey = logEntityChild.Key.ToString();
+
+                switch (chKey)
                 {
-                    props.Add(
-                        new LogProperty
-                        {
-                            Name = logEntityLabel.Key.ToString(),
-                            Value = logEntityLabel.Value.ToString()
-                        }
-                    );
-                }
-            }
-
-            if (logEntity[nameof(LogEntity.Facts)] is YamlMappingNode { NodeType: YamlNodeType.Mapping } logFacts)
-            {
-
-                foreach (var logEntityFact in logFacts.Children)
-                {
-                    props.Add(
-                        new LogProperty
-                        {
-                            Name = logEntityFact.Key.ToString(),
-                            Value = logEntityFact.Value.ToString()
-                        }
-                    );
-                }
-            }
-
-            if (logEntity[nameof(LogEntity.Time)] is not { } timeNode)
-                throw new FormatException("Time node not found");
-            if (logEntity[nameof(LogEntity.Message)] is not { } messageNode)
-                throw new FormatException("Message node not found");
-
-            if (logEntity[nameof(LogEntity.Exception)] is { } exceptionNode)
-            {
-                props.Add(
-                    new LogProperty
+                    case nameof(LogEntity.Labels):
                     {
-                        Name = LogPropertyNames.Exception,
-                        Value = ParseException(exceptionNode)
-                    });
+                        if (logEntityChild.Value is YamlMappingNode { NodeType: YamlNodeType.Mapping } logLabels)
+                        {
+                            ProcessLabels(logLabels, props, out var labelLogLevel);
+                            logLevel ??= labelLogLevel;
+                        }
+                    }
+                    break;
+                    case nameof(LogEntity.Facts):
+                    {
+                        if (logEntityChild.Value is YamlMappingNode { NodeType: YamlNodeType.Mapping } logFacts)
+                        {
+                            ProcessFacts(logFacts, props, out var labelLogLevel);
+                            logLevel ??= labelLogLevel;
+                        }
+                    }
+                    break;
+                    case nameof(LogEntity.Exception):
+                    {
+                        props.Add(
+                            new LogProperty
+                            {
+                                Name = LogPropertyNames.Exception,
+                                Value = ParseException(logEntityChild.Value)
+                            });
+                        }
+                        break;
+                }
             }
+
+            if(!logEntity.Children.TryGetValue(nameof(LogEntity.Time), out var timeNode))
+                throw new FormatException("Time node not found");
+            if (!logEntity.Children.TryGetValue(nameof(LogEntity.Message), out var messageNode))
+                throw new FormatException("Message node not found");
 
             return new LogRecord
             {
                 Time = DateTime.Parse(timeNode.ToString()),
                 Message = messageNode.ToString(),
-                Properties = props
+                Properties = props,
+                Level = DeserializeLogLevel(logLevel)
             };
+        }
+
+        private static void ProcessFacts(YamlMappingNode logFacts, List<LogProperty> props, out string? logLevel)
+        {
+            logLevel = null;
+
+            foreach (var logEntityFact in logFacts.Children)
+            {
+                var factKey = logEntityFact.Key.ToString();
+                var factVal = logEntityFact.Value.ToString();
+
+                if (factKey == "log-level" || factKey == "log_level")
+                {
+                    logLevel = factVal;
+                    continue;
+                }
+
+                props.Add(
+                    new LogProperty
+                    {
+                        Name = factKey,
+                        Value = factVal
+                    }
+                );
+            }
+        }
+
+        private static void ProcessLabels(YamlMappingNode logLabels, List<LogProperty> props, out string? logLevel)
+        {
+            logLevel = null;
+
+            foreach (var logEntityLabel in logLabels.Children)
+            {
+                var labelKey = logEntityLabel.Key.ToString();
+                var labelVal = logEntityLabel.Value.ToString();
+
+                if (labelKey == "log-level" || labelKey == "log_level")
+                {
+                    logLevel = labelVal;
+                    continue;
+                }
+
+                props.Add(
+                    new LogProperty
+                    {
+                        Name = labelKey,
+                        Value = labelVal
+                    }
+                );
+            }
+        }
+
+        LogLevel DeserializeLogLevel(string? strVal)
+        {
+            switch (strVal)
+            {
+                case "info": return LogLevel.Info;
+                case "error": return LogLevel.Error;
+                case "warning": return LogLevel.Warning;
+                default: return LogLevel.Info;
+            }
         }
 
         private string ParseException(YamlNode exceptionNode)
@@ -95,7 +151,7 @@ namespace MyLab.LogAgent.LogFormats
             return sb.ToString();
         }
 
-        private static YamlNode ParseYaml(string logText)
+        private static YamlMappingNode ParseYaml(string logText)
         {
             var ymlStream = new YamlStream();
 
@@ -110,7 +166,36 @@ namespace MyLab.LogAgent.LogFormats
                     .AndFactIs("doc-count", ymlStream.Documents.Count);
 
             var logEntity = ymlStream.Documents[0].RootNode;
-            return logEntity;
+
+            if(logEntity is YamlMappingNode yamlMappingNode)
+                return yamlMappingNode;
+
+            throw new FormatException("Yaml document should be YamlMappingNode");
+        }
+
+        class YamlLogBuilder : ILogBuilder
+        {
+            private readonly StringBuilder _sb = new();
+
+            public LogReaderResult ApplyNexLine(string? logTextLine)
+            {
+                if (string.IsNullOrWhiteSpace(logTextLine))
+                    return LogReaderResult.CompleteRecord;
+
+                _sb.AppendLine(logTextLine.TrimEnd());
+
+                return LogReaderResult.Accepted;
+            }
+
+            public string? BuildString()
+            {
+                return _sb.ToString();
+            }
+
+            public void Cleanup()
+            {
+                _sb.Clear();
+            }
         }
     }
 }

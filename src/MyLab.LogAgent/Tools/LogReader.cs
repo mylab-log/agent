@@ -2,6 +2,7 @@
 using MyLab.LogAgent.LogFormats;
 using MyLab.LogAgent.LogSourceReaders;
 using MyLab.LogAgent.Model;
+using LogLevel = MyLab.LogAgent.Model.LogLevel;
 
 namespace MyLab.LogAgent.Tools
 {
@@ -28,6 +29,7 @@ namespace MyLab.LogAgent.Tools
 
             LogRecord? readyLogRecord;
             DateTime? contextDateTime = null;
+            bool contextErrorFactor = false;
 
             await foreach (var nextLine in logEnum.WithCancellation(cancellationToken))
             {
@@ -40,17 +42,18 @@ namespace MyLab.LogAgent.Tools
                     case LogReaderResult.Accepted:
                     {
                         contextDateTime ??= nextLine.Time ?? DateTime.Now;
+                        contextErrorFactor = contextErrorFactor || nextLine.IsError;
                     }
                         break;
                     case LogReaderResult.CompleteRecord:
                     {
-                        readyLogRecord = GetLogRecord(contextDateTime);
+                        readyLogRecord = GetLogRecord(contextDateTime, contextErrorFactor);
                         _buff?.Clear();
                         return readyLogRecord;
                     }
                     case LogReaderResult.NewRecordDetected:
                     {
-                        readyLogRecord = GetLogRecord(contextDateTime);
+                        readyLogRecord = GetLogRecord(contextDateTime, contextErrorFactor);
                         _buff?.Clear();
                         _buff?.Add(nextLine);
                         return readyLogRecord;
@@ -60,7 +63,7 @@ namespace MyLab.LogAgent.Tools
                 }
             }
 
-            readyLogRecord = GetLogRecord(contextDateTime);
+            readyLogRecord = GetLogRecord(contextDateTime, contextErrorFactor);
 
             _buff?.Clear();
 
@@ -68,7 +71,7 @@ namespace MyLab.LogAgent.Tools
         }
         
 
-        LogRecord? GetLogRecord(DateTime? contextDateTime)
+        LogRecord? GetLogRecord(DateTime? contextDateTime, bool contextErrorFactor)
         {
             var logString = _logBuilder.BuildString();
             if (string.IsNullOrWhiteSpace(logString))
@@ -77,8 +80,18 @@ namespace MyLab.LogAgent.Tools
             try
             {
                 var lr = _logFormat.Parse(logString);
-                if (lr != null && lr.Time == default)
-                    lr.Time = contextDateTime ?? DateTime.Now;
+                if (lr != null)
+                {
+                    if (lr.Time == default)
+                    {
+                        lr.Time = contextDateTime ?? DateTime.Now;
+                    }
+                    if (contextErrorFactor && lr.Level == LogLevel.Undefined)
+                    {
+                        lr.Level = LogLevel.Error;
+                    }
+                }
+
                 return lr;
             }
             catch (Exception e)

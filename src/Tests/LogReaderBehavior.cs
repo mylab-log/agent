@@ -1,9 +1,11 @@
 ﻿using System.Text;
+using Microsoft.Extensions.ObjectPool;
 using MyLab.LogAgent;
 using MyLab.LogAgent.LogFormats;
 using MyLab.LogAgent.LogSourceReaders;
 using MyLab.LogAgent.Model;
 using MyLab.LogAgent.Tools;
+using YamlDotNet.RepresentationModel;
 
 namespace Tests;
 
@@ -165,6 +167,95 @@ public class LogReaderBehavior
         Assert.Equal("Log parsing error", readLogRecord.Message);
         Assert.NotNull(readLogRecord.Properties);
         Assert.Contains(readLogRecord.Properties, p => p.Name == LogPropertyNames.Exception);
+    }
+
+    [Theory]
+    [MemberData(nameof(GetErrorFactorCases))]
+    public async Task ShouldSetErrorFactorIfNotDefined(string log, bool expectedErrorFactor)
+    {
+        var memStream = new MemoryStream(Encoding.UTF8.GetBytes(log));
+        var streamReader = new StreamReader(memStream);
+        var srcReader = new DockerLogSourceReader(streamReader);
+        var reader = new LogReader(new MyLabLogFormat(), srcReader, null);
+
+        //Act
+        var readLogRecord = await reader.ReadLogAsync(default);
+
+        //Assert
+        Assert.NotNull(readLogRecord);
+        Assert.Equal(expectedErrorFactor, readLogRecord.Level == LogLevel.Error);
+    }
+
+    public static object[][] GetErrorFactorCases()
+    {
+        return new[]
+        {
+            new[]
+            {
+                WrapToDockerFormat(
+                    """
+                    Message: Something wrong!
+                    Time: 2023-12-28T13:38:00.000Z
+                    Facts:
+                      log-category: KeslService
+                    Labels:
+                      log_level: 'error'
+                    """
+                    , "stdout"),
+                (object)true
+            },
+            new[]
+            {
+                WrapToDockerFormat(
+                    """
+                    Message: Something wrong!
+                    Time: 2023-12-28T13:38:00.000Z
+                    Facts:
+                      log-category: KeslService
+                    Labels:
+                      log_level: 'error'
+                    """
+                    , "stderr"),
+                (object)true
+            },
+            new[]
+            {
+                WrapToDockerFormat(
+                    """
+                    Message: Something wrong!
+                    Time: 2023-12-28T13:38:00.000Z
+                    Facts:
+                      log-category: KeslService
+                    Labels:
+                      log_level: 'info'
+                    """
+                    , "stdout"),
+                (object)false
+            }
+            ,
+            new[]
+            {
+                WrapToDockerFormat(
+                    """
+                    Message: Something wrong!
+                    Time: 2023-12-28T13:38:00.000Z
+                    Facts:
+                      log-category: KeslService
+                    Labels:
+                      log_level: 'info'
+                    """
+                    , "stderr"),
+                (object)false
+            }
+        };
+    }
+
+    static string WrapToDockerFormat(string lines, string stream)
+    {
+        var wrappedStrings= lines
+            .Split("\n")
+            .Select(l => $"{{\"log\":\"{l.TrimEnd()}\\n\",\"stream\":\"{stream}\",\"time\":\"2023-08-29T20:15:41.304555874Z\"}}");
+        return string.Join(Environment.NewLine, wrappedStrings);
     }
 
     class BadLogFormat : ILogFormat

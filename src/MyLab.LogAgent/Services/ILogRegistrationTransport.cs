@@ -36,8 +36,9 @@ namespace MyLab.LogAgent.Services
         {
             var esLogRecord = new EsLogRecord
             {
-                { "message", logRecord.Message },
-                { "time", logRecord.Time.ToString("O") }
+                { LogPropertyNames.Message, logRecord.Message },
+                { LogPropertyNames.Time, logRecord.Time.ToString("O") },
+                { LogPropertyNames.Level, logRecord.Level.ToString().ToLower() }
             };
 
             if (logRecord.Properties != null)

@@ -1,5 +1,6 @@
 ﻿using MyLab.LogAgent;
 using MyLab.LogAgent.LogFormats;
+using MyLab.LogAgent.Model;
 using Xunit.Abstractions;
 
 namespace Tests
@@ -79,6 +80,72 @@ namespace Tests
                 output.WriteLine("");
             }
             output.WriteLine("");
+        }
+
+        [Theory]
+        [MemberData(nameof(GetLogLevelCases))]
+        public void ShouldNormalizeLogLevel(string log)
+        {
+            //Arrange
+            var format = new MyLabLogFormat();
+
+            //Act
+            var logRecord = format.Parse(log);
+
+            //Assert
+            Assert.NotNull(logRecord);
+            Assert.Equal(LogLevel.Error, logRecord.Level);
+        }
+
+        public static object[][] GetLogLevelCases()
+        {
+            return new[]
+            {
+                new[]
+                {
+                    """
+                   Message: Something wrong!
+                   Time: 2023-12-28T13:38:00.000Z
+                   Facts:
+                     log-level: 'error'
+                   Labels:
+                     exception-trace: 07ec3acc398533dd64f43420afda50c5
+                   """
+                },
+                new[]
+                {
+                    """
+                    Message: Something wrong!
+                    Time: 2023-12-28T13:38:00.000Z
+                    Facts:
+                      log_level: 'error'
+                    Labels:
+                      exception-trace: 07ec3acc398533dd64f43420afda50c5
+                    """
+                },
+                new[]
+                {
+                    """
+                    Message: Something wrong!
+                    Time: 2023-12-28T13:38:00.000Z
+                    Facts:
+                      log-category: KeslService
+                    Labels:
+                      log-level: 'error'
+                    """
+                },
+                new[]
+                {
+                    """
+                    Message: Something wrong!
+                    Time: 2023-12-28T13:38:00.000Z
+                    Facts:
+                      log-category: KeslService
+                    Labels:
+                      log_level: 'error'
+                    """
+                }
+            };
         }
     }
 }

@@ -36,7 +36,8 @@ namespace MyLab.LogAgent.LogSourceReaders
                 {
                     Name = a.Key,
                     Value = a.Value
-                })
+                }),
+                IsError = dockerLine.Stream == "stderr"
             };
         }
 

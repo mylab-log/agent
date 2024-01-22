@@ -28,5 +28,43 @@ namespace Tests
             Assert.NotNull(readLine.Properties);
             Assert.Contains(readLine.Properties, p => p is { Name: "tag", Value: "redis-monitor" });
         }
+
+        [Theory]
+        [MemberData(nameof(GetErrorFactorCases))]
+        public async Task ShouldDetectErrorFactor(string logLine, bool expectedFactor)
+        {
+            //Arrange
+            var mem = new MemoryStream(Encoding.UTF8.GetBytes(logLine));
+            var streamReader = new StreamReader(mem);
+
+            var dockerReader = new DockerLogSourceReader(streamReader);
+
+            //Act
+            var readLine = await dockerReader.ReadLineAsync(default);
+
+            //Assert
+            Assert.NotNull(readLine);
+            Assert.Equal(expectedFactor, readLine.IsError);
+        }
+
+        public static object[][] GetErrorFactorCases()
+        {
+            return
+            [
+                [
+                    """
+                    {"log":"time=\"2024-01-09T08:44:42Z\" level=warning msg=\"foo\"\n","stream":"stderr","attrs":{"tag":"redis-monitor"},"time":"2024-01-09T08:44:44.000Z"}
+                    """,
+                    true
+                ],
+                new object[]
+                {
+                    """
+                    {"log":"time=\"2024-01-09T08:44:42Z\" level=warning msg=\"foo\"\n","stream":"stdout","attrs":{"tag":"redis-monitor"},"time":"2024-01-09T08:44:44.000Z"}
+                    """,
+                    false
+                }
+            ];
+        }
     }
 }
