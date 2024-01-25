@@ -1,0 +1,1 @@
+docker build -f ./Dockerfile --build-arg VER=local -t ghcr.io/mylab-log/agent:local ../src
