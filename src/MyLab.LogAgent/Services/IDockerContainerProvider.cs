@@ -33,7 +33,7 @@ namespace MyLab.LogAgent.Services
                     Id = c.ID,
                     Name = c.Names.FirstOrDefault(c.ID).TrimStart('/'),
                     LogFormat = c.Labels
-                        .Where(kv => kv.Key == "log-format")
+                        .Where(kv => kv.Key == "log_format")
                         .Select(kv => kv.Value)
                         .FirstOrDefault()
                 });
