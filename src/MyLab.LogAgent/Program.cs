@@ -1,4 +1,5 @@
 using MyLab.HttpMetrics;
+using MyLab.Log;
 using MyLab.LogAgent;
 using MyLab.Search.EsAdapter;
 
@@ -9,7 +10,8 @@ builder.Services
     .AddEsTools()
     .ConfigureLogAgentLogic(builder.Configuration)
     .ConfigureEsTools(builder.Configuration)
-    .AddUrlBasedHttpMetrics();
+    .AddUrlBasedHttpMetrics()
+    .AddLogging(b => b.AddMyLabConsole());
 
 var app = builder.Build();
 
