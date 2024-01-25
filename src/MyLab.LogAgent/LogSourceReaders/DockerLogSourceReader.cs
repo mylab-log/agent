@@ -33,8 +33,7 @@ namespace MyLab.LogAgent.LogSourceReaders
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                throw new SourceLogReadingException("Unable to parse docker json file string", line, e);
             }
 
             return dockerLine == null

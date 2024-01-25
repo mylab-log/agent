@@ -31,10 +31,22 @@ namespace MyLab.LogAgent.Tools
             DateTime? contextDateTime = null;
             bool contextErrorFactor = false;
 
-            await foreach (var nextLine in logEnum.WithCancellation(cancellationToken))
+            var cancellableLogEnum = logEnum.WithCancellation(cancellationToken)
+            var logEnumerator = cancellableLogEnum.GetAsyncEnumerator();
+
+            bool loopSuccFlag;
+            do
             {
-                //if(string.IsNullOrWhiteSpace(nextLine!.Text))
-                //    continue;
+                try
+                {
+                    loopSuccFlag = await logEnumerator.MoveNextAsync();
+                }
+                catch (SourceLogReadingException e)
+                {
+                    return CreateFailLogRecord(e.SourceText, e);
+                }
+
+                var nextLine = logEnumerator.Current;
 
                 var applyResult = _logBuilder.ApplyNexLine(nextLine!.Text);
                 switch (applyResult)
@@ -61,8 +73,9 @@ namespace MyLab.LogAgent.Tools
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
-            }
 
+            } while (loopSuccFlag);
+            
             readyLogRecord = GetLogRecord(contextDateTime, contextErrorFactor);
 
             _buff?.Clear();
@@ -99,25 +112,30 @@ namespace MyLab.LogAgent.Tools
             }
             catch (Exception e)
             {
-                return new LogRecord
-                {
-                    Time = DateTime.Now,
-                    Message = "Log parsing error",
-                    Properties =
-                    [
-                        new LogProperty
-                        {
-                            Name = "log-string", 
-                            Value = logString
-                        },
-                        new LogProperty
-                        {
-                            Name = LogPropertyNames.Exception, 
-                            Value = ExceptionDto.Create(e).ToYaml()!
-                        }
-                    ]
-                };
+                return CreateFailLogRecord(logString, e);
             }
+        }
+
+        private static LogRecord CreateFailLogRecord(string logString, Exception e)
+        {
+            return new LogRecord
+            {
+                Time = DateTime.Now,
+                Message = "Log parsing error",
+                Properties =
+                [
+                    new LogProperty
+                    {
+                        Name = "log-string", 
+                        Value = logString
+                    },
+                    new LogProperty
+                    {
+                        Name = LogPropertyNames.Exception, 
+                        Value = ExceptionDto.Create(e).ToYaml()!
+                    }
+                ]
+            };
         }
     }
 }
