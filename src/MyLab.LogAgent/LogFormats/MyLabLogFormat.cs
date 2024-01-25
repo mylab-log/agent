@@ -10,6 +10,8 @@ namespace MyLab.LogAgent.LogFormats
 {
     class MyLabLogFormat : ILogFormat
     {
+        public string Name => "mylab";
+
         public ILogBuilder? CreateBuilder()
         {
             return new YamlLogBuilder();

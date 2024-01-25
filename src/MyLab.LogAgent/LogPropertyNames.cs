@@ -6,5 +6,6 @@
         public const string Message = "message";
         public const string Level = "level";
         public const string Time = "@timestamp";
+        public const string Format = "format";
     }
 }

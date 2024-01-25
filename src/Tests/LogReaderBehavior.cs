@@ -260,6 +260,8 @@ public class LogReaderBehavior
 
     class BadLogFormat : ILogFormat
     {
+        public string Name => "bad";
+
         public ILogBuilder? CreateBuilder()
         {
             return new SingleLineLogBuilder();

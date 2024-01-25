@@ -86,9 +86,12 @@ namespace MyLab.LogAgent.Tools
                     {
                         lr.Time = contextDateTime ?? DateTime.Now;
                     }
-                    if (contextErrorFactor && lr.Level == LogLevel.Undefined)
+
+                    if (lr.Level == LogLevel.Undefined)
                     {
-                        lr.Level = LogLevel.Error;
+                        lr.Level = contextErrorFactor 
+                            ? LogLevel.Error
+                            : LogLevel.Info;
                     }
                 }
 

@@ -102,7 +102,7 @@ namespace MyLab.LogAgent.Services
             }
 
             _log?.Debug("Log format detected")
-                .AndFactIs("format", format.GetType().Name)
+                .AndFactIs("format", format.Name)
                 .Write();
 
             var lastLogFile = GetLastLogFilename(cEntity.Container.Id);
@@ -161,6 +161,8 @@ namespace MyLab.LogAgent.Services
 
             while (await logReader.ReadLogAsync(cancellationToken) is { } nextLogRecord)
             {
+                nextLogRecord.Format = format.Name;
+
                 ApplyAddProps(nextLogRecord);
 
                 await _logRegistrar.RegisterAsync(nextLogRecord);
