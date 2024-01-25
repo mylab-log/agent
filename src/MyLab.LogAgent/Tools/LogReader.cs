@@ -31,7 +31,7 @@ namespace MyLab.LogAgent.Tools
             DateTime? contextDateTime = null;
             bool contextErrorFactor = false;
 
-            var cancellableLogEnum = logEnum.WithCancellation(cancellationToken)
+            var cancellableLogEnum = logEnum.WithCancellation(cancellationToken);
             var logEnumerator = cancellableLogEnum.GetAsyncEnumerator();
 
             bool loopSuccFlag;
