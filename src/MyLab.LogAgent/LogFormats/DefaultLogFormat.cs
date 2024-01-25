@@ -4,7 +4,6 @@ namespace MyLab.LogAgent.LogFormats
 {
     class DefaultLogFormat : ILogFormat
     {
-        public string Name => "default";
         public ILogBuilder CreateBuilder()
         {
             return new MultilineLogBuilder();

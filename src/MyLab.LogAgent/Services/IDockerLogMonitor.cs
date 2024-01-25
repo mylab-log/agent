@@ -25,7 +25,8 @@ namespace MyLab.LogAgent.Services
 
         private readonly IDictionary<string, ILogFormat> _logFormats = new Dictionary<string, ILogFormat>
         {
-
+            { "default", new DefaultLogFormat() },
+            { "mylab", new MyLabLogFormat() }
         };
 
         private readonly ILogRegistrar _logRegistrar;
@@ -87,9 +88,13 @@ namespace MyLab.LogAgent.Services
         private async Task ProcessContainerLogs(LogContainerRegistry.Entity cEntity, CancellationToken cancellationToken)
         {
             ILogFormat? format;
+            string formatName;
 
             if (cEntity.Container.LogFormat == null)
+            {
                 format = _defaultLogFormat;
+                formatName = "default";
+            }
             else
             {
                 if (!_logFormats.TryGetValue(cEntity.Container.LogFormat, out format))
@@ -99,10 +104,12 @@ namespace MyLab.LogAgent.Services
                         .Write();
                     return;
                 }
+
+                formatName = cEntity.Container.LogFormat;
             }
 
             _log?.Debug("Log format detected")
-                .AndFactIs("format", format.Name)
+                .AndFactIs("format", formatName)
                 .Write();
 
             var lastLogFile = GetLastLogFilename(cEntity.Container.Id);
@@ -161,7 +168,7 @@ namespace MyLab.LogAgent.Services
 
             while (await logReader.ReadLogAsync(cancellationToken) is { } nextLogRecord)
             {
-                nextLogRecord.Format = format.Name;
+                nextLogRecord.Format = formatName;
 
                 ApplyAddProps(nextLogRecord);
 
