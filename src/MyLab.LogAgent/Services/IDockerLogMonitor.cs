@@ -70,6 +70,8 @@ namespace MyLab.LogAgent.Services
 
                 using var scope = _log?.BeginScope(new LabelLogScope("scoped-container", container.Container.Name));
 
+                _log?.Debug("Container monitoring").Write();
+
                 try
                 {
                     await ProcessContainerLogs(container, cancellationToken);
@@ -98,9 +100,20 @@ namespace MyLab.LogAgent.Services
                     return;
                 }
             }
-            
+
+            _log?.Debug("Log format detected")
+                .AndFactIs("format", format)
+                .Write();
+
             var lastLogFilename = GetLastLogFilename(cEntity);
-            if (lastLogFilename == null) return;
+
+            if (lastLogFilename == null)
+            {
+                _log?.Debug("Can't detect log filename")
+                    .Write();
+
+                return;
+            }
 
             if (lastLogFilename != cEntity.LastLogFilename)
             {
@@ -114,16 +127,31 @@ namespace MyLab.LogAgent.Services
             var srcReader = new DockerLogSourceReader(fileReader);
 
             var logReader = new LogReader(format, srcReader, cEntity.LineBuff);
-            
+
+            _log?.Debug("Try to read log file")
+                .AndFactIs("filename", lastLogFilename)
+                .AndFactIs("shift", cEntity.Shift)
+                .Write();
+
+            int recordCount = 0;
+
             while (await logReader.ReadLogAsync(cancellationToken) is { } nextLogRecord)
             {
                 ApplyAddProps(nextLogRecord);
 
                 await _logRegistrar.RegisterAsync(nextLogRecord);
+
+                recordCount++;
             }
 
             cEntity.Shift = fileReader.BaseStream.Position;
             await _logRegistrar.FlushAsync();
+
+            _log?.Debug("Log file reading completion")
+                .AndFactIs("filename", lastLogFilename)
+                .AndFactIs("new-shift", cEntity.Shift)
+                .AndFactIs("rec-count", recordCount)
+                .Write();
         }
 
         private void ApplyAddProps(LogRecord nextLogRecord)

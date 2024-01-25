@@ -11,8 +11,11 @@ namespace MyLab.LogAgent.Services
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            _log?.Debug("Monitoring started").Write();
             while (!stoppingToken.IsCancellationRequested)
             {
+                _log?.Debug("New monitoring iteration").Write();
+
                 try
                 {
                     await _dockerLogMonitor.ProcessLogsAsync(stoppingToken);
@@ -28,6 +31,7 @@ namespace MyLab.LogAgent.Services
 
                 await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
             }
+            _log?.Debug("Monitoring stopped").Write();
         }
     }
 }
