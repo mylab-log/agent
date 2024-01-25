@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Docker.DotNet" Version="3.125.15" />
+    <PackageReference Include="MyLab.HttpMetrics" Version="1.1.3" />
     <PackageReference Include="MyLab.Log.Dsl" Version="3.7.5" />
     <PackageReference Include="MyLab.Search.EsAdapter" Version="2.2.6" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />

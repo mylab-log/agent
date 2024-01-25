@@ -1,9 +1,11 @@
 ﻿using System.Text;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Moq;
 using MyLab.Log.XUnit;
 using MyLab.LogAgent.Model;
+using MyLab.LogAgent.Options;
 using MyLab.LogAgent.Services;
 using Xunit.Abstractions;
 
@@ -130,7 +132,7 @@ namespace Tests
                 containerProvider.Object,
                 filesProvider.Object,
                 registrar.Object,
-                new EmptyContextPropertiesProvider(),
+                new OptionsWrapper<LogAgentOptions>(new LogAgentOptions()),
                 _logger
             );
 
@@ -198,7 +200,7 @@ namespace Tests
                 containerProvider.Object,
                 filesProvider.Object,
                 registrar.Object,
-                new EmptyContextPropertiesProvider(),
+                new OptionsWrapper<LogAgentOptions>(new LogAgentOptions()),
                 _logger
             );
 
@@ -263,7 +265,7 @@ namespace Tests
                 containerProvider.Object,
                 filesProvider.Object,
                 registrar.Object,
-                new EmptyContextPropertiesProvider(),
+                new OptionsWrapper<LogAgentOptions>(new LogAgentOptions()),
                 _logger
             );
 
@@ -308,18 +310,10 @@ namespace Tests
                 containerProvider.Object,
                 filesProvider.Object,
                 registrar.Object,
-                new EmptyContextPropertiesProvider(),
+                new OptionsWrapper<LogAgentOptions>(new LogAgentOptions()),
                 _logger
             );
             return monitor;
-        }
-
-        class EmptyContextPropertiesProvider : IContextPropertiesProvider
-        {
-            public IEnumerable<LogProperty> ProvideProperties()
-            {
-                return Enumerable.Empty<LogProperty>();
-            }
         }
     }
 }

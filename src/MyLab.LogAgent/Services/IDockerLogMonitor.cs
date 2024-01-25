@@ -1,8 +1,10 @@
-﻿using MyLab.Log.Dsl;
+﻿using Microsoft.Extensions.Options;
+using MyLab.Log.Dsl;
 using MyLab.Log.Scopes;
 using MyLab.LogAgent.LogFormats;
 using MyLab.LogAgent.LogSourceReaders;
 using MyLab.LogAgent.Model;
+using MyLab.LogAgent.Options;
 using MyLab.LogAgent.Tools;
 
 namespace MyLab.LogAgent.Services
@@ -27,18 +29,18 @@ namespace MyLab.LogAgent.Services
         };
 
         private readonly ILogRegistrar _logRegistrar;
-        private readonly IContextPropertiesProvider _contextPropertiesProvider;
+        private readonly LogAgentOptions _opts;
 
         public DockerLogMonitor(IDockerContainerProvider containerProvider, 
             IDockerContainerFilesProvider containerFilesProvider, 
             ILogRegistrar logRegistrar,
-            IContextPropertiesProvider contextPropertiesProvider,
+            IOptions<LogAgentOptions> opts,
             ILogger<DockerLogMonitor>? logger = null)
         {
             _logRegistrar = logRegistrar;
-            _contextPropertiesProvider = contextPropertiesProvider ?? throw new ArgumentNullException(nameof(contextPropertiesProvider));
             _containerProvider = containerProvider ?? throw new ArgumentNullException(nameof(containerProvider));
             _containerFilesProvider = containerFilesProvider ?? throw new ArgumentNullException(nameof(containerFilesProvider));
+            _opts = opts.Value ?? throw new ArgumentException("Options is not defined", nameof(opts));
             _log = logger?.Dsl();
         }
 
@@ -107,7 +109,6 @@ namespace MyLab.LogAgent.Services
             }
 
             using var fileReader = _containerFilesProvider.OpenContainerFileRead(cEntity.Container.Id, lastLogFilename);
-            //fileReader.BaseStream.Seek(cEntity.Shift, SeekOrigin.Begin);
             fileReader.BaseStream.Position = cEntity.Shift;
 
             var srcReader = new DockerLogSourceReader(fileReader);
@@ -116,22 +117,31 @@ namespace MyLab.LogAgent.Services
             
             while (await logReader.ReadLogAsync(cancellationToken) is { } nextLogRecord)
             {
-                if (nextLogRecord.Properties != null)
-                {
-                    nextLogRecord.Properties.AddRange(_contextPropertiesProvider.ProvideProperties());
-                }
-                else
-                {
-                    nextLogRecord.Properties =
-                        new List<LogProperty>(_contextPropertiesProvider.ProvideProperties());
-                }
+                ApplyAddProps(nextLogRecord);
+
                 await _logRegistrar.RegisterAsync(nextLogRecord);
             }
 
             cEntity.Shift = fileReader.BaseStream.Position;
             await _logRegistrar.FlushAsync();
         }
-        
+
+        private void ApplyAddProps(LogRecord nextLogRecord)
+        {
+            if (_opts.AddProperties != null)
+            {
+                var logProps = _opts.AddProperties.Select(p => new LogProperty { Name = p.Key, Value = p.Value });
+                if (nextLogRecord.Properties != null)
+                {
+                    nextLogRecord.Properties.AddRange(logProps);
+                }
+                else
+                {
+                    nextLogRecord.Properties = new List<LogProperty>(logProps);
+                }
+            }
+        }
+
         private string? GetLastLogFilename(LogContainerRegistry.Entity cEntity)
         {
             var foundLogFiles = _containerFilesProvider

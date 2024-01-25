@@ -14,8 +14,7 @@ namespace MyLab.LogAgent
                 .AddSingleton<IDockerLogMonitor, DockerLogMonitor>()
                 .AddSingleton<IDockerContainerFilesProvider, DockerContainerFilesProvider>()
                 .AddSingleton<ILogRegistrar, LogRegistrar>()
-                .AddSingleton<ILogRegistrationTransport, LogRegistrationTransport>()
-                .AddSingleton<IContextPropertiesProvider, ContextPropertiesProvider>();
+                .AddSingleton<ILogRegistrationTransport, LogRegistrationTransport>();
         }
 
         public static IServiceCollection ConfigureLogAgentLogic(this IServiceCollection services, IConfiguration configuration)
