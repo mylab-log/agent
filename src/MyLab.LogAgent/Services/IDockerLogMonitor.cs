@@ -102,12 +102,12 @@ namespace MyLab.LogAgent.Services
             }
 
             _log?.Debug("Log format detected")
-                .AndFactIs("format", format)
+                .AndFactIs("format", format.GetType().Name)
                 .Write();
 
-            var lastLogFilename = GetLastLogFilename(cEntity);
+            var lastLogFile = GetLastLogFilename(cEntity.Container.Id);
 
-            if (lastLogFilename == null)
+            if (lastLogFile == null)
             {
                 _log?.Debug("Can't detect log filename")
                     .Write();
@@ -115,13 +115,37 @@ namespace MyLab.LogAgent.Services
                 return;
             }
 
-            if (lastLogFilename != cEntity.LastLogFilename)
+            if (cEntity.LastLogFilename != null)
             {
-                cEntity.LastLogFilename = lastLogFilename;
-                cEntity.Shift = 0;
+                if (lastLogFile.Filename != cEntity.LastLogFilename)
+                {
+                    _log?.Debug("Switch to new log filename")
+                        .AndFactIs("old-filename", cEntity.LastLogFilename)
+                        .AndFactIs("new-filename", lastLogFile)
+                        .Write();
+
+                    cEntity.LastLogFilename = lastLogFile.Filename;
+                    cEntity.Shift = 0;
+                }
+            }
+            else
+            {
+                var initialShift = _opts.ReadFromEnd ? lastLogFile.Length : 0;
+
+                cEntity.LastLogFilename = lastLogFile.Filename;
+                cEntity.Shift = initialShift;
+
+                _log?.Debug("Initial monitoring detected")
+                    .AndFactIs("initial-filename", lastLogFile)
+                    .AndFactIs("initial-shift", initialShift)
+                    .AndFactIs("read-from-end", _opts.ReadFromEnd)
+                    .Write();
+
+                if(_opts.ReadFromEnd)
+                    return;
             }
 
-            using var fileReader = _containerFilesProvider.OpenContainerFileRead(cEntity.Container.Id, lastLogFilename);
+            using var fileReader = _containerFilesProvider.OpenContainerFileRead(cEntity.Container.Id, lastLogFile.Filename);
             fileReader.BaseStream.Position = cEntity.Shift;
 
             var srcReader = new DockerLogSourceReader(fileReader);
@@ -129,7 +153,7 @@ namespace MyLab.LogAgent.Services
             var logReader = new LogReader(format, srcReader, cEntity.LineBuff);
 
             _log?.Debug("Try to read log file")
-                .AndFactIs("filename", lastLogFilename)
+                .AndFactIs("filename", lastLogFile)
                 .AndFactIs("shift", cEntity.Shift)
                 .Write();
 
@@ -148,7 +172,7 @@ namespace MyLab.LogAgent.Services
             await _logRegistrar.FlushAsync();
 
             _log?.Debug("Log file reading completion")
-                .AndFactIs("filename", lastLogFilename)
+                .AndFactIs("filename", lastLogFile)
                 .AndFactIs("new-shift", cEntity.Shift)
                 .AndFactIs("rec-count", recordCount)
                 .Write();
@@ -170,13 +194,13 @@ namespace MyLab.LogAgent.Services
             }
         }
 
-        private string? GetLastLogFilename(LogContainerRegistry.Entity cEntity)
+        private ContainerFile? GetLastLogFilename(string containerId)
         {
             var foundLogFiles = _containerFilesProvider
-                .EnumerateContainerFiles(cEntity.Container.Id)
-                .Where(f => LogFileSelector.Predicate(cEntity.Container.Id, f));
+                .EnumerateContainerFiles(containerId)
+                .Where(f => LogFileSelector.Predicate(containerId, f.Filename));
 
-            var lastLogFilename = foundLogFiles.MaxBy(f => f, new LogFilenameComparer());
+            var lastLogFilename = foundLogFiles.MaxBy(f => f.Filename, new LogFilenameComparer());
             return lastLogFilename;
         }
     }

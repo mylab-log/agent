@@ -107,7 +107,7 @@ namespace Tests
             filesProvider.Setup(p => p.EnumerateContainerFiles(It.Is<string>(id => id == "foo-id")))
                 .Returns<string>(_ => new[]
                 {
-                    "foo-id-json.log"
+                    new ContainerFile("foo-id-json.log", 0)
                 });
             filesProvider.Setup(p => p.OpenContainerFileRead
                 (
@@ -116,7 +116,6 @@ namespace Tests
                 ))
                 .Returns<string, string>((_, _) =>
                 {
-
                     var bytesStr = Encoding.UTF8.GetBytes(logContentString);
                     var memStream = new MemoryStream(bytesStr);
                     var reader = new StreamReader(memStream);
@@ -160,9 +159,9 @@ namespace Tests
 
             const string log2Lines = "{\"log\":\"Start log 3\",\"stream\":\"stdout\",\"time\":\"2023-08-29T20:15:41.304555874Z\"}";
 
-            var logFiles = new List<string>
+            var logFiles = new List<ContainerFile>
             {
-                "foo-id-json.log"
+                new ContainerFile("foo-id-json.log", 0)
             };
 
             var outgoingLogs = new List<LogRecord>();
@@ -200,12 +199,16 @@ namespace Tests
                 containerProvider.Object,
                 filesProvider.Object,
                 registrar.Object,
-                new OptionsWrapper<LogAgentOptions>(new LogAgentOptions()),
+                new OptionsWrapper<LogAgentOptions>(
+                    new LogAgentOptions
+                    {
+                        ReadFromEnd = false
+                    }),
                 _logger
             );
 
             await monitor.ProcessLogsAsync(default);
-            logFiles.Add("foo-id-json.log1");
+            logFiles.Add(new ContainerFile("foo-id-json.log1", 0));
 
             //Act
             await monitor.ProcessLogsAsync(default);
@@ -236,12 +239,12 @@ namespace Tests
             filesProvider.Setup(p => p.EnumerateContainerFiles(It.Is<string>(id => id == "foo-id")))
                 .Returns<string>(_ => new[]
                 {
-                    "foo-id-json.log"
+                    new ContainerFile("foo-id-json.log", 0)
                 });
             filesProvider.Setup(p => p.EnumerateContainerFiles(It.Is<string>(id => id == "bar-id")))
                 .Returns<string>(_ => new[]
                 {
-                    "bar-id-json.log"
+                    new ContainerFile("bar-id-json.log", 0)
                 });
             filesProvider.Setup(p => p.OpenContainerFileRead
                 (
@@ -265,7 +268,11 @@ namespace Tests
                 containerProvider.Object,
                 filesProvider.Object,
                 registrar.Object,
-                new OptionsWrapper<LogAgentOptions>(new LogAgentOptions()),
+                new OptionsWrapper<LogAgentOptions>(
+                    new LogAgentOptions
+                    {
+                        ReadFromEnd = false
+                    }),
                 _logger
             );
 
@@ -292,7 +299,7 @@ namespace Tests
             filesProvider.Setup(p => p.EnumerateContainerFiles(It.Is<string>(id => id == "foo-id")))
                 .Returns<string>(_ => new []
                 {
-                    "foo-id-json.log"
+                    new ContainerFile("foo-id-json.log", 0)
                 });
             filesProvider.Setup(p => p.OpenContainerFileRead
                 (
@@ -310,7 +317,11 @@ namespace Tests
                 containerProvider.Object,
                 filesProvider.Object,
                 registrar.Object,
-                new OptionsWrapper<LogAgentOptions>(new LogAgentOptions()),
+                new OptionsWrapper<LogAgentOptions>(
+                    new LogAgentOptions
+                    {
+                        ReadFromEnd = false
+                    }),
                 _logger
             );
             return monitor;

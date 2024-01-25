@@ -50,6 +50,7 @@ namespace IntegrationTests
                 {
                     opt.DockerContainersPath = Path.Combine( Directory.GetCurrentDirectory(), "logs");
                     opt.OutgoingBufferSize = 1;
+                    opt.ReadFromEnd = false;
                 })
                 .ConfigureEsTools(opt =>
                 {
