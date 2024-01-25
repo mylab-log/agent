@@ -31,7 +31,7 @@ namespace MyLab.LogAgent.Services
                 new DockerContainerInfo
                 {
                     Id = c.ID,
-                    Name = c.Names.FirstOrDefault(c.ID),
+                    Name = c.Names.FirstOrDefault(c.ID).TrimStart('/'),
                     LogFormat = c.Labels
                         .Where(kv => kv.Key == "log-format")
                         .Select(kv => kv.Value)

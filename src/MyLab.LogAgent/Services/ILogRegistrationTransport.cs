@@ -39,7 +39,8 @@ namespace MyLab.LogAgent.Services
                 { LogPropertyNames.Message, logRecord.Message },
                 { LogPropertyNames.Time, logRecord.Time.ToString("O") },
                 { LogPropertyNames.Level, logRecord.Level.ToString().ToLower() },
-                { LogPropertyNames.Format, logRecord.Format ?? "undefined" }
+                { LogPropertyNames.Format, logRecord.Format ?? "undefined" },
+                { LogPropertyNames.Container, logRecord.Container ?? "undefined" }
             };
 
             if (logRecord.Properties != null)

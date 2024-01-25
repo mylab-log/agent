@@ -169,6 +169,7 @@ namespace MyLab.LogAgent.Services
             while (await logReader.ReadLogAsync(cancellationToken) is { } nextLogRecord)
             {
                 nextLogRecord.Format = formatName;
+                nextLogRecord.Container = cEntity.Container.Name;
 
                 ApplyAddProps(nextLogRecord);
 

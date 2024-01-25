@@ -7,5 +7,6 @@
         public const string Level = "level";
         public const string Time = "@timestamp";
         public const string Format = "format";
+        public const string Container = "container";
     }
 }

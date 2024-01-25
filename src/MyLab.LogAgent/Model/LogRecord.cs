@@ -8,6 +8,7 @@ namespace MyLab.LogAgent.Model
         public required string Message { get; init; }
         public LogLevel Level { get; set; }
         public string? Format { get; set; }
+        public string? Container { get; set; }
         public List<LogProperty>? Properties { get; set; }
     }
 
