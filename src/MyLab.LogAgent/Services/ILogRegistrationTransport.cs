@@ -34,31 +34,35 @@ namespace MyLab.LogAgent.Services
     {
         public static EsLogRecord FromLogRecord(LogRecord logRecord)
         {
-            var esLogRecord = new EsLogRecord
+            var resultProperties = new List<LogProperty>
             {
-                { LogPropertyNames.Message, logRecord.Message },
-                { LogPropertyNames.Time, logRecord.Time.ToString("O") },
-                { LogPropertyNames.Level, logRecord.Level.ToString().ToLower() },
-                { LogPropertyNames.Format, logRecord.Format ?? "undefined" },
-                { LogPropertyNames.Container, logRecord.Container ?? "undefined" }
+                new() {Name = LogPropertyNames.Message, Value = logRecord.Message},
+                new() {Name = LogPropertyNames.Time, Value = logRecord.Time.ToString("O")},
+                new() {Name = LogPropertyNames.Level, Value = logRecord.Level.ToString().ToLower()},
+                new() {Name = LogPropertyNames.Format, Value = logRecord.Format ?? "undefined" },
+                new() {Name = LogPropertyNames.Container, Value = logRecord.Container ?? "undefined"}
             };
 
             if (logRecord.Properties != null)
             {
-                var pGroups = logRecord.Properties
-                    .GroupBy(p => p.Name)
-                    .ToDictionary(
-                        pg => pg.Key,
-                        pg => pg.Select(pgv => pgv.Value).ToArray()
-                    );
+                resultProperties.AddRange(logRecord.Properties);
+            }
 
-                foreach (var pGroup in pGroups)
-                {
-                    esLogRecord.Add(pGroup.Key, pGroup.Value.Length == 1 
-                        ? pGroup.Value.First() 
-                        : string.Join(", ", pGroup.Value)
-                        );
-                }
+            var pGroups = resultProperties
+                .GroupBy(p => p.Name)
+                .ToDictionary(
+                    pg => pg.Key,
+                    pg => pg.Select(pgv => pgv.Value).ToArray()
+                );
+
+            var esLogRecord = new EsLogRecord();
+
+            foreach (var pGroup in pGroups)
+            {
+                esLogRecord.Add(pGroup.Key, pGroup.Value.Length == 1 
+                    ? pGroup.Value.First() 
+                    : string.Join(", ", pGroup.Value)
+                    );
             }
 
             return esLogRecord;

@@ -179,8 +179,10 @@ namespace MyLab.LogAgent.LogFormats
 
             public LogReaderResult ApplyNexLine(string? logTextLine)
             {
-                if (string.IsNullOrWhiteSpace(logTextLine))
+                if (logTextLine == null) 
                     return LogReaderResult.CompleteRecord;
+                if (_sb.Length != 0 && logTextLine.StartsWith(nameof(LogEntity.Message) +": "))
+                    return LogReaderResult.NewRecordDetected;
 
                 _sb.AppendLine(logTextLine.TrimEnd());
 

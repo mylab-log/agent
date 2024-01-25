@@ -11,7 +11,7 @@ class MultilineLogBuilder : ILogBuilder
         if (logTextLine == null)
             return LogReaderResult.Accepted;
 
-        if (_sb.Length != 0 && !char.IsWhiteSpace(logTextLine[0]))
+        if (_sb.Length != 0 && logTextLine.Length > 0 && !char.IsWhiteSpace(logTextLine[0]))
             return LogReaderResult.NewRecordDetected;
 
         if (_sb.Length != 0)

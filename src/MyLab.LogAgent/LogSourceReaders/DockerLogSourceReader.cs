@@ -25,7 +25,17 @@ namespace MyLab.LogAgent.LogSourceReaders
             if (string.IsNullOrWhiteSpace(line))
                 return null;
 
-            var dockerLine = JsonConvert.DeserializeObject<DockerLogLine>(line);
+            DockerLogLine? dockerLine;
+
+            try
+            {
+                dockerLine = JsonConvert.DeserializeObject<DockerLogLine>(line);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
 
             return dockerLine == null
                 ? throw new InvalidOperationException("Can't deserialize log string")

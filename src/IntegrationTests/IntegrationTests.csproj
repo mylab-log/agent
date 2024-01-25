@@ -30,6 +30,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="logs\bad\bad-json.log">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="logs\multiline.log">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

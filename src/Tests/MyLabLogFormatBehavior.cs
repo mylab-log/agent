@@ -97,6 +97,39 @@ namespace Tests
             Assert.Equal(LogLevel.Error, logRecord.Level);
         }
 
+        [Fact]
+        public void ShouldReadPerOneRecord()
+        {
+            //Arrange
+            var format = new MyLabLogFormat();
+            var b = format.CreateBuilder()!;
+
+            var strings = new []
+            {
+                "Message: foo",
+                "Time: 2024-01-01T01:01:01",
+                "\n",
+                "Message: bar",
+                "Time: 2024-01-01T01:01:01"
+            };
+
+            //Act
+            foreach (var s in strings)
+            {
+                var applyRes = b.ApplyNexLine(s);
+
+                if (applyRes != LogReaderResult.Accepted)
+                    break;
+            }
+
+            var resStr = b.BuildString();
+            var rec = format.Parse(resStr);
+
+            //Assert
+            Assert.NotNull(rec);
+            Assert.Equal("foo", rec.Message);
+        }
+
         public static object[][] GetLogLevelCases()
         {
             return new[]

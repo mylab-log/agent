@@ -17,7 +17,12 @@ GET /logs-test/_search
 Content-Type: application/json
 
 {
-  "query": {
-    "match_all": {}
-  }
+    "from": 10,
+    "size": 10,
+    "query": {
+        "match_all": {}
+    }
 }
+
+### Remove index
+DELETE /logs-test

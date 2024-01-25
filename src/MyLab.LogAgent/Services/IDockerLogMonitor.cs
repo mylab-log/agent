@@ -54,11 +54,11 @@ namespace MyLab.LogAgent.Services
             if (_log != null && syncReport != LogContainerRegistry.SyncReport.Empty)
             {
                 _log.Action("Docker container list changed")
-                    .AndFactIs("Removed", syncReport.Removed.Count == 0
+                    .AndFactIs("removed", syncReport.Removed.Count == 0
                         ? "[empty]"
                         : string.Join(", ", syncReport.Removed.Select(c => c.Name))
                     )
-                    .AndFactIs("Added", syncReport.Added.Count == 0
+                    .AndFactIs("added", syncReport.Added.Count == 0
                         ? "[empty]"
                         : string.Join(", ", syncReport.Added.Select(c => c.Name))
                     )

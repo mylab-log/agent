@@ -33,8 +33,8 @@ namespace MyLab.LogAgent.Tools
 
             await foreach (var nextLine in logEnum.WithCancellation(cancellationToken))
             {
-                if(string.IsNullOrWhiteSpace(nextLine!.Text))
-                    continue;
+                //if(string.IsNullOrWhiteSpace(nextLine!.Text))
+                //    continue;
 
                 var applyResult = _logBuilder.ApplyNexLine(nextLine!.Text);
                 switch (applyResult)
