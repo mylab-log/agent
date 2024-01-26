@@ -48,13 +48,13 @@ namespace MyLab.LogAgent.Tools
 
                 var nextLine = logEnumerator.Current;
 
-                var applyResult = _logBuilder.ApplyNexLine(nextLine!.Text);
+                var applyResult = _logBuilder.ApplyNexLine(nextLine?.Text);
                 switch (applyResult)
                 {
                     case LogReaderResult.Accepted:
                     {
-                        contextDateTime ??= nextLine.Time ?? DateTime.Now;
-                        contextErrorFactor = contextErrorFactor || nextLine.IsError;
+                        contextDateTime ??= nextLine?.Time ?? DateTime.Now;
+                        contextErrorFactor = contextErrorFactor || (nextLine?.IsError ?? false);
                     }
                         break;
                     case LogReaderResult.CompleteRecord:
@@ -67,7 +67,8 @@ namespace MyLab.LogAgent.Tools
                     {
                         readyLogRecord = GetLogRecord(contextDateTime, contextErrorFactor);
                         _buff?.Clear();
-                        _buff?.Add(nextLine);
+                        if(nextLine != null)
+                            _buff?.Add(nextLine);
                         return readyLogRecord;
                     }
                     default:
