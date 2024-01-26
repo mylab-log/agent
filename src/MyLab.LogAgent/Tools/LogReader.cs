@@ -34,12 +34,12 @@ namespace MyLab.LogAgent.Tools
             var cancellableLogEnum = logEnum.WithCancellation(cancellationToken);
             var logEnumerator = cancellableLogEnum.GetAsyncEnumerator();
 
-            bool loopSuccFlag;
             do
             {
                 try
                 {
-                    loopSuccFlag = await logEnumerator.MoveNextAsync();
+                    if (!await logEnumerator.MoveNextAsync())
+                        break;
                 }
                 catch (SourceLogReadingException e)
                 {
@@ -75,7 +75,7 @@ namespace MyLab.LogAgent.Tools
                         throw new ArgumentOutOfRangeException();
                 }
 
-            } while (loopSuccFlag);
+            } while (true);
             
             readyLogRecord = GetLogRecord(contextDateTime, contextErrorFactor);
 
