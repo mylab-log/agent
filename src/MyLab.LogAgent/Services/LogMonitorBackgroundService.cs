@@ -26,7 +26,7 @@ namespace MyLab.LogAgent.Services
                 }
                 finally
                 {
-                    GC.Collect();
+                    //GC.Collect();
                 }
 
                 await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
