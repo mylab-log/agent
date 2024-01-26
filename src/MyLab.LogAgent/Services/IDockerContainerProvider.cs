@@ -37,6 +37,10 @@ namespace MyLab.LogAgent.Services
                         LogFormat = c.Labels
                             .Where(kv => kv.Key == "log_format")
                             .Select(kv => kv.Value)
+                            .FirstOrDefault(),
+                        IgnoreStreamType= c.Labels
+                            .Where(kv => kv.Key == "log_ignore_stream")
+                            .Select(kv => kv.Value == "true")
                             .FirstOrDefault()
                     }
                 );

@@ -7,6 +7,8 @@ namespace MyLab.LogAgent.LogSourceReaders
     {
         private readonly StreamReader _streamReader;
 
+        public bool IgnoreStreamType { get; set; } = false;
+
         public DockerLogSourceReader(StreamReader streamReader)
         {
             _streamReader = streamReader ?? throw new ArgumentNullException(nameof(streamReader));
@@ -46,7 +48,7 @@ namespace MyLab.LogAgent.LogSourceReaders
                     Name = a.Key,
                     Value = a.Value
                 }),
-                IsError = dockerLine.Stream == "stderr"
+                IsError = !IgnoreStreamType && dockerLine.Stream == "stderr"
             };
         }
 

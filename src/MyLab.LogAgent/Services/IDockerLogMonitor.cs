@@ -155,7 +155,10 @@ namespace MyLab.LogAgent.Services
             using var fileReader = _containerFilesProvider.OpenContainerFileRead(cEntity.Container.Id, lastLogFile.Filename);
             fileReader.BaseStream.Position = cEntity.Shift;
 
-            var srcReader = new DockerLogSourceReader(fileReader);
+            var srcReader = new DockerLogSourceReader(fileReader)
+            {
+                IgnoreStreamType = cEntity.Container.IgnoreStreamType
+            };
 
             var logReader = new LogReader(format, srcReader, cEntity.LineBuff);
 
