@@ -27,16 +27,19 @@ namespace MyLab.LogAgent.Services
                 },
                 cancellationToken);
 
-            return containers.Select(c => 
-                new DockerContainerInfo
-                {
-                    Id = c.ID,
-                    Name = c.Names.FirstOrDefault(c.ID).TrimStart('/'),
-                    LogFormat = c.Labels
-                        .Where(kv => kv.Key == "log_format")
-                        .Select(kv => kv.Value)
-                        .FirstOrDefault()
-                });
+            return containers
+                .Where(c => !c.Labels.Any(l => l is { Key: "log_exclude", Value: "true" }))
+                .Select(c => 
+                    new DockerContainerInfo
+                    {
+                        Id = c.ID,
+                        Name = c.Names.FirstOrDefault(c.ID).TrimStart('/'),
+                        LogFormat = c.Labels
+                            .Where(kv => kv.Key == "log_format")
+                            .Select(kv => kv.Value)
+                            .FirstOrDefault()
+                    }
+                );
         }
     }
 }
