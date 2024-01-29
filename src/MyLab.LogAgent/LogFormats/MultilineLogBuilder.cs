@@ -6,11 +6,8 @@ class MultilineLogBuilder : ILogBuilder
 {
     readonly StringBuilder _sb = new ();
 
-    public LogReaderResult ApplyNexLine(string? logTextLine)
+    public LogReaderResult ApplyNexLine(string logTextLine)
     {
-        if (logTextLine == null)
-            return LogReaderResult.Accepted;
-
         if (_sb.Length != 0 && logTextLine.Length > 0 && !char.IsWhiteSpace(logTextLine[0]))
             return LogReaderResult.NewRecordDetected;
 

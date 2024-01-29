@@ -48,7 +48,10 @@ namespace MyLab.LogAgent.Tools
 
                 var nextLine = logEnumerator.Current;
 
-                var applyResult = _logBuilder.ApplyNexLine(nextLine?.Text);
+                var applyResult = nextLine != null 
+                    ? _logBuilder.ApplyNexLine(nextLine.Text)
+                    : LogReaderResult.CompleteRecord;
+
                 switch (applyResult)
                 {
                     case LogReaderResult.Accepted:

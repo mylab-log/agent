@@ -123,7 +123,7 @@ namespace Tests
             }
 
             var resStr = b.BuildString();
-            var rec = format.Parse(resStr);
+            var rec = format.Parse(resStr.Text);
 
             //Assert
             Assert.NotNull(rec);

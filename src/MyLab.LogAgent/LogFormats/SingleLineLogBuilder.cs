@@ -2,9 +2,9 @@
 
 class SingleLineLogBuilder : ILogBuilder
 {
-    private string? _text;
+    private string _text;
 
-    public LogReaderResult ApplyNexLine(string? logTextLine)
+    public LogReaderResult ApplyNexLine(string logTextLine)
     {
         _text = logTextLine;
         return LogReaderResult.CompleteRecord;
@@ -17,6 +17,6 @@ class SingleLineLogBuilder : ILogBuilder
 
     public void Cleanup()
     {
-        _text = null;
+        _text = string.Empty;
     }
 }

@@ -7,10 +7,8 @@ class MyLabLogBuilder : ILogBuilder
 {
     private readonly StringBuilder _sb = new();
 
-    public LogReaderResult ApplyNexLine(string? logTextLine)
+    public LogReaderResult ApplyNexLine(string logTextLine)
     {
-        if (logTextLine == null)
-            return LogReaderResult.CompleteRecord;
         if (_sb.Length != 0 && logTextLine.StartsWith(nameof(LogEntity.Message) + ": "))
             return LogReaderResult.NewRecordDetected;
 
