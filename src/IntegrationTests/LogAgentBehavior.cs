@@ -92,8 +92,9 @@ namespace IntegrationTests
                 rec.Any(p => p is { Key: LogPropertyNames.Time, Value: "2023-08-29T20:15:41.3045745Z" })
             );
             Assert.Contains(searchRes, rec =>
-                rec.Any(p => p.Key == LogPropertyNames.Message && p.Value.Contains("Trace ID       : f15bcb09a61119c219067946020cd5a1")) && 
-                rec.Any(p => p is { Key: LogPropertyNames.Time, Value: "2023-08-29T20:15:41.3045815Z" })
+                rec.Any(p => p.Key == LogPropertyNames.Message && p.Value.Contains("Span #0")) && 
+                rec.Any(p => p is { Key: LogPropertyNames.Time, Value: "2023-08-29T20:15:41.3045815Z" }) &&
+                rec.Any(p => p.Key == LogPropertyNames.OriginMessage && p.Value.Contains("Trace ID       : f15bcb09a61119c219067946020cd5a1"))
             );
         }
 

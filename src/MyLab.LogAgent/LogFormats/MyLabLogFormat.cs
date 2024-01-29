@@ -2,6 +2,7 @@
 using System.Text;
 using MyLab.Log;
 using MyLab.LogAgent.Model;
+using MyLab.LogAgent.Tools.LogMessageProc;
 using YamlDotNet.RepresentationModel;
 using YamlDotNet.Serialization;
 using LogLevel = MyLab.LogAgent.Model.LogLevel;
@@ -15,7 +16,7 @@ namespace MyLab.LogAgent.LogFormats
             return new MyLabLogReader();
         }
 
-        public LogRecord? Parse(string logText)
+        public LogRecord? Parse(string logText, ILogMessageExtractor messageExtractor)
         {
             var logEntity = ParseYaml(logText);
 
@@ -65,10 +66,20 @@ namespace MyLab.LogAgent.LogFormats
             if (!logEntity.Children.TryGetValue(nameof(LogEntity.Message), out var messageNode))
                 throw new FormatException("Message node not found");
 
+            var msg = messageExtractor.Extract(messageNode.ToString());
+            if (msg.Shorted)
+            {
+                props.Add(new()
+                {
+                    Name = LogPropertyNames.OriginMessage,
+                    Value = msg.Full
+                });
+            }
+
             return new LogRecord
             {
                 Time = DateTime.Parse(timeNode.ToString()),
-                Message = messageNode.ToString(),
+                Message = msg.Short,
                 Properties = props,
                 Level = DeserializeLogLevel(logLevel)
             };

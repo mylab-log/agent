@@ -5,6 +5,7 @@ using MyLab.LogAgent.LogFormats;
 using MyLab.LogAgent.LogSourceReaders;
 using MyLab.LogAgent.Model;
 using MyLab.LogAgent.Tools;
+using MyLab.LogAgent.Tools.LogMessageProc;
 using YamlDotNet.RepresentationModel;
 
 namespace Tests;
@@ -28,14 +29,16 @@ public class LogReaderBehavior
         var srcReader = new AsIsLogSourceReader(streamReader);
         var logFormat = new DefaultLogFormat();
 
-        var reader = new LogReader(logFormat, srcReader, null);
+        var reader = new LogReader(logFormat, TestTools.DefaultMessageExtractor, srcReader, null);
 
         //Act
         var readLogRecord = await reader.ReadLogAsync(default);
 
         //Assert
         Assert.NotNull(readLogRecord);
-        Assert.Equal(sourceString, readLogRecord.Message);
+        Assert.Equal("Start log", readLogRecord.Message);
+        Assert.NotNull(readLogRecord.Properties);
+        Assert.Contains(readLogRecord.Properties, p => p.Name == LogPropertyNames.OriginMessage && p.Value == sourceString);
     }
 
     [Fact]
@@ -62,14 +65,16 @@ public class LogReaderBehavior
 
         var buff = new List<LogSourceLine>();
 
-        var reader = new LogReader(logFormat, srcReader, buff);
+        var reader = new LogReader(logFormat, TestTools.DefaultMessageExtractor, srcReader, buff);
 
         //Act
         var readLogRecord = await reader.ReadLogAsync(default);
 
         //Assert
         Assert.NotNull(readLogRecord);
-        Assert.Equal(fullLog1String, readLogRecord.Message);
+        Assert.Equal("Start log-1", readLogRecord.Message);
+        Assert.NotNull(readLogRecord.Properties);
+        Assert.Contains(readLogRecord.Properties, p => p.Name == LogPropertyNames.OriginMessage && p.Value == fullLog1String );
         Assert.Single(buff);
         Assert.Equal("Start log-2", buff[0].Text);
     }
@@ -102,14 +107,16 @@ public class LogReaderBehavior
             new (stringInBuff)
         };
 
-        var reader = new LogReader(logFormat, srcReader, buff);
+        var reader = new LogReader(logFormat, TestTools.DefaultMessageExtractor, srcReader, buff);
 
         //Act
         var readLogRecord = await reader.ReadLogAsync(default);
 
         //Assert
         Assert.NotNull(readLogRecord);
-        Assert.Equal(fullLog1String, readLogRecord.Message);
+        Assert.Equal("Start log-2", readLogRecord.Message);
+        Assert.NotNull(readLogRecord.Properties);
+        Assert.Contains(readLogRecord.Properties, p => p.Name == LogPropertyNames.OriginMessage && p.Value == fullLog1String);
         Assert.Empty(buff);
     }
 
@@ -137,7 +144,7 @@ public class LogReaderBehavior
 
         var buff = new List<LogSourceLine>();
 
-        var reader = new LogReader(logFormat, srcReader, buff);
+        var reader = new LogReader(logFormat, TestTools.DefaultMessageExtractor, srcReader, buff);
 
         await reader.ReadLogAsync(default);
 
@@ -157,7 +164,7 @@ public class LogReaderBehavior
         var memStream = new MemoryStream(Encoding.UTF8.GetBytes(sourceString));
         var streamReader = new StreamReader(memStream);
         var srcReader = new AsIsLogSourceReader(streamReader);
-        var reader = new LogReader(new BadLogFormat(), srcReader, null);
+        var reader = new LogReader(new BadLogFormat(), TestTools.DefaultMessageExtractor, srcReader, null);
         
         //Act
         var readLogRecord = await reader.ReadLogAsync(default);
@@ -176,7 +183,7 @@ public class LogReaderBehavior
         var memStream = new MemoryStream(Encoding.UTF8.GetBytes(log));
         var streamReader = new StreamReader(memStream);
         var srcReader = new DockerLogSourceReader(streamReader);
-        var reader = new LogReader(new MyLabLogFormat(), srcReader, null);
+        var reader = new LogReader(new MyLabLogFormat(), TestTools.DefaultMessageExtractor, srcReader, null);
 
         //Act
         var readLogRecord = await reader.ReadLogAsync(default);
@@ -265,7 +272,7 @@ public class LogReaderBehavior
             return new SingleLineLogReader();
         }
 
-        public LogRecord Parse(string logText)
+        public LogRecord Parse(string logText, ILogMessageExtractor messageExtractor)
         {
             throw new FormatException();
         }

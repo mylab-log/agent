@@ -1,5 +1,6 @@
 ﻿using MyLab.LogAgent;
 using MyLab.LogAgent.LogFormats;
+using MyLab.LogAgent.Tools.LogMessageProc;
 
 namespace Tests
 {
@@ -14,8 +15,8 @@ namespace Tests
                 "\u001b[41m\u001b[30minfo\u001b[41m\u001b[30m: MyApp.Worker[0]",
                 "      Hellow!"
             };
-
-            var format = new NetLogFormat(messageLenLim: 500);
+            
+            var format = new NetLogFormat();
 
             var rdr = format.CreateReader()!;
 
@@ -25,7 +26,7 @@ namespace Tests
             var str = rdr.BuildString();
 
             //Act
-            var logRec = format.Parse(str.Text);
+            var logRec = format.Parse(str.Text, TestTools.DefaultMessageExtractor);
 
             //Assert
             Assert.NotNull(logRec);

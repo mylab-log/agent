@@ -1,17 +1,18 @@
-﻿using MyLab.LogAgent.Tools;
+﻿using MyLab.LogAgent.Tools.LogMessageProc;
 
 namespace Tests
 {
-    public class LogMessageBehavior
+    public class LogMessageExtractorBehavior
     {
         [Theory]
         [MemberData(nameof(GetMessageCases))]
         public void ShouldExtractMessage(string origin, string expectedShort, int limit, bool expectedShortedFlag)
         {
             //Arrange
+            var extractor = new LogMessageExtractor(limit);
 
             //Act
-            var actualMessage = LogMessage.Extract(origin, limit);
+            var actualMessage = extractor.Extract(origin);
 
             //Assert
             Assert.Equal(expectedShort, actualMessage.Short);

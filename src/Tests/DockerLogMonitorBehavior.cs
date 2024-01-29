@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
 using MyLab.Log.XUnit;
+using MyLab.LogAgent;
 using MyLab.LogAgent.Model;
 using MyLab.LogAgent.Options;
 using MyLab.LogAgent.Services;
@@ -68,16 +69,28 @@ namespace Tests
 
             //Assert
             Assert.Equal(2, outgoingLogs.Count);
-            Assert.Equal("""
-                         Start log 1
-                          line 1
-                          line 2
-                         """, outgoingLogs[0].Message);
-            Assert.Equal("""
-                         Start log 2
-                          line 1
-                          line 2
-                         """, outgoingLogs[1].Message);
+            Assert.Equal("Start log 1", outgoingLogs[0].Message);
+            Assert.NotNull(outgoingLogs[0].Properties);
+            Assert.Contains(outgoingLogs[0].Properties!, p => p is 
+            { 
+                Name: LogPropertyNames.OriginMessage, 
+                Value: """
+                        Start log 1
+                         line 1
+                         line 2
+                        """
+            });
+            Assert.Equal("Start log 2", outgoingLogs[1].Message);
+            Assert.NotNull(outgoingLogs[1].Properties);
+            Assert.Contains(outgoingLogs[1].Properties!, p => p is
+            {
+                Name: LogPropertyNames.OriginMessage,
+                Value: """
+                       Start log 2
+                        line 1
+                        line 2
+                       """
+            });
         }
 
         [Fact]

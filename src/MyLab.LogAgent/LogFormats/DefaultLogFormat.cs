@@ -1,4 +1,5 @@
 ﻿using MyLab.LogAgent.Model;
+using MyLab.LogAgent.Tools.LogMessageProc;
 
 namespace MyLab.LogAgent.LogFormats
 {
@@ -9,14 +10,33 @@ namespace MyLab.LogAgent.LogFormats
             return new MultilineLogReader();
         }
 
-        public LogRecord? Parse(string logText)
+        public LogRecord? Parse(string logText, ILogMessageExtractor messageExtractor)
         {
-            return string.IsNullOrWhiteSpace(logText) 
-                ? null
-                : new LogRecord
+            if (string.IsNullOrWhiteSpace(logText))
+                return null;
+
+            var msg = messageExtractor.Extract(logText);
+
+            if (!msg.Shorted)
+            {
+                return new LogRecord
                 {
-                    Message = logText
+                    Message = msg.Full
                 };
+            }
+
+            return new LogRecord
+            {
+                Message = msg.Short,
+                Properties = new List<LogProperty>()
+                {
+                    new()
+                    {
+                        Name = LogPropertyNames.OriginMessage,
+                        Value = msg.Full
+                    }
+                }
+            };
         }
     }
 }

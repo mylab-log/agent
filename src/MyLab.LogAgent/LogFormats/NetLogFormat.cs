@@ -1,23 +1,16 @@
 ﻿using MyLab.LogAgent.Model;
-using MyLab.LogAgent.Tools;
+using MyLab.LogAgent.Tools.LogMessageProc;
 
 namespace MyLab.LogAgent.LogFormats
 {
     class NetLogFormat : ILogFormat
     {
-        private readonly int _messageLenLim;
-
-        public NetLogFormat(int messageLenLim)
-        {
-            _messageLenLim = messageLenLim;
-        }
-
         public ILogReader CreateReader()
         {
             return new NetLogReader();
         }
 
-        public LogRecord Parse(string logText)
+        public LogRecord Parse(string logText, ILogMessageExtractor messageExtractor)
         {
             string leftText;
             var props = new List<LogProperty>();
@@ -49,7 +42,7 @@ namespace MyLab.LogAgent.LogFormats
                 leftText = logText;
             }
 
-            var message = LogMessage.Extract(leftText, _messageLenLim);
+            var message = messageExtractor.Extract(leftText);
 
             if (message.Shorted)
             {

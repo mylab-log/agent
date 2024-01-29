@@ -57,7 +57,7 @@ namespace Tests
             var format = new MyLabLogFormat();
 
             //Act
-            var logRecord = format.Parse(log);
+            var logRecord = format.Parse(log, TestTools.DefaultMessageExtractor);
 
             //Assert
             Assert.NotNull(logRecord);
@@ -90,7 +90,7 @@ namespace Tests
             var format = new MyLabLogFormat();
 
             //Act
-            var logRecord = format.Parse(log);
+            var logRecord = format.Parse(log, TestTools.DefaultMessageExtractor);
 
             //Assert
             Assert.NotNull(logRecord);
@@ -123,7 +123,7 @@ namespace Tests
             }
 
             var resStr = b.BuildString();
-            var rec = format.Parse(resStr.Text);
+            var rec = format.Parse(resStr.Text, TestTools.DefaultMessageExtractor);
 
             //Assert
             Assert.NotNull(rec);

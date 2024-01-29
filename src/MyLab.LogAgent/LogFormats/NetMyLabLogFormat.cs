@@ -1,4 +1,5 @@
 ﻿using MyLab.LogAgent.Model;
+using MyLab.LogAgent.Tools.LogMessageProc;
 
 namespace MyLab.LogAgent.LogFormats
 {
@@ -9,7 +10,7 @@ namespace MyLab.LogAgent.LogFormats
             return new NetLogReader();
         }
 
-        public LogRecord? Parse(string logText)
+        public LogRecord? Parse(string logText, ILogMessageExtractor messageExtractor)
         {
             throw new NotImplementedException();
         }

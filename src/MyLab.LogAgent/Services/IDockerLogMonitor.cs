@@ -6,6 +6,7 @@ using MyLab.LogAgent.LogSourceReaders;
 using MyLab.LogAgent.Model;
 using MyLab.LogAgent.Options;
 using MyLab.LogAgent.Tools;
+using MyLab.LogAgent.Tools.LogMessageProc;
 
 namespace MyLab.LogAgent.Services
 {
@@ -27,6 +28,7 @@ namespace MyLab.LogAgent.Services
 
         private readonly ILogRegistrar _logRegistrar;
         private readonly LogAgentOptions _opts;
+        private readonly LogMessageExtractor _logMessageExtractor;
 
         public DockerLogMonitor(IDockerContainerProvider containerProvider, 
             IDockerContainerFilesProvider containerFilesProvider, 
@@ -40,11 +42,13 @@ namespace MyLab.LogAgent.Services
             _opts = opts.Value ?? throw new ArgumentException("Options is not defined", nameof(opts));
             _log = logger?.Dsl();
 
+            _logMessageExtractor = new LogMessageExtractor(_opts.MessageLenLimit);
+
             _logFormats = new Dictionary<string, ILogFormat>
             {
                 { "default", new DefaultLogFormat() },
                 { "mylab", new MyLabLogFormat() },
-                { "net", new NetLogFormat(_opts.MessageLenLimit) }
+                { "net", new NetLogFormat() }
             };
         }
 
@@ -163,7 +167,7 @@ namespace MyLab.LogAgent.Services
                 IgnoreStreamType = cEntity.Container.IgnoreStreamType
             };
 
-            var logReader = new LogReader(format, srcReader, cEntity.LineBuff);
+            var logReader = new LogReader(format, _logMessageExtractor, srcReader, cEntity.LineBuff);
 
             _log?.Debug("Try to read log file")
                 .AndFactIs("filename", lastLogFile)

@@ -2,6 +2,7 @@
 using MyLab.LogAgent.LogFormats;
 using MyLab.LogAgent.LogSourceReaders;
 using MyLab.LogAgent.Model;
+using MyLab.LogAgent.Tools.LogMessageProc;
 using LogLevel = MyLab.LogAgent.Model.LogLevel;
 
 namespace MyLab.LogAgent.Tools
@@ -10,12 +11,18 @@ namespace MyLab.LogAgent.Tools
     {
         private readonly ILogReader _logReader;
         private readonly ILogFormat _logFormat;
+        private readonly ILogMessageExtractor _messageExtractor;
         private readonly ILogSourceReader _logSourceReader;
         private readonly List<LogSourceLine>? _buff;
 
-        public LogReader(ILogFormat logFormat, ILogSourceReader logSourceReader, List<LogSourceLine>? buff)
+        public LogReader(
+            ILogFormat logFormat, 
+            ILogMessageExtractor messageExtractor,
+            ILogSourceReader logSourceReader, 
+            List<LogSourceLine>? buff)
         {
             _logFormat = logFormat;
+            _messageExtractor = messageExtractor;
             _logSourceReader = logSourceReader ?? throw new ArgumentNullException(nameof(logSourceReader));
             _buff = buff;
             _logReader = logFormat.CreateReader() ?? new SingleLineLogReader();
@@ -96,7 +103,7 @@ namespace MyLab.LogAgent.Tools
 
             try
             {
-                var lr = _logFormat.Parse(logString.Text);
+                var lr = _logFormat.Parse(logString.Text, _messageExtractor);
                 if (lr != null)
                 {
                     if (lr.Time == default)
