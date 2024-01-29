@@ -260,9 +260,9 @@ public class LogReaderBehavior
 
     class BadLogFormat : ILogFormat
     {
-        public ILogBuilder? CreateBuilder()
+        public ILogReader? CreateBuilder()
         {
-            return new SingleLineLogBuilder();
+            return new SingleLineLogReader();
         }
 
         public LogRecord Parse(string logText)

@@ -10,9 +10,9 @@ namespace MyLab.LogAgent.LogFormats
 {
     class MyLabLogFormat : ILogFormat
     {
-        public ILogBuilder? CreateBuilder()
+        public ILogReader? CreateBuilder()
         {
-            return new MyLabLogBuilder();
+            return new MyLabLogReader();
         }
 
         public LogRecord? Parse(string logText)

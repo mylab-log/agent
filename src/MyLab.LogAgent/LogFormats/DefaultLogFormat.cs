@@ -4,9 +4,9 @@ namespace MyLab.LogAgent.LogFormats
 {
     class DefaultLogFormat : ILogFormat
     {
-        public ILogBuilder CreateBuilder()
+        public ILogReader CreateBuilder()
         {
-            return new MultilineLogBuilder();
+            return new MultilineLogReader();
         }
 
         public LogRecord? Parse(string logText)

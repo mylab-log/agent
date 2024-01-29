@@ -3,7 +3,7 @@ using MyLab.Log;
 
 namespace MyLab.LogAgent.LogFormats;
 
-class MyLabLogBuilder : ILogBuilder
+class MyLabLogReader : ILogReader
 {
     private readonly StringBuilder _sb = new();
 
@@ -17,9 +17,9 @@ class MyLabLogBuilder : ILogBuilder
         return LogReaderResult.Accepted;
     }
 
-    public BuiltString BuildString()
+    public BuildString BuildString()
     {
-        return new BuiltString(_sb.ToString());
+        return new BuildString(_sb.ToString());
     }
 
     public void Cleanup()

@@ -4,7 +4,7 @@ namespace MyLab.LogAgent.LogFormats
 {
     interface ILogFormat
     {
-        ILogBuilder? CreateBuilder();
+        ILogReader? CreateBuilder();
 
         LogRecord? Parse(string logText);
     }

@@ -1,6 +1,6 @@
 ﻿namespace MyLab.LogAgent.LogFormats;
 
-class SingleLineLogBuilder : ILogBuilder
+class SingleLineLogReader : ILogReader
 {
     private string _text;
 
@@ -10,9 +10,9 @@ class SingleLineLogBuilder : ILogBuilder
         return LogReaderResult.CompleteRecord;
     }
 
-    public BuiltString BuildString()
+    public BuildString BuildString()
     {
-        return new BuiltString(_text);
+        return new BuildString(_text);
     }
 
     public void Cleanup()

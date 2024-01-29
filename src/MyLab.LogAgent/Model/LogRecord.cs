@@ -15,6 +15,7 @@ namespace MyLab.LogAgent.Model
     public enum LogLevel
     {
         Undefined,
+        Debug,
         Info,
         Warning,
         Error

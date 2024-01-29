@@ -2,7 +2,7 @@
 
 namespace MyLab.LogAgent.LogFormats;
 
-class MultilineLogBuilder : ILogBuilder
+class MultilineLogReader : ILogReader
 {
     readonly StringBuilder _sb = new ();
 
@@ -17,9 +17,9 @@ class MultilineLogBuilder : ILogBuilder
         return LogReaderResult.Accepted;
     }
 
-    public BuiltString BuildString()
+    public BuildString BuildString()
     {
-        return new BuiltString(_sb.ToString());
+        return new BuildString(_sb.ToString());
     }
 
     public void Cleanup()

@@ -8,7 +8,7 @@ namespace MyLab.LogAgent.Tools
 {
     class LogReader
     {
-        private readonly ILogBuilder _logBuilder;
+        private readonly ILogReader _logReader;
         private readonly ILogFormat _logFormat;
         private readonly ILogSourceReader _logSourceReader;
         private readonly List<LogSourceLine>? _buff;
@@ -18,12 +18,12 @@ namespace MyLab.LogAgent.Tools
             _logFormat = logFormat;
             _logSourceReader = logSourceReader ?? throw new ArgumentNullException(nameof(logSourceReader));
             _buff = buff;
-            _logBuilder = logFormat.CreateBuilder() ?? new SingleLineLogBuilder();
+            _logReader = logFormat.CreateBuilder() ?? new SingleLineLogReader();
         }
 
         public async Task<LogRecord?> ReadLogAsync(CancellationToken cancellationToken)
         {
-            _logBuilder.Cleanup();
+            _logReader.Cleanup();
         
             var logEnum = new LogReaderEnumerable(_logSourceReader, _buff);
 
@@ -49,7 +49,7 @@ namespace MyLab.LogAgent.Tools
                 var nextLine = logEnumerator.Current;
 
                 var applyResult = nextLine != null 
-                    ? _logBuilder.ApplyNexLine(nextLine.Text)
+                    ? _logReader.ApplyNexLine(nextLine.Text)
                     : LogReaderResult.CompleteRecord;
 
                 switch (applyResult)
@@ -90,7 +90,7 @@ namespace MyLab.LogAgent.Tools
 
         LogRecord? GetLogRecord(DateTime? contextDateTime, bool contextErrorFactor)
         {
-            var logString = _logBuilder.BuildString();
+            var logString = _logReader.BuildString();
             if (string.IsNullOrWhiteSpace(logString.Text))
                 return null;
 

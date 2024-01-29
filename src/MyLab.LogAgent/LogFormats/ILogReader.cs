@@ -2,13 +2,13 @@
 
 namespace MyLab.LogAgent.LogFormats;
 
-interface ILogBuilder
+interface ILogReader
 {
     LogReaderResult ApplyNexLine(string logTextLine);
 
-    BuiltString BuildString();
+    BuildString BuildString();
 
     void Cleanup();
 }
 
-record BuiltString(string Text, LogLevel ExtractedLogLevel = LogLevel.Undefined);
+record BuildString(string Text, LogLevel ExtractedLogLevel = LogLevel.Undefined);

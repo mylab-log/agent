@@ -15,7 +15,7 @@ namespace Tests
                 "      Message: Connection refused (infonot-doc-storage-antivirus-processor:80)\n",
             };
 
-            var b = new NetLogBuilder();
+            var b = new NetLogReader();
             var readerResults = new[]
             {
                 b.ApplyNexLine(lines[0]),
