@@ -18,7 +18,7 @@ namespace MyLab.LogAgent.Tools
             _logFormat = logFormat;
             _logSourceReader = logSourceReader ?? throw new ArgumentNullException(nameof(logSourceReader));
             _buff = buff;
-            _logReader = logFormat.CreateBuilder() ?? new SingleLineLogReader();
+            _logReader = logFormat.CreateReader() ?? new SingleLineLogReader();
         }
 
         public async Task<LogRecord?> ReadLogAsync(CancellationToken cancellationToken)

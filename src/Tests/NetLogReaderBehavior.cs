@@ -3,10 +3,10 @@ using MyLab.LogAgent.Model;
 
 namespace Tests
 {
-    public class NetLogBuilderBehavior
+    public class NetLogReaderBehavior
     {
         [Fact]
-        public void ShouldBuildSimple()
+        public void ShouldBuildError()
         {
             //Arrange
             string[] lines = new[]
@@ -30,6 +30,33 @@ namespace Tests
             Assert.Equal(LogLevel.Error, str.ExtractedLogLevel);
             Assert.Contains("MyLab.PrometheusAgent.Services.TargetsMetricProvider[0]", str.Text);
             Assert.Contains("Message: Connection refused (infonot-doc-storage-antivirus-processor:80)", str.Text);
+        }
+
+        [Fact]
+        public void ShouldBuildInfo()
+        {
+            //Arrange
+            string[] lines = new[]
+            {
+                "\u001b[41m\u001b[30minfo\u001b[41m\u001b[30m: MyApp.Worker[0]",
+                "      Hellow!"
+            };
+
+            var b = new NetLogReader();
+            var readerResults = new[]
+            {
+                b.ApplyNexLine(lines[0]),
+                b.ApplyNexLine(lines[1])
+            };
+
+            //Act
+            var str = b.BuildString();
+
+            //Assert
+            Assert.True(readerResults.All(rr => rr == LogReaderResult.Accepted));
+            Assert.Equal(LogLevel.Info, str.ExtractedLogLevel);
+            Assert.Contains("MyApp.Worker[0]", str.Text);
+            Assert.Contains(" Hellow!", str.Text);
         }
     }
 }

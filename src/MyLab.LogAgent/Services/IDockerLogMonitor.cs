@@ -23,11 +23,7 @@ namespace MyLab.LogAgent.Services
 
         private readonly ILogFormat _defaultLogFormat = new DefaultLogFormat();
 
-        private readonly IDictionary<string, ILogFormat> _logFormats = new Dictionary<string, ILogFormat>
-        {
-            { "default", new DefaultLogFormat() },
-            { "mylab", new MyLabLogFormat() }
-        };
+        private readonly IDictionary<string, ILogFormat> _logFormats;
 
         private readonly ILogRegistrar _logRegistrar;
         private readonly LogAgentOptions _opts;
@@ -43,6 +39,13 @@ namespace MyLab.LogAgent.Services
             _containerFilesProvider = containerFilesProvider ?? throw new ArgumentNullException(nameof(containerFilesProvider));
             _opts = opts.Value ?? throw new ArgumentException("Options is not defined", nameof(opts));
             _log = logger?.Dsl();
+
+            _logFormats = new Dictionary<string, ILogFormat>
+            {
+                { "default", new DefaultLogFormat() },
+                { "mylab", new MyLabLogFormat() },
+                { "net", new NetLogFormat(_opts.MessageLenLimit) }
+            };
         }
 
         public async Task ProcessLogsAsync(CancellationToken cancellationToken)

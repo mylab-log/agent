@@ -102,7 +102,7 @@ namespace Tests
         {
             //Arrange
             var format = new MyLabLogFormat();
-            var b = format.CreateBuilder()!;
+            var b = format.CreateReader()!;
 
             var strings = new []
             {

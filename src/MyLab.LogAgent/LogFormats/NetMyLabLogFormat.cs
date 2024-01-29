@@ -4,7 +4,7 @@ namespace MyLab.LogAgent.LogFormats
 {
     class NetMyLabLogFormat : ILogFormat
     {
-        public ILogReader CreateBuilder()
+        public ILogReader CreateReader()
         {
             return new NetLogReader();
         }

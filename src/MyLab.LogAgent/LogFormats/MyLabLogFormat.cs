@@ -10,7 +10,7 @@ namespace MyLab.LogAgent.LogFormats
 {
     class MyLabLogFormat : ILogFormat
     {
-        public ILogReader? CreateBuilder()
+        public ILogReader? CreateReader()
         {
             return new MyLabLogReader();
         }

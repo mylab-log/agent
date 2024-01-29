@@ -8,5 +8,7 @@
         public const string Time = "@timestamp";
         public const string Format = "format";
         public const string Container = "container";
+        public const string Category = "category";
+        public const string OriginMessage = "origin-message";
     }
 }

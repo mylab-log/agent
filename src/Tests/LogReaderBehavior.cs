@@ -260,7 +260,7 @@ public class LogReaderBehavior
 
     class BadLogFormat : ILogFormat
     {
-        public ILogReader? CreateBuilder()
+        public ILogReader? CreateReader()
         {
             return new SingleLineLogReader();
         }

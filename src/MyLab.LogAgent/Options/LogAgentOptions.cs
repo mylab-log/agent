@@ -7,5 +7,6 @@
         public int OutgoingBufferSize { get; set; } = 100;
         public Dictionary<string,string>? AddProperties { get; set; }
         public bool ReadFromEnd { get; set; } = true;
+        public int MessageLenLimit { get; set; } = 500;
     }
 }

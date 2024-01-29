@@ -32,7 +32,16 @@ class NetLogReader : ILogReader
                     break;
             }
 
-            _sb.AppendLine(logTextLine.Substring(31).TrimEnd());
+            int indexOfCategory = logTextLine.IndexOf(':');
+
+            if (indexOfCategory != -1 && logTextLine.Length > indexOfCategory+2)
+            {
+                _sb.AppendLine(logTextLine.Substring(indexOfCategory+2).TrimEnd());
+            }
+            else
+            {
+                _sb.AppendLine(logTextLine.Substring(31).TrimEnd());
+            }
         }
         else
         {

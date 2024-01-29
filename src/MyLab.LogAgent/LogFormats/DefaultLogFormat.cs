@@ -4,7 +4,7 @@ namespace MyLab.LogAgent.LogFormats
 {
     class DefaultLogFormat : ILogFormat
     {
-        public ILogReader CreateBuilder()
+        public ILogReader CreateReader()
         {
             return new MultilineLogReader();
         }
