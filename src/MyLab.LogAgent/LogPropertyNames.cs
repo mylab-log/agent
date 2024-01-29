@@ -10,5 +10,6 @@
         public const string Container = "container";
         public const string Category = "category";
         public const string OriginMessage = "origin-message";
+        public const string ParsingFailedFlag = "parsing-failed";
     }
 }

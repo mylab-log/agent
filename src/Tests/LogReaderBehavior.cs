@@ -171,9 +171,10 @@ public class LogReaderBehavior
 
         //Assert
         Assert.NotNull(readLogRecord);
-        Assert.Equal("Log parsing error", readLogRecord.Message);
+        Assert.Equal("Start log-1", readLogRecord.Message);
         Assert.NotNull(readLogRecord.Properties);
         Assert.Contains(readLogRecord.Properties, p => p.Name == LogPropertyNames.Exception);
+        Assert.Contains(readLogRecord.Properties, p => p is { Name: LogPropertyNames.ParsingFailedFlag, Value: "true" });
     }
 
     [Theory]

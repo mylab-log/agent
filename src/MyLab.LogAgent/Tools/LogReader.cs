@@ -14,6 +14,7 @@ namespace MyLab.LogAgent.Tools
         private readonly ILogMessageExtractor _messageExtractor;
         private readonly ILogSourceReader _logSourceReader;
         private readonly List<LogSourceLine>? _buff;
+        private readonly DefaultLogFormat _defaultFormat = new();
 
         public LogReader(
             ILogFormat logFormat, 
@@ -132,26 +133,43 @@ namespace MyLab.LogAgent.Tools
             }
         }
 
-        private static LogRecord CreateFailLogRecord(string logString, Exception e)
+        private LogRecord CreateFailLogRecord(string logString, Exception e)
         {
-            return new LogRecord
+            LogRecord? logRecord;
+
+            try
             {
-                Time = DateTime.Now,
-                Message = "Log parsing error",
-                Properties =
-                [
-                    new LogProperty
-                    {
-                        Name = "log-string", 
-                        Value = logString
-                    },
-                    new LogProperty
-                    {
-                        Name = LogPropertyNames.Exception, 
-                        Value = ExceptionDto.Create(e).ToYaml()!
-                    }
-                ]
-            };
+                logRecord = _defaultFormat.Parse(logString, _messageExtractor);
+
+                if (logRecord == null)
+                {
+                    throw new InvalidOperationException("Can't parse log string");
+                }
+            }
+            catch (Exception exception)
+            {
+                throw new AggregateException(new Exception[]
+                {
+                    new FormatException("Can't create parsing error log record", exception),
+                    e
+                });
+            }
+
+            logRecord.Properties ??= new List<LogProperty>();
+
+            logRecord.Properties.Add(new LogProperty
+            {
+                Name = LogPropertyNames.ParsingFailedFlag,
+                Value = "true"
+            });
+
+            logRecord.Properties.Add(new LogProperty
+            {
+                Name = LogPropertyNames.Exception,
+                Value = ExceptionDto.Create(e).ToYaml() ?? "[no-error-yaml]"
+            });
+
+            return logRecord;
         }
     }
 }
