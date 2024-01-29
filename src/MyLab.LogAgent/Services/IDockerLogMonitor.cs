@@ -97,6 +97,7 @@ namespace MyLab.LogAgent.Services
         {
             ILogFormat? format;
             string formatName;
+            bool unsupportedFormat = false;
 
             if (cEntity.Container.LogFormat == null)
             {
@@ -107,17 +108,18 @@ namespace MyLab.LogAgent.Services
             {
                 if (!_logFormats.TryGetValue(cEntity.Container.LogFormat, out format))
                 {
-                    _log?.Error("Log format is not supported")
+                    _log?.Warning("Log format is not supported")
                         .AndFactIs("format", cEntity.Container.LogFormat)
                         .Write();
-                    return;
+                    format = _defaultLogFormat;
+                    unsupportedFormat = true;
                 }
 
                 formatName = cEntity.Container.LogFormat;
             }
 
             _log?.Debug("Log format detected")
-                .AndFactIs("format", formatName)
+                .AndFactIs("format", cEntity.Container.LogFormat)
                 .Write();
 
             var lastLogFile = GetLastLogFilename(cEntity.Container.Id);
@@ -183,6 +185,16 @@ namespace MyLab.LogAgent.Services
                 nextLogRecord.Container = cEntity.Container.Name;
 
                 ApplyAddProps(nextLogRecord);
+
+                if (unsupportedFormat)
+                {
+                    nextLogRecord.Properties ??= [];
+                    nextLogRecord.Properties.Add(new LogProperty
+                    {
+                        Name = LogPropertyNames.UnsupportedFormatFlag,
+                        Value = "true"
+                    });
+                }
 
                 await _logRegistrar.RegisterAsync(nextLogRecord);
 
