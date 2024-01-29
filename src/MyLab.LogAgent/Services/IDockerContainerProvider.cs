@@ -28,7 +28,7 @@ namespace MyLab.LogAgent.Services
                 cancellationToken);
 
             return containers
-                .Where(c => !c.Labels.Any(l => l is { Key: "log_exclude", Value: "true" }))
+                .Where(c => !c.Labels.Any(l => l.Key == "log_exclude" &&  l.Value.ToLower() == "true" ))
                 .Select(c => 
                     new DockerContainerInfo
                     {
@@ -36,11 +36,11 @@ namespace MyLab.LogAgent.Services
                         Name = c.Names.FirstOrDefault(c.ID).TrimStart('/'),
                         LogFormat = c.Labels
                             .Where(kv => kv.Key == "log_format")
-                            .Select(kv => kv.Value)
+                            .Select(kv => kv.Value.ToLower())
                             .FirstOrDefault(),
                         IgnoreStreamType= c.Labels
                             .Where(kv => kv.Key == "log_ignore_stream")
-                            .Select(kv => kv.Value == "true")
+                            .Select(kv => kv.Value.ToLower() == "true")
                             .FirstOrDefault()
                     }
                 );
