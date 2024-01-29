@@ -88,12 +88,12 @@ namespace MyLab.LogAgent.Tools
         LogRecord? GetLogRecord(DateTime? contextDateTime, bool contextErrorFactor)
         {
             var logString = _logBuilder.BuildString();
-            if (string.IsNullOrWhiteSpace(logString))
+            if (string.IsNullOrWhiteSpace(logString.Text))
                 return null;
 
             try
             {
-                var lr = _logFormat.Parse(logString);
+                var lr = _logFormat.Parse(logString.Text);
                 if (lr != null)
                 {
                     if (lr.Time == default)
@@ -103,9 +103,14 @@ namespace MyLab.LogAgent.Tools
 
                     if (lr.Level == LogLevel.Undefined)
                     {
-                        lr.Level = contextErrorFactor 
-                            ? LogLevel.Error
-                            : LogLevel.Info;
+                        if (logString.ExtractedLogLevel != LogLevel.Undefined)
+                            lr.Level = logString.ExtractedLogLevel;
+                        else
+                        {
+                            lr.Level = contextErrorFactor
+                                ? LogLevel.Error
+                                : LogLevel.Info;
+                        }
                     }
                 }
 
@@ -113,7 +118,7 @@ namespace MyLab.LogAgent.Tools
             }
             catch (Exception e)
             {
-                return CreateFailLogRecord(logString, e);
+                return CreateFailLogRecord(logString.Text, e);
             }
         }
 

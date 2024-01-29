@@ -12,7 +12,7 @@ namespace MyLab.LogAgent.LogFormats
     {
         public ILogBuilder? CreateBuilder()
         {
-            return new YamlLogBuilder();
+            return new MyLabLogBuilder();
         }
 
         public LogRecord? Parse(string logText)
@@ -171,33 +171,6 @@ namespace MyLab.LogAgent.LogFormats
                 return yamlMappingNode;
 
             throw new FormatException("Yaml document should be YamlMappingNode");
-        }
-
-        class YamlLogBuilder : ILogBuilder
-        {
-            private readonly StringBuilder _sb = new();
-
-            public LogReaderResult ApplyNexLine(string? logTextLine)
-            {
-                if (logTextLine == null) 
-                    return LogReaderResult.CompleteRecord;
-                if (_sb.Length != 0 && logTextLine.StartsWith(nameof(LogEntity.Message) +": "))
-                    return LogReaderResult.NewRecordDetected;
-
-                _sb.AppendLine(logTextLine.TrimEnd());
-
-                return LogReaderResult.Accepted;
-            }
-
-            public string? BuildString()
-            {
-                return _sb.ToString();
-            }
-
-            public void Cleanup()
-            {
-                _sb.Clear();
-            }
         }
     }
 }

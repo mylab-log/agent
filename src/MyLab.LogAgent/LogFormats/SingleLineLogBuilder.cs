@@ -10,9 +10,9 @@ class SingleLineLogBuilder : ILogBuilder
         return LogReaderResult.CompleteRecord;
     }
 
-    public string? BuildString()
+    public BuiltString BuildString()
     {
-        return _text;
+        return new BuiltString(_text);
     }
 
     public void Cleanup()

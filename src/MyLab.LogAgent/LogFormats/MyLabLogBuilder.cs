@@ -1,22 +1,21 @@
 ﻿using System.Text;
+using MyLab.Log;
 
 namespace MyLab.LogAgent.LogFormats;
 
-class MultilineLogBuilder : ILogBuilder
+class MyLabLogBuilder : ILogBuilder
 {
-    readonly StringBuilder _sb = new ();
+    private readonly StringBuilder _sb = new();
 
     public LogReaderResult ApplyNexLine(string? logTextLine)
     {
         if (logTextLine == null)
-            return LogReaderResult.Accepted;
-
-        if (_sb.Length != 0 && logTextLine.Length > 0 && !char.IsWhiteSpace(logTextLine[0]))
+            return LogReaderResult.CompleteRecord;
+        if (_sb.Length != 0 && logTextLine.StartsWith(nameof(LogEntity.Message) + ": "))
             return LogReaderResult.NewRecordDetected;
 
-        if (_sb.Length != 0)
-            _sb.AppendLine();
-        _sb.Append(logTextLine.TrimEnd());
+        _sb.AppendLine(logTextLine.TrimEnd());
+
         return LogReaderResult.Accepted;
     }
 
