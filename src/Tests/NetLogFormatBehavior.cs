@@ -1,6 +1,5 @@
 ﻿using MyLab.LogAgent;
 using MyLab.LogAgent.LogFormats;
-using MyLab.LogAgent.Tools.LogMessageProc;
 
 namespace Tests
 {

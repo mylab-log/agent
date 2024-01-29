@@ -264,7 +264,7 @@ namespace Tests
                     It.Is<string>(id => id == "foo-id"),
                     It.Is<string>(fn => fn == "foo-id-json.log")
                 ))
-                .Returns<string, string>((_, _) => new StreamReader(new MemoryStream("{\"log\":\"Foo log\",\"stream\":\"stdout\",\"time\":\"2023-08-29T20:15:41.304555874Z\"}"u8.ToArray())));
+                .Returns<string, string>((_, _) => new StreamReader(new MemoryStream("{\"log\":\"ExtractCategory log\",\"stream\":\"stdout\",\"time\":\"2023-08-29T20:15:41.304555874Z\"}"u8.ToArray())));
             filesProvider.Setup(p => p.OpenContainerFileRead
                 (
                     It.Is<string>(id => id == "bar-id"),
@@ -294,7 +294,7 @@ namespace Tests
 
             //Assert
             Assert.Equal(2, outgoingLogs.Count);
-            Assert.Contains(outgoingLogs, l => l.Message == "Foo log");
+            Assert.Contains(outgoingLogs, l => l.Message == "ExtractCategory log");
             Assert.Contains(outgoingLogs, l => l.Message == "Bar log");
         }
 

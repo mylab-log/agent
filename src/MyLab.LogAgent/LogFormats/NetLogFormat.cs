@@ -12,35 +12,15 @@ namespace MyLab.LogAgent.LogFormats
 
         public LogRecord Parse(string logText, ILogMessageExtractor messageExtractor)
         {
-            string leftText;
             var props = new List<LogProperty>();
 
-            int firstLineIndex = logText.IndexOf('\n');
-            if (firstLineIndex != -1)
-            {
-                string categoryStr = logText.Remove(firstLineIndex).TrimEnd();
+            NetFormatLogic.ExtractCategory(logText, out var category, out var leftText);
 
-                string? category;
-                if (categoryStr[^3] == '[' && char.IsDigit(categoryStr[^2]) && categoryStr[^1] == ']')
-                {
-                    category = categoryStr.Remove(categoryStr.Length - 3);
-                }
-                else
-                {
-                    category = categoryStr;
-                }
-
-                props.Add(new LogProperty
-                {
-                    Name = LogPropertyNames.Category, 
-                    Value = category
-                });
-                leftText = logText.Substring(firstLineIndex).TrimStart();
-            }
-            else
+            props.Add(new LogProperty
             {
-                leftText = logText;
-            }
+                Name = LogPropertyNames.Category,
+                Value = category
+            });
 
             var message = messageExtractor.Extract(leftText);
 

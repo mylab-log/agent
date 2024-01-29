@@ -48,7 +48,8 @@ namespace MyLab.LogAgent.Services
             {
                 { "default", new DefaultLogFormat() },
                 { "mylab", new MyLabLogFormat() },
-                { "net", new NetLogFormat() }
+                { "net", new NetLogFormat() },
+                { "net+mylab", new NetMyLabLogFormat() }
             };
         }
 

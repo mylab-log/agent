@@ -76,6 +76,8 @@ namespace IntegrationTests
             var stopToken = new CancellationTokenSource(TimeSpan.FromSeconds(1));
             await monitorService.StopAsync(stopToken.Token);
 
+            await Task.Delay(TimeSpan.FromSeconds(1), default(CancellationToken));
+
             var searchRes = await _fxt.Searcher.SearchAsync("logs-test", 
                 new EsSearchParams<EsLogRecord>(d => d.MatchAll()), 
                 default
