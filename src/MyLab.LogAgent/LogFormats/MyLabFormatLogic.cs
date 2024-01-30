@@ -63,23 +63,12 @@ namespace MyLab.LogAgent.LogFormats
             if (!logEntity.Children.TryGetValue(nameof(LogEntity.Message), out var messageNode))
                 throw new FormatException("Message node not found");
 
-            var msg = messageExtractor.Extract(messageNode.ToString());
-            if (msg.Shorted)
-            {
-                props.Add(new()
-                {
-                    Name = LogPropertyNames.OriginMessage,
-                    Value = msg.Full
-                });
-            }
+            var resRecord = messageExtractor.ExtractAndCreateLogRecord(messageNode.ToString(), props);
+            
+            resRecord.Time = DateTime.Parse(timeNode.ToString());
+            resRecord.Level = DeserializeLogLevel(logLevel);
 
-            return new LogRecord
-            {
-                Time = DateTime.Parse(timeNode.ToString()),
-                Message = msg.Short,
-                Properties = props,
-                Level = DeserializeLogLevel(logLevel)
-            };
+            return resRecord;
         }
 
         private static void ProcessFacts(YamlMappingNode logFacts, List<LogProperty> props, out string? logLevel)

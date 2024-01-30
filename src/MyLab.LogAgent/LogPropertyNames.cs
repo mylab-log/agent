@@ -11,6 +11,7 @@
         public const string Category = "category";
         public const string OriginMessage = "origin-message";
         public const string ParsingFailedFlag = "parsing-failed";
+        public const string ParsingFailureReason = "parsing-failure-reason";
         public const string UnsupportedFormatFlag = "unsupported-format";
     }
 }

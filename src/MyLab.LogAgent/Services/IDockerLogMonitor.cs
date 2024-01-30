@@ -49,7 +49,8 @@ namespace MyLab.LogAgent.Services
                 { "default", new DefaultLogFormat() },
                 { "mylab", new MyLabLogFormat() },
                 { "net", new NetLogFormat() },
-                { "net+mylab", new NetMyLabLogFormat() }
+                { "net+mylab", new NetMyLabLogFormat() },
+                { "nginx", new NginxLogFormat() }
             };
         }
 

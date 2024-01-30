@@ -162,6 +162,11 @@ namespace MyLab.LogAgent.Tools
                 Name = LogPropertyNames.ParsingFailedFlag,
                 Value = "true"
             });
+            logRecord.Properties.Add(new LogProperty
+            {
+                Name = LogPropertyNames.ParsingFailureReason,
+                Value = "exception"
+            });
 
             logRecord.Properties.Add(new LogProperty
             {

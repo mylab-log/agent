@@ -15,28 +15,7 @@ namespace MyLab.LogAgent.LogFormats
             if (string.IsNullOrWhiteSpace(logText))
                 return null;
 
-            var msg = messageExtractor.Extract(logText);
-
-            if (!msg.Shorted)
-            {
-                return new LogRecord
-                {
-                    Message = msg.Full
-                };
-            }
-
-            return new LogRecord
-            {
-                Message = msg.Short,
-                Properties = new List<LogProperty>()
-                {
-                    new()
-                    {
-                        Name = LogPropertyNames.OriginMessage,
-                        Value = msg.Full
-                    }
-                }
-            };
+            return messageExtractor.ExtractAndCreateLogRecord(logText);
         }
     }
 }

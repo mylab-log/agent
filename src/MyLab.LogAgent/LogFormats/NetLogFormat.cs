@@ -22,22 +22,7 @@ namespace MyLab.LogAgent.LogFormats
                 Value = category
             });
 
-            var message = messageExtractor.Extract(leftText);
-
-            if (message.Shorted)
-            {
-                props.Add(new LogProperty
-                {
-                    Name = LogPropertyNames.OriginMessage, 
-                    Value = message.Full
-                });
-            }
-
-            return new LogRecord
-            {
-                Message = message.Short,
-                Properties = props
-            };
+            return messageExtractor.ExtractAndCreateLogRecord(leftText, props);
         }
     }
 }
