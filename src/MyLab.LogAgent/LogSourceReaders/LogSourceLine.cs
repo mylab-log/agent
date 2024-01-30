@@ -2,7 +2,7 @@
 
 namespace MyLab.LogAgent.LogSourceReaders;
 
-class LogSourceLine
+public class LogSourceLine
 {
     public string Text { get; private set; }
     public DateTime? Time { get; set; }

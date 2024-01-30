@@ -19,7 +19,7 @@ namespace MyLab.LogAgent.Services
     {
         private readonly IDockerContainerProvider _containerProvider;
         private readonly IDockerContainerFilesProvider _containerFilesProvider;
-        private readonly LogContainerRegistry _registry = new();
+        private readonly IDockerContainerRegistry _containerRegistry;
         private readonly IDslLogger? _log;
 
         private readonly ILogFormat _defaultLogFormat = new DefaultLogFormat();
@@ -31,7 +31,8 @@ namespace MyLab.LogAgent.Services
         private readonly LogMessageExtractor _logMessageExtractor;
 
         public DockerLogMonitor(IDockerContainerProvider containerProvider, 
-            IDockerContainerFilesProvider containerFilesProvider, 
+            IDockerContainerFilesProvider containerFilesProvider,
+            IDockerContainerRegistry containerRegistry,
             ILogRegistrar logRegistrar,
             IOptions<LogAgentOptions> opts,
             ILogger<DockerLogMonitor>? logger = null)
@@ -39,6 +40,7 @@ namespace MyLab.LogAgent.Services
             _logRegistrar = logRegistrar;
             _containerProvider = containerProvider ?? throw new ArgumentNullException(nameof(containerProvider));
             _containerFilesProvider = containerFilesProvider ?? throw new ArgumentNullException(nameof(containerFilesProvider));
+            _containerRegistry = containerRegistry ?? throw new ArgumentNullException(nameof(containerRegistry));
             _opts = opts.Value ?? throw new ArgumentException("Options is not defined", nameof(opts));
             _log = logger?.Dsl();
 
@@ -58,9 +60,9 @@ namespace MyLab.LogAgent.Services
         {
             var actualContainers = await _containerProvider.ProvideContainersAsync(cancellationToken);
 
-            var syncReport = _registry.Sync(actualContainers);
+            var syncReport = _containerRegistry.Sync(actualContainers);
 
-            if (_log != null && syncReport != LogContainerRegistry.SyncReport.Empty)
+            if (_log != null && syncReport != DockerContainerSyncReport.Empty)
             {
                 _log.Action("Docker container list changed")
                     .AndFactIs("removed", syncReport.Removed.Count == 0
@@ -74,9 +76,9 @@ namespace MyLab.LogAgent.Services
                     .Write();
             }
 
-            foreach (var container in _registry)
+            foreach (var container in _containerRegistry.GetContainers())
             {
-                container.LastIterationDt = DateTime.Now;
+                container.LastIteration.DateTime = DateTime.Now;
 
                 using var scope = _log?.BeginScope(new LabelLogScope("scoped-container", container.Container.Name));
 
@@ -88,13 +90,13 @@ namespace MyLab.LogAgent.Services
                 }
                 catch (Exception e)
                 {
-                    container.LastError = e;
+                    container.LastIteration.Error = e;
                     _log?.Error(e).Write();
                 }
             }
         }
 
-        private async Task ProcessContainerLogs(LogContainerRegistry.Entity cEntity, CancellationToken cancellationToken)
+        private async Task ProcessContainerLogs(DockerContainerMonitoringState cEntity, CancellationToken cancellationToken)
         {
             ILogFormat? format;
             string formatName;
@@ -133,16 +135,16 @@ namespace MyLab.LogAgent.Services
                 return;
             }
 
-            if (cEntity.LastLogFilename != null)
+            if (cEntity.LastIteration.Filename != null)
             {
-                if (lastLogFile.Filename != cEntity.LastLogFilename)
+                if (lastLogFile.Filename != cEntity.LastIteration.Filename)
                 {
                     _log?.Debug("Switch to new log filename")
-                        .AndFactIs("old-filename", cEntity.LastLogFilename)
+                        .AndFactIs("old-filename", cEntity.LastIteration.Filename)
                         .AndFactIs("new-filename", lastLogFile)
                         .Write();
 
-                    cEntity.LastLogFilename = lastLogFile.Filename;
+                    cEntity.LastIteration.Filename = lastLogFile.Filename;
                     cEntity.Shift = 0;
                 }
             }
@@ -150,7 +152,7 @@ namespace MyLab.LogAgent.Services
             {
                 var initialShift = _opts.ReadFromEnd ? lastLogFile.Length : 0;
 
-                cEntity.LastLogFilename = lastLogFile.Filename;
+                cEntity.LastIteration.Filename = lastLogFile.Filename;
                 cEntity.Shift = initialShift;
 
                 _log?.Debug("Initial monitoring detected")
@@ -202,6 +204,7 @@ namespace MyLab.LogAgent.Services
                 recordCount++;
             }
 
+            cEntity.LastIteration.LogCount = recordCount;
             cEntity.Shift = fileReader.BaseStream.Position;
             await _logRegistrar.FlushAsync();
 
