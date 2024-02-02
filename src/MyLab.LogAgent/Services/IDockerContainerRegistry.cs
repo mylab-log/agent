@@ -6,7 +6,7 @@ namespace MyLab.LogAgent.Services
     public interface IDockerContainerRegistry
     {
         DockerContainerSyncReport Sync(IEnumerable<DockerContainerInfo> containers);
-        ImmutableArray<DockerContainerMonitoringState> GetContainers();
+        IEnumerable<DockerContainerMonitoringState> GetContainers();
     }
 
     class DockerContainerRegistry : IDockerContainerRegistry
@@ -37,7 +37,7 @@ namespace MyLab.LogAgent.Services
             };
         }
 
-        public ImmutableArray<DockerContainerMonitoringState> GetContainers()
+        public IEnumerable<DockerContainerMonitoringState> GetContainers()
         {
             return _entities.ToImmutableArray();
         }

@@ -22,6 +22,6 @@ ENV PROJ_FILE=$PROJ
 ENV LogAgent__AddProperties__agent-ver=$VER
 WORKDIR /app
 COPY --from=build /app /app
-EXPOSE 80
+EXPOSE 8080
 
 ENTRYPOINT ["sh", "-c", "dotnet /app/${PROJ_FILE}.dll"]

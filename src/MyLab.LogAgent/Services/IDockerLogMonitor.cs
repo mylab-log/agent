@@ -82,8 +82,6 @@ namespace MyLab.LogAgent.Services
 
                 using var scope = _log?.BeginScope(new LabelLogScope("scoped-container", container.Container.Name));
 
-                _log?.Debug("Container monitoring").Write();
-
                 try
                 {
                     await ProcessContainerLogs(container, cancellationToken);
@@ -129,7 +127,7 @@ namespace MyLab.LogAgent.Services
 
             if (lastLogFile == null)
             {
-                _log?.Debug("Can't detect log filename")
+                _log?.Warning("Can't detect log filename")
                     .Write();
 
                 return;
@@ -174,12 +172,7 @@ namespace MyLab.LogAgent.Services
             };
 
             var logReader = new LogReader(format, _logMessageExtractor, srcReader, cEntity.LineBuff);
-
-            _log?.Debug("Try to read log file")
-                .AndFactIs("filename", lastLogFile)
-                .AndFactIs("shift", cEntity.Shift)
-                .Write();
-
+            
             int recordCount = 0;
 
             while (await logReader.ReadLogAsync(cancellationToken) is { } nextLogRecord)
