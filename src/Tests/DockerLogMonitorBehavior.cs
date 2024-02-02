@@ -143,6 +143,7 @@ namespace Tests
             (
                 containerProvider.Object,
                 filesProvider.Object,
+                new DockerContainerRegistry(),
                 registrar.Object,
                 new OptionsWrapper<LogAgentOptions>(new LogAgentOptions()),
                 _logger
@@ -211,6 +212,7 @@ namespace Tests
             (
                 containerProvider.Object,
                 filesProvider.Object,
+                new DockerContainerRegistry(),
                 registrar.Object,
                 new OptionsWrapper<LogAgentOptions>(
                     new LogAgentOptions
@@ -280,6 +282,7 @@ namespace Tests
             (
                 containerProvider.Object,
                 filesProvider.Object,
+                new DockerContainerRegistry(),
                 registrar.Object,
                 new OptionsWrapper<LogAgentOptions>(
                     new LogAgentOptions
@@ -329,6 +332,7 @@ namespace Tests
             (
                 containerProvider.Object,
                 filesProvider.Object,
+                new DockerContainerRegistry(),
                 registrar.Object,
                 new OptionsWrapper<LogAgentOptions>(
                     new LogAgentOptions

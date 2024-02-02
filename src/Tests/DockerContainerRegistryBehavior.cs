@@ -5,13 +5,13 @@ using MyLab.LogAgent.Tools;
 
 namespace Tests
 {
-    public class LogContainerRegistryBehavior
+    public class DockerContainerRegistryBehavior
     {
         [Fact]
         public void ShouldAddInitialContainers()
         {
             //Arrange
-            var registry = new LogContainerRegistry();
+            var registry = new DockerContainerRegistry();
 
             var initialContainers = new []
             {
@@ -37,7 +37,7 @@ namespace Tests
         public void ShouldAddNewAndRemoveAbsentContainers()
         {
             //Arrange
-            var registry = new LogContainerRegistry();
+            var registry = new DockerContainerRegistry();
 
             var initialContainers = new[]
             {
