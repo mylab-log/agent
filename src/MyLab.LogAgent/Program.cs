@@ -7,6 +7,7 @@ using MyLab.StatusProvider;
 using MyLab.WebErrors;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,7 +25,9 @@ var app = builder.Build();
 
 app.UseUrlBasedHttpMetrics();
 app.UseStatusApi();
+
 app.MapControllers();
+app.MapMetrics();
 
 app.Run();
 

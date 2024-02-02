@@ -7,6 +7,7 @@ using MyLab.LogAgent.Model;
 using MyLab.LogAgent.Options;
 using MyLab.LogAgent.Tools;
 using MyLab.LogAgent.Tools.LogMessageProc;
+using System.ComponentModel;
 
 namespace MyLab.LogAgent.Services
 {
@@ -62,25 +63,48 @@ namespace MyLab.LogAgent.Services
 
             var syncReport = _containerRegistry.Sync(actualContainers);
 
-            if (_log != null && syncReport != DockerContainerSyncReport.Empty)
+            if (syncReport != DockerContainerSyncReport.Empty)
             {
-                _log.Action("Docker container list changed")
-                    .AndFactIs("removed", syncReport.Removed.Count == 0
-                        ? "[empty]"
-                        : string.Join(", ", syncReport.Removed.Select(c => c.Name))
-                    )
-                    .AndFactIs("added", syncReport.Added.Count == 0
-                        ? "[empty]"
-                        : string.Join(", ", syncReport.Added.Select(c => c.Name))
-                    )
-                    .Write();
+                LogAgentMetrics.UpdateContainerMetrics(syncReport);
+
+                if (_log != null)
+                {
+                    var removedList = syncReport.Removed
+                        .Select(c => c.Name)
+                        .ToArray();
+
+                    var addedList = syncReport.Added
+                        .Where(c => c.Enabled)
+                        .Select(c => c.Name)
+                        .ToArray();
+
+                    var disabledList = syncReport.Added
+                        .Where(c => !c.Enabled)
+                        .Select(c => c.Name)
+                        .ToArray();
+
+                    _log.Action("Docker container list changed")
+                        .AndFactIs("removed", removedList.Length == 0
+                            ? "[empty]"
+                            : string.Join(", ", removedList)
+                        )
+                        .AndFactIs("added", addedList.Length == 0
+                            ? "[empty]"
+                            : string.Join(", ", addedList)
+                        )
+                        .AndFactIs("disabled", disabledList.Length == 0
+                            ? "[empty]"
+                            : string.Join(", ", disabledList)
+                        )
+                        .Write();
+                }
             }
 
-            foreach (var container in _containerRegistry.GetContainers())
+            foreach (var container in _containerRegistry.GetContainers().Where(c => c.Info.Enabled))
             {
                 container.LastIteration.DateTime = DateTime.Now;
 
-                using var scope = _log?.BeginScope(new LabelLogScope("scoped-container", container.Container.Name));
+                using var scope = _log?.BeginScope(new LabelLogScope("scoped-container", container.Info.Name));
 
                 try
                 {
@@ -100,30 +124,30 @@ namespace MyLab.LogAgent.Services
             string formatName;
             bool unsupportedFormat = false;
 
-            if (cEntity.Container.LogFormat == null)
+            if (cEntity.Info.LogFormat == null)
             {
                 format = _defaultLogFormat;
                 formatName = "default";
             }
             else
             {
-                if (!_logFormats.TryGetValue(cEntity.Container.LogFormat, out format))
+                if (!_logFormats.TryGetValue(cEntity.Info.LogFormat, out format))
                 {
                     _log?.Warning("Log format is not supported")
-                        .AndFactIs("format", cEntity.Container.LogFormat)
+                        .AndFactIs("format", cEntity.Info.LogFormat)
                         .Write();
                     format = _defaultLogFormat;
                     unsupportedFormat = true;
                 }
 
-                formatName = cEntity.Container.LogFormat;
+                formatName = cEntity.Info.LogFormat;
             }
 
             _log?.Debug("Log format detected")
-                .AndFactIs("format", cEntity.Container.LogFormat)
+                .AndFactIs("format", cEntity.Info.LogFormat)
                 .Write();
 
-            var lastLogFile = GetLastLogFilename(cEntity.Container.Id);
+            var lastLogFile = GetLastLogFilename(cEntity.Info.Id);
 
             if (lastLogFile == null)
             {
@@ -163,22 +187,25 @@ namespace MyLab.LogAgent.Services
                     return;
             }
 
-            using var fileReader = _containerFilesProvider.OpenContainerFileRead(cEntity.Container.Id, lastLogFile.Filename);
+            using var fileReader = _containerFilesProvider.OpenContainerFileRead(cEntity.Info.Id, lastLogFile.Filename);
             fileReader.BaseStream.Position = cEntity.Shift;
 
             var srcReader = new DockerLogSourceReader(fileReader)
             {
-                IgnoreStreamType = cEntity.Container.IgnoreStreamType
+                IgnoreStreamType = cEntity.Info.IgnoreStreamType
             };
 
-            var logReader = new LogReader(format, _logMessageExtractor, srcReader, cEntity.LineBuff);
+            var logReader = new LogReader(format, _logMessageExtractor, srcReader)
+            {
+                Buffer = cEntity.LineBuff
+            };
             
             int recordCount = 0;
 
             while (await logReader.ReadLogAsync(cancellationToken) is { } nextLogRecord)
             {
                 nextLogRecord.Format = formatName;
-                nextLogRecord.Container = cEntity.Container.Name;
+                nextLogRecord.Container = cEntity.Info.Name;
 
                 ApplyAddProps(nextLogRecord);
 
@@ -195,6 +222,8 @@ namespace MyLab.LogAgent.Services
                 await _logRegistrar.RegisterAsync(nextLogRecord);
 
                 recordCount++;
+
+                LogAgentMetrics.UpdateReadingMetrics(nextLogRecord);
             }
 
             cEntity.LastIteration.LogCount = recordCount;

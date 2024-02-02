@@ -18,17 +18,17 @@ namespace MyLab.LogAgent.Services
             if (containers == null) throw new ArgumentNullException(nameof(containers));
 
             var forRemove = _entities
-                .Where(e => containers.All(c => c.Id != e.Container.Id))
-                .Select(e => e.Container)
+                .Where(e => containers.All(c => c.Id != e.Info.Id))
+                .Select(e => e.Info)
                 .ToArray();
             var forAdd = containers
-                .Where(c => _entities.All(e => e.Container.Id != c.Id))
+                .Where(c => _entities.All(e => e.Info.Id != c.Id))
                 .ToArray();
 
             if (forAdd.Length == 0 && forRemove.Length == 0) return DockerContainerSyncReport.Empty;
 
-            _entities.RemoveAll(e => forRemove.Any(r => r.Id == e.Container.Id));
-            _entities.AddRange(forAdd.Select(c => new DockerContainerMonitoringState { Container = c }));
+            _entities.RemoveAll(e => forRemove.Any(r => r.Id == e.Info.Id));
+            _entities.AddRange(forAdd.Select(c => new DockerContainerMonitoringState { Info = c }));
 
             return new DockerContainerSyncReport
             {

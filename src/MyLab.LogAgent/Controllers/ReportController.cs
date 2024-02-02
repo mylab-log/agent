@@ -25,7 +25,7 @@ namespace MyLab.LogAgent.Controllers
         {
             var foundContainer = _dockerContainerRegistry
                 .GetContainers()
-                .FirstOrDefault(c => c.Container.Id == container || c.Container.Name == container);
+                .FirstOrDefault(c => c.Info.Id == container || c.Info.Name == container);
             return foundContainer != null ? Ok(foundContainer) : NotFound($"Container '{container}' not found!");
         }
     }

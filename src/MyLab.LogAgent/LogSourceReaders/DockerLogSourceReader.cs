@@ -40,7 +40,7 @@ namespace MyLab.LogAgent.LogSourceReaders
 
             return dockerLine == null
                 ? throw new InvalidOperationException("Can't deserialize log string")
-                : new LogSourceLine(dockerLine.Log ?? string.Empty)
+                : new LogSourceLine(dockerLine.Log?.TrimEnd('\n') ?? string.Empty)
             {
                 Time = dockerLine.Time,
                 Properties = dockerLine.Attributes?.Select(a => new LogProperty

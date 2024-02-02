@@ -1,4 +1,5 @@
-﻿using MyLab.Log;
+﻿using System.Text;
+using MyLab.Log;
 using MyLab.LogAgent.LogFormats;
 using MyLab.LogAgent.LogSourceReaders;
 using MyLab.LogAgent.Model;
@@ -13,19 +14,18 @@ namespace MyLab.LogAgent.Tools
         private readonly ILogFormat _logFormat;
         private readonly ILogMessageExtractor _messageExtractor;
         private readonly ILogSourceReader _logSourceReader;
-        private readonly List<LogSourceLine>? _buff;
         private readonly DefaultLogFormat _defaultFormat = new();
+
+        public List<LogSourceLine>? Buffer { get; set; }
 
         public LogReader(
             ILogFormat logFormat, 
             ILogMessageExtractor messageExtractor,
-            ILogSourceReader logSourceReader, 
-            List<LogSourceLine>? buff)
+            ILogSourceReader logSourceReader)
         {
             _logFormat = logFormat;
             _messageExtractor = messageExtractor;
             _logSourceReader = logSourceReader ?? throw new ArgumentNullException(nameof(logSourceReader));
-            _buff = buff;
             _logReader = logFormat.CreateReader() ?? new SingleLineLogReader();
         }
 
@@ -33,7 +33,7 @@ namespace MyLab.LogAgent.Tools
         {
             _logReader.Cleanup();
         
-            var logEnum = new LogReaderEnumerable(_logSourceReader, _buff);
+            var logEnum = new LogReaderEnumerable(_logSourceReader, Buffer);
 
             LogRecord? readyLogRecord;
             DateTime? contextDateTime = null;
@@ -41,6 +41,9 @@ namespace MyLab.LogAgent.Tools
 
             var cancellableLogEnum = logEnum.WithCancellation(cancellationToken);
             var logEnumerator = cancellableLogEnum.GetAsyncEnumerator();
+
+            int originLinesCount = 0;
+            int originBytesCount = 0;
 
             do
             {
@@ -55,6 +58,12 @@ namespace MyLab.LogAgent.Tools
                 }
 
                 var nextLine = logEnumerator.Current;
+
+                if (nextLine != null)
+                {
+                    originLinesCount += nextLine.Text.Count(ch => ch == '\n')+1;
+                    originBytesCount += Encoding.UTF8.GetByteCount(nextLine.Text);
+                }
 
                 var applyResult = nextLine != null 
                     ? _logReader.ApplyNexLine(nextLine.Text)
@@ -71,15 +80,15 @@ namespace MyLab.LogAgent.Tools
                     case LogReaderResult.CompleteRecord:
                     {
                         readyLogRecord = GetLogRecord(contextDateTime, contextErrorFactor);
-                        _buff?.Clear();
+                        Buffer?.Clear();
                         return readyLogRecord;
                     }
                     case LogReaderResult.NewRecordDetected:
                     {
                         readyLogRecord = GetLogRecord(contextDateTime, contextErrorFactor);
-                        _buff?.Clear();
+                        Buffer?.Clear();
                         if(nextLine != null)
-                            _buff?.Add(nextLine);
+                            Buffer?.Add(nextLine);
                         return readyLogRecord;
                     }
                     default:
@@ -90,7 +99,13 @@ namespace MyLab.LogAgent.Tools
             
             readyLogRecord = GetLogRecord(contextDateTime, contextErrorFactor);
 
-            _buff?.Clear();
+            if (readyLogRecord != null)
+            {
+                readyLogRecord.OriginBytesCount = originBytesCount;
+                readyLogRecord.OriginLinesCount = originLinesCount;
+            }
+
+            Buffer?.Clear();
 
             return readyLogRecord;
         }
@@ -173,6 +188,8 @@ namespace MyLab.LogAgent.Tools
                 Name = LogPropertyNames.Exception,
                 Value = ExceptionDto.Create(e).ToYaml() ?? "[no-error-yaml]"
             });
+
+            logRecord.HasParsingError = true;
 
             return logRecord;
         }
