@@ -4,10 +4,10 @@ public class DockerContainerSyncReport
 {
     public static readonly DockerContainerSyncReport Empty = new()
     {
-        Added = Array.Empty<DockerContainerInfo>(),
-        Removed = Array.Empty<DockerContainerInfo>()
+        Added = Array.Empty<DockerContainerMonitoringState>(),
+        Removed = Array.Empty<DockerContainerMonitoringState>()
     };
 
-    public required IReadOnlyCollection<DockerContainerInfo> Removed { get; set; }
-    public required IReadOnlyCollection<DockerContainerInfo> Added { get; set; }
+    public required IReadOnlyCollection<DockerContainerMonitoringState> Removed { get; set; }
+    public required IReadOnlyCollection<DockerContainerMonitoringState> Added { get; set; }
 }

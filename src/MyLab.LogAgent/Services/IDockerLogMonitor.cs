@@ -6,8 +6,7 @@ using MyLab.LogAgent.LogSourceReaders;
 using MyLab.LogAgent.Model;
 using MyLab.LogAgent.Options;
 using MyLab.LogAgent.Tools;
-using MyLab.LogAgent.Tools.LogMessageProc;
-using System.ComponentModel;
+using MyLab.LogAgent.Tools.LogMessageExtraction;
 
 namespace MyLab.LogAgent.Services
 {
@@ -51,6 +50,7 @@ namespace MyLab.LogAgent.Services
             {
                 { "default", new DefaultLogFormat() },
                 { "mylab", new MyLabLogFormat() },
+                { "mylab-yaml", new MyLabLogFormat() },
                 { "net", new NetLogFormat() },
                 { "net+mylab", new NetMyLabLogFormat() },
                 { "nginx", new NginxLogFormat() }
@@ -63,42 +63,7 @@ namespace MyLab.LogAgent.Services
 
             var syncReport = _containerRegistry.Sync(actualContainers);
 
-            if (syncReport != DockerContainerSyncReport.Empty)
-            {
-                LogAgentMetrics.UpdateContainerMetrics(syncReport);
-
-                if (_log != null)
-                {
-                    var removedList = syncReport.Removed
-                        .Select(c => c.Name)
-                        .ToArray();
-
-                    var addedList = syncReport.Added
-                        .Where(c => c.Enabled)
-                        .Select(c => c.Name)
-                        .ToArray();
-
-                    var disabledList = syncReport.Added
-                        .Where(c => !c.Enabled)
-                        .Select(c => c.Name)
-                        .ToArray();
-
-                    _log.Action("Docker container list changed")
-                        .AndFactIs("removed", removedList.Length == 0
-                            ? "[empty]"
-                            : string.Join(", ", removedList)
-                        )
-                        .AndFactIs("added", addedList.Length == 0
-                            ? "[empty]"
-                            : string.Join(", ", addedList)
-                        )
-                        .AndFactIs("disabled", disabledList.Length == 0
-                            ? "[empty]"
-                            : string.Join(", ", disabledList)
-                        )
-                        .Write();
-                }
-            }
+            ProcessContainerSyncReport(syncReport);
 
             foreach (var container in _containerRegistry.GetContainers().Where(c => c.Info.Enabled))
             {
@@ -118,35 +83,57 @@ namespace MyLab.LogAgent.Services
             }
         }
 
+        private void ProcessContainerSyncReport(DockerContainerSyncReport syncReport)
+        {
+            if (syncReport == DockerContainerSyncReport.Empty)
+                return;
+
+            foreach (var cEntity in syncReport.Added)
+            {
+                bool unsupportedFormat = !ProvideFormat(cEntity, out var format, out var formatName);
+
+                cEntity.Format = format;
+                cEntity.FormatName = formatName;
+                cEntity.UnsupportedFormatDetected = unsupportedFormat;
+            }
+
+            LogAgentMetrics.UpdateContainerMetrics(syncReport);
+
+            if (_log != null)
+            {
+                var removedList = syncReport.Removed
+                    .Select(c => c.Info.Name)
+                    .ToArray();
+
+                var addedList = syncReport.Added
+                    .Where(c => c.Info.Enabled)
+                    .Select(c => c.Info.Name)
+                    .ToArray();
+
+                var disabledList = syncReport.Added
+                    .Where(c => !c.Info.Enabled)
+                    .Select(c => c.Info.Name)
+                    .ToArray();
+
+                _log.Action("Docker container list changed")
+                    .AndFactIs("removed", removedList.Length == 0
+                        ? "[empty]"
+                        : string.Join(", ", removedList)
+                    )
+                    .AndFactIs("added", addedList.Length == 0
+                        ? "[empty]"
+                        : string.Join(", ", addedList)
+                    )
+                    .AndFactIs("disabled", disabledList.Length == 0
+                        ? "[empty]"
+                        : string.Join(", ", disabledList)
+                    )
+                    .Write();
+            }
+        }
+
         private async Task ProcessContainerLogs(DockerContainerMonitoringState cEntity, CancellationToken cancellationToken)
         {
-            ILogFormat? format;
-            string formatName;
-            bool unsupportedFormat = false;
-
-            if (cEntity.Info.LogFormat == null)
-            {
-                format = _defaultLogFormat;
-                formatName = "default";
-            }
-            else
-            {
-                if (!_logFormats.TryGetValue(cEntity.Info.LogFormat, out format))
-                {
-                    _log?.Warning("Log format is not supported")
-                        .AndFactIs("format", cEntity.Info.LogFormat)
-                        .Write();
-                    format = _defaultLogFormat;
-                    unsupportedFormat = true;
-                }
-
-                formatName = cEntity.Info.LogFormat;
-            }
-
-            _log?.Debug("Log format detected")
-                .AndFactIs("format", cEntity.Info.LogFormat)
-                .Write();
-
             var lastLogFile = GetLastLogFilename(cEntity.Info.Id);
 
             if (lastLogFile == null)
@@ -195,7 +182,10 @@ namespace MyLab.LogAgent.Services
                 IgnoreStreamType = cEntity.Info.IgnoreStreamType
             };
 
-            var logReader = new LogReader(format, _logMessageExtractor, srcReader)
+            if (cEntity.Format == null)
+                throw new InvalidOperationException("Null format");
+
+            var logReader = new LogReader(cEntity.Format, _logMessageExtractor, srcReader)
             {
                 Buffer = cEntity.LineBuff
             };
@@ -204,12 +194,12 @@ namespace MyLab.LogAgent.Services
 
             while (await logReader.ReadLogAsync(cancellationToken) is { } nextLogRecord)
             {
-                nextLogRecord.Format = formatName;
+                nextLogRecord.Format = cEntity.FormatName;
                 nextLogRecord.Container = cEntity.Info.Name;
 
                 ApplyAddProps(nextLogRecord);
 
-                if (unsupportedFormat)
+                if (cEntity.UnsupportedFormatDetected)
                 {
                     nextLogRecord.Properties ??= [];
                     nextLogRecord.Properties.Add(new LogProperty
@@ -235,6 +225,41 @@ namespace MyLab.LogAgent.Services
                 .AndFactIs("new-shift", cEntity.Shift)
                 .AndFactIs("rec-count", recordCount)
                 .Write();
+        }
+
+        private bool ProvideFormat(DockerContainerMonitoringState cEntity, out ILogFormat format, out string formatName)
+        {
+            bool unsupportedFormat = false;
+
+            if (cEntity.Info.LogFormat == null)
+            {
+                format = _defaultLogFormat;
+                formatName = "default";
+            }
+            else
+            {
+
+                if (_logFormats.TryGetValue(cEntity.Info.LogFormat, out var foundFormat))
+                {
+                    format = foundFormat;
+                }
+                else
+                {
+                    _log?.Warning("Log format is not supported")
+                        .AndFactIs("format", cEntity.Info.LogFormat ?? "[null]")
+                        .Write();
+                    format = _defaultLogFormat;
+                    unsupportedFormat = true;
+                }
+
+                formatName = cEntity.Info.LogFormat!;
+            }
+
+            _log?.Debug("Log format detected")
+                .AndFactIs("format", cEntity.Info.LogFormat)
+                .Write();
+
+            return !unsupportedFormat;
         }
 
         private void ApplyAddProps(LogRecord nextLogRecord)
