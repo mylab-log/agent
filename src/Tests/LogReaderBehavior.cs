@@ -1,12 +1,10 @@
 ﻿using System.Text;
-using Microsoft.Extensions.ObjectPool;
 using MyLab.LogAgent;
 using MyLab.LogAgent.LogFormats;
 using MyLab.LogAgent.LogSourceReaders;
 using MyLab.LogAgent.Model;
 using MyLab.LogAgent.Tools;
-using MyLab.LogAgent.Tools.LogMessageProc;
-using YamlDotNet.RepresentationModel;
+using MyLab.LogAgent.Tools.LogMessageExtraction;
 
 namespace Tests;
 
@@ -29,7 +27,7 @@ public class LogReaderBehavior
         var srcReader = new AsIsLogSourceReader(streamReader);
         var logFormat = new DefaultLogFormat();
 
-        var reader = new LogReader(logFormat, TestTools.DefaultMessageExtractor, srcReader, null);
+        var reader = new LogReader(logFormat, TestTools.DefaultMessageExtractor, srcReader);
 
         //Act
         var readLogRecord = await reader.ReadLogAsync(default);
@@ -65,7 +63,7 @@ public class LogReaderBehavior
 
         var buff = new List<LogSourceLine>();
 
-        var reader = new LogReader(logFormat, TestTools.DefaultMessageExtractor, srcReader, buff);
+        var reader = new LogReader(logFormat, TestTools.DefaultMessageExtractor, srcReader) { Buffer = buff };
 
         //Act
         var readLogRecord = await reader.ReadLogAsync(default);
@@ -107,7 +105,7 @@ public class LogReaderBehavior
             new (stringInBuff)
         };
 
-        var reader = new LogReader(logFormat, TestTools.DefaultMessageExtractor, srcReader, buff);
+        var reader = new LogReader(logFormat, TestTools.DefaultMessageExtractor, srcReader) { Buffer = buff };
 
         //Act
         var readLogRecord = await reader.ReadLogAsync(default);
@@ -144,7 +142,7 @@ public class LogReaderBehavior
 
         var buff = new List<LogSourceLine>();
 
-        var reader = new LogReader(logFormat, TestTools.DefaultMessageExtractor, srcReader, buff);
+        var reader = new LogReader(logFormat, TestTools.DefaultMessageExtractor, srcReader){ Buffer = buff};
 
         await reader.ReadLogAsync(default);
 
@@ -164,7 +162,7 @@ public class LogReaderBehavior
         var memStream = new MemoryStream(Encoding.UTF8.GetBytes(sourceString));
         var streamReader = new StreamReader(memStream);
         var srcReader = new AsIsLogSourceReader(streamReader);
-        var reader = new LogReader(new BadLogFormat(), TestTools.DefaultMessageExtractor, srcReader, null);
+        var reader = new LogReader(new BadLogFormat(), TestTools.DefaultMessageExtractor, srcReader);
         
         //Act
         var readLogRecord = await reader.ReadLogAsync(default);
@@ -185,7 +183,7 @@ public class LogReaderBehavior
         var memStream = new MemoryStream(Encoding.UTF8.GetBytes(log));
         var streamReader = new StreamReader(memStream);
         var srcReader = new DockerLogSourceReader(streamReader);
-        var reader = new LogReader(new MyLabLogFormat(), TestTools.DefaultMessageExtractor, srcReader, null);
+        var reader = new LogReader(new MyLabLogFormat(), TestTools.DefaultMessageExtractor, srcReader);
 
         //Act
         var readLogRecord = await reader.ReadLogAsync(default);

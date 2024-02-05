@@ -30,7 +30,7 @@ namespace Tests
             Assert.Empty(syncReport.Removed!);
 
             Assert.NotNull(syncReport.Added);
-            Assert.Contains(syncReport.Added, c => c.Id == "foo");
+            Assert.Contains(syncReport.Added, c => c.Info.Id == "foo");
         }
 
         [Fact]
@@ -64,10 +64,10 @@ namespace Tests
 
             //Assert
             Assert.NotNull(syncReport.Removed);
-            Assert.Contains(syncReport.Removed, c => c.Id == "foo");
+            Assert.Contains(syncReport.Removed, c => c.Info.Id == "foo");
 
             Assert.NotNull(syncReport.Added);
-            Assert.Contains(syncReport.Added, c => c.Id == "bar");
+            Assert.Contains(syncReport.Added, c => c.Info.Id == "bar");
 
         }
     }

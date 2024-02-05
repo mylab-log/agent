@@ -23,7 +23,7 @@ namespace Tests
 
             //Assert
             Assert.NotNull(readLine);
-            Assert.Equal("time=\"2024-01-09T08:44:42Z\" level=error msg=\"foo\"\n",readLine.Text);
+            Assert.Equal("time=\"2024-01-09T08:44:42Z\" level=error msg=\"foo\"",readLine.Text);
             Assert.Equal(new DateTime(2024, 01, 09, 8, 44, 44),readLine.Time);
             Assert.NotNull(readLine.Properties);
             Assert.Contains(readLine.Properties, p => p is { Name: "tag", Value: "redis-monitor" });
@@ -48,7 +48,7 @@ namespace Tests
 
             //Assert
             Assert.NotNull(readLine);
-            Assert.Equal("\n", readLine.Text);
+            Assert.Equal("", readLine.Text);
         }
 
         [Theory]

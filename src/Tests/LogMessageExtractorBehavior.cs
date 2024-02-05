@@ -1,4 +1,4 @@
-﻿using MyLab.LogAgent.Tools.LogMessageProc;
+﻿using MyLab.LogAgent.Tools.LogMessageExtraction;
 
 namespace Tests
 {
