@@ -1,4 +1,4 @@
-﻿namespace MyLab.LogAgent.Tools.LogMessageProc;
+﻿namespace MyLab.LogAgent.Tools.LogMessageExtraction;
 
 class LogMessageExtractor : ILogMessageExtractor
 {

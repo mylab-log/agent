@@ -1,6 +1,6 @@
 ﻿namespace MyLab.LogAgent.LogFormats;
 
-enum LogReaderResult
+public enum LogReaderResult
 {
     Undefined,
     Accepted,

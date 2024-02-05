@@ -23,4 +23,8 @@
     <InternalsVisibleTo Include="IntegrationTests" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Tools\LogProcessing\" />
+  </ItemGroup>
+
 </Project>

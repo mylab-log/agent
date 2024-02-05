@@ -1,8 +1,6 @@
-﻿using Nest;
-
-namespace MyLab.LogAgent.Tools.LogMessageProc
+﻿namespace MyLab.LogAgent.Tools.LogMessageExtraction
 {
-    class LogMessage
+    public class LogMessage
     {
         public required string Full { get; init; }
         public required string Short { get; init; }

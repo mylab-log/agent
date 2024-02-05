@@ -1,8 +1,8 @@
 ﻿using MyLab.LogAgent.Model;
 
-namespace MyLab.LogAgent.Tools.LogMessageProc;
+namespace MyLab.LogAgent.Tools.LogMessageExtraction;
 
-interface ILogMessageExtractor
+public interface ILogMessageExtractor
 {
     LogMessage Extract(string originMessage);
 }

@@ -69,18 +69,18 @@ namespace MyLab.LogAgent.Tools
             foreach (var removed in syncReport.Removed)
             {
                 ContainerNumber.RemoveLabelled(
-                    removed.Name,
-                    removed.LogFormat ?? UndefinedLabel,
-                    removed.Enabled.ToString()
+                    removed.Info.Name,
+                    removed.Info.LogFormat ?? UndefinedLabel,
+                    removed.Info.Enabled.ToString()
                     );
             }
 
             foreach (var added in syncReport.Added)
             {
                 ContainerNumber.WithLabels(
-                    added.Name,
-                    added.LogFormat ?? UndefinedLabel,
-                    added.Enabled.ToString()
+                    added.Info.Name,
+                    added.Info.LogFormat ?? UndefinedLabel,
+                    added.Info.Enabled.ToString()
                 ).Set(1);
             }
         }

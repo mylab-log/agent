@@ -1,5 +1,5 @@
 ﻿using MyLab.LogAgent.Model;
-using MyLab.LogAgent.Tools.LogMessageProc;
+using MyLab.LogAgent.Tools.LogMessageExtraction;
 
 namespace MyLab.LogAgent.LogFormats
 {

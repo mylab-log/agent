@@ -2,7 +2,7 @@
 
 class SingleLineLogReader : ILogReader
 {
-    private string _text;
+    private string? _text;
 
     public LogReaderResult ApplyNexLine(string logTextLine)
     {
@@ -12,7 +12,7 @@ class SingleLineLogReader : ILogReader
 
     public BuildString BuildString()
     {
-        return new BuildString(_text);
+        return new BuildString(_text??string.Empty);
     }
 
     public void Cleanup()

@@ -2,7 +2,7 @@
 using System.Text;
 using MyLab.Log;
 using MyLab.LogAgent.Model;
-using MyLab.LogAgent.Tools.LogMessageProc;
+using MyLab.LogAgent.Tools.LogMessageExtraction;
 using YamlDotNet.RepresentationModel;
 using YamlDotNet.Serialization;
 using LogLevel = MyLab.LogAgent.Model.LogLevel;
