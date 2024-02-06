@@ -1,14 +1,20 @@
 ﻿using MyLab.LogAgent.Model;
 using Prometheus;
 
-namespace MyLab.LogAgent.Tools
+namespace MyLab.LogAgent.Services
 {
-    static class LogAgentMetrics
+    public interface IMetricsOperator
+    {
+        void UpdateReadingMetrics(LogRecord logRecord);
+        void UpdateContainerMetrics(DockerContainerSyncReport syncReport);
+    }
+
+    class MetricsOperator : IMetricsOperator
     {
         private const string UndefinedLabel = "[undefined]";
 
         static readonly Counter ReadRecordCounter = Metrics.CreateCounter("loga_read_records_total", "Count of read log records",
-            labelNames: 
+            labelNames:
             [
                 "container",
                 "format",
@@ -47,7 +53,7 @@ namespace MyLab.LogAgent.Tools
                 "enabled"
             ]);
 
-        public static void UpdateReadingMetrics(LogRecord logRecord)
+        public void UpdateReadingMetrics(LogRecord logRecord)
         {
             string[] labels = new[]
             {
@@ -64,7 +70,7 @@ namespace MyLab.LogAgent.Tools
                 ParsingErrorCounter.WithLabels(labels).Inc();
         }
 
-        public static void UpdateContainerMetrics(DockerContainerSyncReport syncReport)
+        public void UpdateContainerMetrics(DockerContainerSyncReport syncReport)
         {
             foreach (var removed in syncReport.Removed)
             {

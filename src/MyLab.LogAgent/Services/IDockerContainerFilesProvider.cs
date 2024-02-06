@@ -5,7 +5,7 @@ namespace MyLab.LogAgent.Services
 {
     public interface IDockerContainerFilesProvider
     {
-        IEnumerable<ContainerFile> EnumerateContainerFiles(string containerId);
+        ContainerFile? GetActualContainerLogFile(string containerId);
 
         StreamReader OpenContainerFileRead(string containerId, string filename);
     }
@@ -23,6 +23,16 @@ namespace MyLab.LogAgent.Services
             return new DirectoryInfo(containerDirPath)
                 .EnumerateFiles()
                 .Select(f => new ContainerFile(f.Name, f.Length));
+        }
+
+        public ContainerFile? GetActualContainerLogFile(string containerId)
+        {
+            var filePath = Path.Combine(_opts.DockerContainersPath, containerId, $"{containerId}-json.log");
+            var file = new FileInfo(filePath);
+
+            return file.Exists
+                ? new ContainerFile(file.Name, file.Length)
+                : null;
         }
 
         public StreamReader OpenContainerFileRead(string containerId, string filename)
