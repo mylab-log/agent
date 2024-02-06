@@ -78,6 +78,11 @@ class ContainerMonitoringProcessor : IContainerMonitoringProcessor
                 cState.LastIteration.Filename = lastLogFile.Filename;
                 cState.Shift = 0;
             }
+            else if(lastLogFile.Length < cState.Shift)
+            {
+                //File has been reset
+                cState.Shift = 0;
+            }
         }
         else
         {
