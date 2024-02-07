@@ -9,8 +9,6 @@ using MyLab.LogAgent.Services;
 using MyLab.Search.EsAdapter;
 using MyLab.Search.EsAdapter.Search;
 using MyLab.Search.EsTest;
-using Nest;
-using Newtonsoft.Json.Linq;
 using Xunit.Abstractions;
 
 namespace IntegrationTests
@@ -100,68 +98,9 @@ namespace IntegrationTests
             );
         }
 
-        //[Fact]
-        //public async Task ShouldIndexBad()
-        //{
-        //    //Arrange
-        //    var testContainer = new DockerContainerInfo
-        //    {
-        //        Id = "bad",
-        //        Name = "bad",
-        //        LogFormat = "mylab"
-        //    };
-
-        //    var containerProvider = new Mock<IDockerContainerProvider>();
-        //    containerProvider
-        //        .Setup(p => p.ProvideContainersAsync(It.IsAny<CancellationToken>()))
-        //        .ReturnsAsync(() => Enumerable.Repeat(testContainer, 1));
-
-        //    var srv = new ServiceCollection()
-        //        .AddLogAgentLogic()
-        //        .AddEsTools()
-        //        .AddSingleton(containerProvider.Object)
-        //        .ConfigureLogAgentLogic(opt =>
-        //        {
-        //            opt.DockerContainersPath = Path.Combine(Directory.GetCurrentDirectory(), "logs");
-        //            opt.OutgoingBufferSize = 1;
-        //            opt.ReadFromEnd = false;
-        //        })
-        //        .ConfigureEsTools(opt =>
-        //        {
-        //            opt.Url = TestStuff.EsUrl;
-        //            opt.IndexBindings = new IndexBinding[]
-        //            {
-        //                new() { Doc = "log", Index = "logs-test" }
-        //            };
-        //        })
-        //        .AddLogging(b => b.AddFilter(_ => true).AddXUnit(_output))
-        //        .BuildServiceProvider();
-
-        //    var monitorService = srv.GetRequiredService<IHostedService>();
-        //    if (monitorService is not LogMonitorBackgroundService)
-        //        throw new InvalidOperationException($"Wrong hosted service type: {monitorService.GetType().FullName}");
-
-        //    //Act
-        //    var startToken = new CancellationTokenSource(TimeSpan.FromSeconds(1));
-        //    await monitorService.StartAsync(default);
-
-        //    await Task.Delay(TimeSpan.FromSeconds(5), default(CancellationToken));
-        //    //await Task.Delay(TimeSpan.FromMinutes(1), default(CancellationToken));
-
-        //    var stopToken = new CancellationTokenSource(TimeSpan.FromSeconds(1));
-        //    await monitorService.StopAsync(default);
-
-        //    var searchRes = await _fxt.Searcher.SearchAsync("logs-test",
-        //        new EsSearchParams<EsLogRecord>(d => d.MatchAll()),
-        //        default
-        //        );
-
-        //    //Assert
-        //}
-
         public Task InitializeAsync()
         {
-            return _fxt.IndexTools.PruneIndexAsync("logs-test");
+            return _fxt.Tools.Index("logs-test").PruneAsync();
         }
 
         public Task DisposeAsync()

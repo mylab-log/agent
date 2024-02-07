@@ -1,1 +1,1 @@
-docker-compose -p logagnet-test up -d
+docker-compose up -d

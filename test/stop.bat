@@ -1,1 +1,1 @@
-docker-compose -p logagent-test down
+docker-compose down -v
