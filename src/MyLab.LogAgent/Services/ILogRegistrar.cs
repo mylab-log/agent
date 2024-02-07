@@ -7,63 +7,83 @@ namespace MyLab.LogAgent.Services
 {
     public interface ILogRegistrar
     {
-        Task RegisterAsync(LogRecord logRecord);
+        Task RegisterAsync(LogRecord logRecord, CancellationToken cancellationToken);
 
-        Task FlushAsync();
+        Task FlushAsync(CancellationToken cancellationToken);
     }
 
     class LogRegistrar : ILogRegistrar
     {
-        private readonly List<LogRecord> _buff = new ();
+        private readonly Queue<List<LogRecord>> _buffQ = new ();
         private readonly ILogRegistrationTransport _registrationTransport;
-        private readonly IOptions<LogAgentOptions> _opts;
-        private bool _registering;
-        private readonly object _buffLock = new ();
+        private readonly IMetricsOperator? _metricsOperator;
+        private readonly int _buffSize;
 
-        public LogRegistrar(ILogRegistrationTransport registrationTransport, IOptions<LogAgentOptions> opts)
+        public LogRegistrar(
+            ILogRegistrationTransport registrationTransport, 
+            IOptions<LogAgentOptions> opts,
+            IMetricsOperator? metricsOperator = null)
         {
             _registrationTransport = registrationTransport ?? throw new ArgumentNullException(nameof(registrationTransport));
-            _opts = opts ?? throw new ArgumentNullException(nameof(opts));
+            _metricsOperator = metricsOperator;
+            _buffSize = opts.Value.OutgoingBufferSize;
         }
 
-        public async Task RegisterAsync(LogRecord logRecord)
+        public Task RegisterAsync(LogRecord logRecord, CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(logRecord, nameof(logRecord));
 
-            _buff.Add(logRecord);
-            await TryRegisterLogsFromBufferAsync();
-
+            return AddRecordAsync(logRecord, cancellationToken);
         }
 
-        public Task FlushAsync()
+        public Task FlushAsync(CancellationToken cancellationToken = default)
         {
-            return TryRegisterLogsFromBufferAsync(force: true);
+            return UploadRecordsAsync(force:true, cancellationToken);
         }
 
-        private async Task TryRegisterLogsFromBufferAsync(bool force = false)
+        Task AddRecordAsync(LogRecord rec, CancellationToken cancellationToken)
         {
-            if (!_registering && _buff.Count != 0 && (force || _opts.Value.OutgoingBufferSize <= _buff.Count))
+            List<LogRecord> buff;
+
+            if (_buffQ.Count != 0)
+                buff = _buffQ.Last();
+            else
             {
-                _registering = true;
-
-                try
-                {
-                    var buffClone = _buff.ToArray();
-                    await _registrationTransport.RegisterLogsAsync(buffClone);
-
-                    lock (_buffLock)
-                    {
-                        foreach (var cloneRec in buffClone)
-                        {
-                            _buff.Remove(cloneRec);
-                        }
-                    }
-                }
-                finally
-                {
-                    _registering = false;
-                }
+                buff = [];
+                _buffQ.Enqueue(buff);
             }
+
+            buff.Add(rec);
+
+            if (buff.Count >= _buffSize)
+            {
+                _buffQ.Enqueue([]);
+            }
+
+            return UploadRecordsAsync(force: false, cancellationToken);
+        }
+
+        async Task UploadRecordsAsync(bool force, CancellationToken cancellationToken)
+        {
+            if (_buffQ.Count == 0 || (_buffQ.Count == 1 && !force)) return;
+
+            var buffToUpload = _buffQ.First();
+
+            DateTime start = DateTime.Now;
+
+            try
+            {
+                await _registrationTransport.RegisterLogsAsync(buffToUpload, cancellationToken);
+
+                _metricsOperator?.RegisterEsRequest(false, buffToUpload.Count, start - DateTime.Now);
+            }
+            catch
+            {
+                _metricsOperator?.RegisterEsRequest(true, buffToUpload.Count, start - DateTime.Now);
+                throw;
+            }
+            
+            _buffQ.Dequeue();
         }
     }
 }

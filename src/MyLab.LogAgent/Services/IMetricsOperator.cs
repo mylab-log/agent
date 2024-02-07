@@ -1,12 +1,14 @@
 ﻿using MyLab.LogAgent.Model;
 using Prometheus;
+using System.Reflection.Emit;
 
 namespace MyLab.LogAgent.Services
 {
     public interface IMetricsOperator
     {
-        void UpdateReadingMetrics(LogRecord logRecord);
-        void UpdateContainerMetrics(DockerContainerSyncReport syncReport);
+        void RegisterLogReading(LogRecord logRecord);
+        void RegisterContainerSyncReport(DockerContainerSyncReport syncReport);
+        void RegisterEsRequest(bool hasError, int logRecordCount, TimeSpan duration);
     }
 
     class MetricsOperator : IMetricsOperator
@@ -45,6 +47,45 @@ namespace MyLab.LogAgent.Services
                 "level"
             ]);
 
+        static readonly Histogram EsRequestDuration = Metrics.CreateHistogram("loga_es_request_duration_seconds", "Duration of Elasticsearch requests",
+            new HistogramConfiguration
+            {
+                LabelNames = [
+                    "haserr"
+                ],
+                Buckets = new[]
+                {
+                    0.1,
+                    0.2,
+                    0.5,
+                    1,
+                    2,
+                    5,
+                    10
+                }
+            });
+
+        static readonly Histogram EsRequestLogCount = Metrics.CreateHistogram("loga_es_request_rec_count", "Elasticsearch requests payload size (log rec count)",
+            new HistogramConfiguration
+            {
+                LabelNames = [
+                    "haserr"
+                ],
+                Buckets = new double[]
+                {
+                    1,
+                    2,
+                    5,
+                    10,
+                    20,
+                    50,
+                    100,
+                    200,
+                    500,
+                    1000
+                }
+            });
+
         static readonly Gauge ContainerNumber = Metrics.CreateGauge("loga_container_number", "Number of target containers",
             labelNames:
             [
@@ -53,7 +94,7 @@ namespace MyLab.LogAgent.Services
                 "enabled"
             ]);
 
-        public void UpdateReadingMetrics(LogRecord logRecord)
+        public void RegisterLogReading(LogRecord logRecord)
         {
             string[] labels = new[]
             {
@@ -70,7 +111,7 @@ namespace MyLab.LogAgent.Services
                 ParsingErrorCounter.WithLabels(labels).Inc();
         }
 
-        public void UpdateContainerMetrics(DockerContainerSyncReport syncReport)
+        public void RegisterContainerSyncReport(DockerContainerSyncReport syncReport)
         {
             foreach (var removed in syncReport.Removed)
             {
@@ -89,6 +130,12 @@ namespace MyLab.LogAgent.Services
                     added.Info.Enabled.ToString()
                 ).Set(1);
             }
+        }
+
+        public void RegisterEsRequest(bool hasError, int logRecordCount, TimeSpan duration)
+        {
+            EsRequestDuration.WithLabels(hasError.ToString()).Observe(duration.TotalSeconds);
+            EsRequestLogCount.WithLabels(hasError.ToString()).Observe(logRecordCount);
         }
     }
 }

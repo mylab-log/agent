@@ -264,8 +264,8 @@ namespace Tests
         ILogRegistrar CreateLogRegistrar(List<LogRecord> outgoingLogs)
         {
             var registrar = new Mock<ILogRegistrar>();
-            registrar.Setup(r => r.RegisterAsync(It.IsAny<LogRecord>()))
-                .Callback<LogRecord>(outgoingLogs.Add);
+            registrar.Setup(r => r.RegisterAsync(It.IsAny<LogRecord>(), It.IsAny<CancellationToken>()))
+                .Callback<LogRecord, CancellationToken>((lr, _) => outgoingLogs.Add(lr));
 
             return registrar.Object;
         }

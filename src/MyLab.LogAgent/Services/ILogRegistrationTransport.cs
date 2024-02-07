@@ -6,7 +6,7 @@ namespace MyLab.LogAgent.Services
 {
     public interface ILogRegistrationTransport
     {
-        Task RegisterLogsAsync(IEnumerable<LogRecord> logRecords);
+        Task RegisterLogsAsync(IEnumerable<LogRecord> logRecords, CancellationToken cancellationToken = default);
     }
 
     class LogRegistrationTransport : ILogRegistrationTransport
@@ -18,14 +18,14 @@ namespace MyLab.LogAgent.Services
             _esIndexer = esIndexer;
         }
 
-        public Task RegisterLogsAsync(IEnumerable<LogRecord> logRecords)
+        public Task RegisterLogsAsync(IEnumerable<LogRecord> logRecords, CancellationToken cancellationToken)
         {
             var recs = logRecords.Select(EsLogRecord.FromLogRecord);
 
             return _esIndexer.BulkAsync(new EsBulkIndexingRequest<EsLogRecord>
             {
                 CreateList = recs.ToArray()
-            });
+            }, cancellationToken);
         }
     }
 

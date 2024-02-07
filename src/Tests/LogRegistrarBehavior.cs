@@ -15,8 +15,8 @@ namespace Tests
             LogRecord[]? capturedRecords = null;
 
             var registrarTransport = new Mock<ILogRegistrationTransport>();
-            registrarTransport.Setup(t => t.RegisterLogsAsync(It.IsAny<IEnumerable<LogRecord>>()))
-                .Callback<IEnumerable<LogRecord>>(records => capturedRecords = records.ToArray());
+            registrarTransport.Setup(t => t.RegisterLogsAsync(It.IsAny<IEnumerable<LogRecord>>(), It.IsAny<CancellationToken>()))
+                .Callback<IEnumerable<LogRecord>, CancellationToken>((records, _) => capturedRecords = records.ToArray());
 
             var options = new LogAgentOptions
             {
@@ -51,8 +51,8 @@ namespace Tests
             LogRecord[]? capturedRecords = null;
 
             var registrarTransport = new Mock<ILogRegistrationTransport>();
-            registrarTransport.Setup(t => t.RegisterLogsAsync(It.IsAny<IEnumerable<LogRecord>>()))
-                .Callback<IEnumerable<LogRecord>>(records => capturedRecords = records.ToArray());
+            registrarTransport.Setup(t => t.RegisterLogsAsync(It.IsAny<IEnumerable<LogRecord>>(), It.IsAny<CancellationToken>()))
+                .Callback<IEnumerable<LogRecord>, CancellationToken>((records, _) => capturedRecords = records.ToArray());
 
             var options = new LogAgentOptions
             {

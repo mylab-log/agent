@@ -41,7 +41,7 @@ namespace MyLab.LogAgent.Tools.DockerContainerProcessing
                 cEntity.UnsupportedFormatDetected = unsupportedFormat;
             }
 
-            MetricsOperator?.UpdateContainerMetrics(syncReport);
+            MetricsOperator?.RegisterContainerSyncReport(syncReport);
 
             if (Logger != null)
             {

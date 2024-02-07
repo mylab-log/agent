@@ -136,16 +136,16 @@ class ContainerMonitoringProcessor : IContainerMonitoringProcessor
                 });
             }
 
-            await _logRegistrar.RegisterAsync(nextLogRecord);
+            await _logRegistrar.RegisterAsync(nextLogRecord, cancellationToken);
 
             recordCount++;
 
-            _metricsOperator?.UpdateReadingMetrics(nextLogRecord);
+            _metricsOperator?.RegisterLogReading(nextLogRecord);
         }
 
         cState.LastIteration.LogCount = recordCount;
         cState.Shift = fileReader.BaseStream.Position;
-        await _logRegistrar.FlushAsync();
+        await _logRegistrar.FlushAsync(cancellationToken);
 
         _log?.Debug("Log file reading completion")
             .AndFactIs("filename", lastLogFile)
