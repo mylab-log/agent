@@ -9,11 +9,11 @@ namespace MyLab.LogAgent.Services
         Task RegisterLogsAsync(IEnumerable<LogRecord> logRecords, CancellationToken cancellationToken = default);
     }
 
-    class LogRegistrationTransport : ILogRegistrationTransport
+    class ElasticsearchLogRegistrationTransport : ILogRegistrationTransport
     {
         private readonly IEsIndexer<EsLogRecord> _esIndexer;
 
-        public LogRegistrationTransport(IEsIndexer<EsLogRecord> esIndexer)
+        public ElasticsearchLogRegistrationTransport(IEsIndexer<EsLogRecord> esIndexer)
         {
             _esIndexer = esIndexer;
         }
@@ -51,7 +51,7 @@ namespace MyLab.LogAgent.Services
             var pGroups = resultProperties
                 .GroupBy(p => p.Name)
                 .ToDictionary(
-                    pg => pg.Key,
+                    pg => NormKey(pg.Key),
                     pg => pg.Select(pgv => pgv.Value).ToArray()
                 );
 
@@ -66,6 +66,15 @@ namespace MyLab.LogAgent.Services
             }
 
             return esLogRecord;
+        }
+
+        private static string NormKey(string originKey)
+        {
+            if (originKey == "host")
+                return LogPropertyNames.HostAltName;
+            if (originKey.Contains('.'))
+                return originKey.Replace('.', '-');
+            return originKey;
         }
     }
 }

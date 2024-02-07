@@ -14,7 +14,7 @@ namespace MyLab.LogAgent
                 .AddSingleton<IDockerLogMonitor, DockerLogMonitor>()
                 .AddSingleton<IDockerContainerFilesProvider, DockerContainerFilesProvider>()
                 .AddSingleton<ILogRegistrar, LogRegistrar>()
-                .AddSingleton<ILogRegistrationTransport, LogRegistrationTransport>()
+                .AddSingleton<ILogRegistrationTransport, ElasticsearchLogRegistrationTransport>()
                 .AddSingleton<IDockerContainerRegistry, DockerContainerRegistry>()
                 .AddSingleton<IContainerMonitoringProcessor, ContainerMonitoringProcessor>()
                 .AddSingleton<IMetricsOperator, MetricsOperator>();

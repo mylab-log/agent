@@ -33,5 +33,38 @@ namespace Tests
             Assert.Contains(esLogRecord, p => p is { Key:"bar-name", Value:"bar-value-1, bar-value-2" });
             Assert.Contains(esLogRecord, p => p is { Key:"baz-name", Value:"baz-value" });
         }
+
+        [Theory]
+        [MemberData(nameof(GetNormKeyCases))]
+        public void ShouldNormPropertyKey(string originKey, string expectedNormalizedKey)
+        {
+            //Arrange
+            var logRecord = new LogRecord
+            {
+                Message = "foo",
+                Time = default,
+                Properties = new List<LogProperty>
+                {
+                    new() { Name = originKey, Value = "some-value" },
+                }
+            };
+
+            //Act
+            var esLogRecord = EsLogRecord.FromLogRecord(logRecord);
+
+            //Assert
+            Assert.NotNull(esLogRecord);
+            Assert.Contains(esLogRecord, p => p.Key == expectedNormalizedKey && p.Value == "some-value");
+        }
+
+        public static object[][] GetNormKeyCases()
+        {
+            return new[]
+            {
+                new object[] { "ololo", "ololo" },
+                new object[] { "host", LogPropertyNames.HostAltName },
+                new object[] { "obj.param", "obj-param" },
+            };
+        }
     }
 }

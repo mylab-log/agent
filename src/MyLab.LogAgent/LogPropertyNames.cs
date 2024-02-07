@@ -13,5 +13,6 @@
         public const string ParsingFailedFlag = "parsing-failed";
         public const string ParsingFailureReason = "parsing-failure-reason";
         public const string UnsupportedFormatFlag = "unsupported-format";
+        public const string HostAltName = "host-prop";
     }
 }
