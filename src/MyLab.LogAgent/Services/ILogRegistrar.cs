@@ -75,11 +75,11 @@ namespace MyLab.LogAgent.Services
             {
                 await _registrationTransport.RegisterLogsAsync(buffToUpload, cancellationToken);
 
-                _metricsOperator?.RegisterEsRequest(false, buffToUpload.Count, start - DateTime.Now);
+                _metricsOperator?.RegisterEsRequest(false, buffToUpload.Count, DateTime.Now - start);
             }
             catch
             {
-                _metricsOperator?.RegisterEsRequest(true, buffToUpload.Count, start - DateTime.Now);
+                _metricsOperator?.RegisterEsRequest(true, buffToUpload.Count, DateTime.Now - start);
                 throw;
             }
             
