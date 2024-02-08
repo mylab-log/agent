@@ -35,7 +35,7 @@ namespace MyLab.LogAgent.Tools
         
             var logEnum = new LogReaderEnumerable(_logSourceReader, Buffer);
 
-            LogRecord? readyLogRecord;
+            LogRecord? readyLogRecord = null;
             DateTime? contextDateTime = null;
             bool contextErrorFactor = false;
 
@@ -45,67 +45,64 @@ namespace MyLab.LogAgent.Tools
             int originLinesCount = 0;
             int originBytesCount = 0;
 
-            do
+            try
             {
-                try
+                do
                 {
                     if (!await logEnumerator.MoveNextAsync())
+                    {
+                        readyLogRecord = GetLogRecord(contextDateTime, contextErrorFactor);
+                        Buffer?.Clear();
                         break;
-                }
-                catch (SourceLogReadingException e)
-                {
-                    return CreateFailLogRecord(e.SourceText, e);
-                }
+                    }
 
-                var nextLine = logEnumerator.Current;
+                    var nextLine = logEnumerator.Current;
 
-                if (nextLine != null)
-                {
-                    originLinesCount += nextLine.Text.Count(ch => ch == '\n')+1;
-                    originBytesCount += Encoding.UTF8.GetByteCount(nextLine.Text);
-                }
+                    if (nextLine != null)
+                    {
+                        originLinesCount += nextLine.Text.Count(ch => ch == '\n')+1;
+                        originBytesCount += Encoding.UTF8.GetByteCount(nextLine.Text);
+                    }
 
-                var applyResult = nextLine != null 
-                    ? _logReader.ApplyNexLine(nextLine.Text)
-                    : LogReaderResult.CompleteRecord;
+                    var applyResult = nextLine != null 
+                        ? _logReader.ApplyNexLine(nextLine.Text)
+                        : LogReaderResult.CompleteRecord;
 
-                switch (applyResult)
-                {
-                    case LogReaderResult.Accepted:
+
+                    if (applyResult == LogReaderResult.Accepted)
                     {
                         contextDateTime ??= nextLine?.Time ?? DateTime.Now;
                         contextErrorFactor = contextErrorFactor || (nextLine?.IsError ?? false);
                     }
+                    else if (applyResult == LogReaderResult.CompleteRecord)
+                    {
+                        readyLogRecord = GetLogRecord(contextDateTime, contextErrorFactor);
+                        Buffer?.Clear();
                         break;
-                    case LogReaderResult.CompleteRecord:
-                    {
-                        readyLogRecord = GetLogRecord(contextDateTime, contextErrorFactor);
-                        Buffer?.Clear();
-                        return readyLogRecord;
                     }
-                    case LogReaderResult.NewRecordDetected:
+                    else if (applyResult == LogReaderResult.NewRecordDetected)
                     {
                         readyLogRecord = GetLogRecord(contextDateTime, contextErrorFactor);
                         Buffer?.Clear();
-                        if(nextLine != null)
+                        if (nextLine != null)
                             Buffer?.Add(nextLine);
-                        return readyLogRecord;
+                        break;
                     }
-                    default:
+                    else
                         throw new ArgumentOutOfRangeException();
-                }
 
-            } while (true);
+                } while (true);
+            }
+            catch (SourceLogReadingException e)
+            {
+                readyLogRecord = CreateFailLogRecord(e.SourceText, e);
+            }
             
-            readyLogRecord = GetLogRecord(contextDateTime, contextErrorFactor);
-
             if (readyLogRecord != null)
             {
                 readyLogRecord.OriginBytesCount = originBytesCount;
                 readyLogRecord.OriginLinesCount = originLinesCount;
             }
-
-            Buffer?.Clear();
 
             return readyLogRecord;
         }
