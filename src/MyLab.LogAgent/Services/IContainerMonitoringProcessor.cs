@@ -141,6 +141,13 @@ class ContainerMonitoringProcessor : IContainerMonitoringProcessor
             recordCount++;
 
             _metricsOperator?.RegisterLogReading(nextLogRecord);
+
+            if(nextLogRecord.HasParsingError)
+            {
+                _log?.Warning("Log parsing error")
+                    .AndFactIs("record", nextLogRecord)
+                    .Write();
+            }
         }
 
         cState.LastIteration.LogCount = recordCount;

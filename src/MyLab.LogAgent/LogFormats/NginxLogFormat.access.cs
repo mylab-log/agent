@@ -6,7 +6,7 @@ partial class NginxLogFormat
 {
     static class AssessLogExtractor
     {
-        public static void Extract(string logText, List<LogProperty> props, out string message)
+        public static bool Extract(string logText, List<LogProperty> props, out string message)
         {
             if (
                 !TryExtractRemoteAddress(logText, props, out var remoteAddress) &
@@ -26,10 +26,13 @@ partial class NginxLogFormat
                 });
 
                 message = logText;
+
+                return false;
             }
             else
             {
                 message = $"{remoteAddress}: {request} -> {status}";
+                return true;
             }
         }
 

@@ -23,13 +23,13 @@ namespace MyLab.LogAgent.LogFormats
             string message;
             var detectedLogLevel = LogLevel.Undefined;
 
-            if (IsAccessLog(logText))
-                AssessLogExtractor.Extract(logText, props, out message);
-            else
-                ErrorLogExtractor.Extract(logText, props, out message, out detectedLogLevel);
+            bool extractSuccess = IsAccessLog(logText)
+                ? AssessLogExtractor.Extract(logText, props, out message)
+                : ErrorLogExtractor.Extract(logText, props, out message, out detectedLogLevel);
 
             var resMessage = messageExtractor.ExtractAndCreateLogRecord(message, props);
             resMessage.Level = detectedLogLevel;
+            resMessage.HasParsingError = !extractSuccess;
 
             return resMessage;
         }

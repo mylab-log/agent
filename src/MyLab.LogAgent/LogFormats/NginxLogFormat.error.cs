@@ -11,7 +11,7 @@ partial class NginxLogFormat
         private const string RegexPattern = """
                                       (?<level>\[\w+\])\s\d+#\d+:\s\*\d+\s(?<message>[^,]+),\s(?<props>[^$]+)
                                       """;
-        public static void Extract(string logText, List<LogProperty> props, out string message, out LogLevel logLevel)
+        public static bool Extract(string logText, List<LogProperty> props, out string message, out LogLevel logLevel)
         {
             logLevel = LogLevel.Undefined;
             var m = Regex.Match(logText, RegexPattern);
@@ -30,6 +30,7 @@ partial class NginxLogFormat
                 });
 
                 message = logText;
+                return false;
             }
             else
             {
@@ -48,6 +49,7 @@ partial class NginxLogFormat
                         ? TryCleanupRequest(requestStr.Trim('"'))
                         : NotFound
                 });
+                return true;
             }
         }
 
