@@ -69,6 +69,8 @@ namespace MyLab.LogAgent.Services
 
             var buffToUpload = _buffQ.First();
 
+            if (buffToUpload.Count == 0) return;
+
             DateTime start = DateTime.Now;
 
             try
