@@ -11,7 +11,7 @@
     <PackageReference Include="Docker.DotNet" Version="3.125.15" />
     <PackageReference Include="MyLab.HttpMetrics" Version="1.1.3" />
     <PackageReference Include="MyLab.Log.Dsl" Version="3.7.5" />
-    <PackageReference Include="MyLab.Search.EsAdapter" Version="2.4.25" />
+    <PackageReference Include="MyLab.Search.EsAdapter" Version="2.4.26" />
     <PackageReference Include="MyLab.StatusProvider" Version="1.5.9" />
     <PackageReference Include="MyLab.WebErrors" Version="1.1.6" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
