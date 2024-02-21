@@ -13,7 +13,7 @@ namespace Tests
             //Arrange
             const string log = """
                                Message: Something wrong!
-                               Time: 2023-12-28T13:38:00.000Z
+                               Time: 2023-12-28T13:38:00.000
                                Exception:
                                  Message: Name not known
                                  Type: System.Net.Http.HttpRequestException
@@ -62,7 +62,8 @@ namespace Tests
             //Assert
             Assert.NotNull(logRecord);
             Assert.Equal("Something wrong!", logRecord.Message);
-            Assert.Equal(new DateTime(2023, 12,28, 13,38,0), logRecord.Time.ToUniversalTime());
+            Assert.Equal(new DateTime(2023, 12,28, 13,38,0), logRecord.Time);
+            Assert.Equal(DateTimeKind.Local, logRecord.Time.Kind);
             Assert.NotNull(logRecord.Properties);
             Assert.Contains(logRecord.Properties, p => p is { Name: "log-category", Value: "KeslService" });
             Assert.Contains(logRecord.Properties, p => p is { Name: "exception-trace", Value: "07ec3acc398533dd64f43420afda50c5" });

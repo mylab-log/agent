@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Globalization;
 using System.Text;
 using MyLab.Log;
 using MyLab.LogAgent.Model;
@@ -65,10 +66,22 @@ namespace MyLab.LogAgent.LogFormats
 
             var resRecord = messageExtractor.ExtractAndCreateLogRecord(messageNode.ToString(), props);
             
-            resRecord.Time = DateTime.Parse(timeNode.ToString());
+            resRecord.Time = ParseDateTime(timeNode);
             resRecord.Level = DeserializeLogLevel(logLevel);
 
             return resRecord;
+        }
+
+        private static DateTime ParseDateTime(YamlNode timeNode)
+        {
+            var dt =  DateTime.Parse(timeNode.ToString(), CultureInfo.InvariantCulture);
+
+            if (dt.Kind == DateTimeKind.Unspecified)
+            {
+                dt = DateTime.SpecifyKind(dt, DateTimeKind.Local);
+            }
+
+            return dt;
         }
 
         private static void ProcessFacts(YamlMappingNode logFacts, List<LogProperty> props, out string? logLevel)

@@ -1,11 +1,19 @@
 ﻿using System.Text;
 using MyLab.LogAgent.LogSourceReaders;
+using Xunit.Abstractions;
 using StreamReader = System.IO.StreamReader;
 
 namespace Tests
 {
     public class DockerLogSourceReaderBehavior
     {
+        private readonly ITestOutputHelper _output;
+
+        public DockerLogSourceReaderBehavior(ITestOutputHelper output)
+        {
+            _output = output;
+        }
+
         [Fact]
         public async Task ShouldReadDockerLog()
         {
@@ -24,9 +32,13 @@ namespace Tests
             //Assert
             Assert.NotNull(readLine);
             Assert.Equal("time=\"2024-01-09T08:44:42Z\" level=error msg=\"foo\"",readLine.Text);
-            Assert.Equal(new DateTime(2024, 01, 09, 8, 44, 44),readLine.Time);
+            Assert.NotNull(readLine.Time);
+            Assert.Equal(new DateTime(2024, 01, 09, 8, 44, 44, DateTimeKind.Utc),readLine.Time);
             Assert.NotNull(readLine.Properties);
             Assert.Contains(readLine.Properties, p => p is { Name: "tag", Value: "redis-monitor" });
+
+
+            _output.WriteLine("Time: " + readLine.Time.Value.ToString("O"));
         }
 
         [Fact]

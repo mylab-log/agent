@@ -10,7 +10,7 @@ namespace Tests
         public void ShouldInitFromLogRecord()
         {
             //Arrange
-            var dTime = new DateTime(1990, 01, 02, 03, 04, 05);
+            var dTime = new DateTime(1990, 01, 02, 03, 04, 05, DateTimeKind.Utc);
             var logRecord = new LogRecord
             {
                 Message = "foo",
@@ -29,7 +29,7 @@ namespace Tests
             //Assert
             Assert.NotNull(esLogRecord);
             Assert.Contains(esLogRecord, p => p is { Key:LogPropertyNames.Message, Value:"foo" });
-            Assert.Contains(esLogRecord, p => p is { Key: LogPropertyNames.Time, Value: "1990-01-02T03:04:05.0000000" });
+            Assert.Contains(esLogRecord, p => p is { Key: LogPropertyNames.Time, Value: "1990-01-02T03:04:05.0000000Z" });
             Assert.Contains(esLogRecord, p => p is { Key:"bar-name", Value:"bar-value-1, bar-value-2" });
             Assert.Contains(esLogRecord, p => p is { Key:"baz-name", Value:"baz-value" });
         }
