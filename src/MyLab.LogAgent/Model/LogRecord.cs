@@ -1,4 +1,6 @@
 ﻿using MyLab.Log;
+using MyLab.LogAgent.Services;
+using MyLab.LogAgent.Tools;
 
 namespace MyLab.LogAgent.Model
 {
@@ -14,6 +16,33 @@ namespace MyLab.LogAgent.Model
         public int OriginLinesCount { get; set; }
         public int OriginBytesCount { get; set; }
         public bool HasParsingError { get; set; }
+
+        public void SetParsingErrorState(string failureReasonId, Exception? exception = null)
+        {
+            Properties ??= new List<LogProperty>();
+
+            Properties.Add(new LogProperty
+            {
+                Name = LogPropertyNames.ParsingFailedFlag,
+                Value = "true"
+            });
+            Properties.Add(new LogProperty
+            {
+                Name = LogPropertyNames.ParsingFailureReason,
+                Value = failureReasonId
+            });
+
+            if (exception != null)
+            {
+                Properties.Add(new LogProperty
+                {
+                    Name = LogPropertyNames.Exception,
+                    Value = ExceptionDto.Create(exception).ToYaml() ?? "[no-error-yaml]"
+                });
+            }
+
+            HasParsingError = true;
+        }
     }
 
     public enum LogLevel

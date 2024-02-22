@@ -27,11 +27,15 @@ namespace MyLab.LogAgent.LogFormats
                 ? AssessLogExtractor.Extract(logText, props, out message)
                 : ErrorLogExtractor.Extract(logText, props, out message, out detectedLogLevel);
 
-            var resMessage = messageExtractor.ExtractAndCreateLogRecord(message, props);
-            resMessage.Level = detectedLogLevel;
-            resMessage.HasParsingError = !extractSuccess;
+            var resRecord = messageExtractor.ExtractAndCreateLogRecord(message, props);
+            resRecord.Level = detectedLogLevel;
 
-            return resMessage;
+            if (!extractSuccess)
+            {
+                resRecord.SetParsingErrorState("nginx-format");
+            }
+
+            return resRecord;
         }
 
         private bool IsAccessLog(string logText)

@@ -95,7 +95,7 @@ namespace MyLab.LogAgent.Tools
             }
             catch (SourceLogReadingException e)
             {
-                readyLogRecord = CreateFailLogRecord(e.SourceText, e);
+                readyLogRecord = CreateFailLogRecord(e.SourceText, e, contextDateTime);
             }
             
             if (readyLogRecord != null)
@@ -141,11 +141,11 @@ namespace MyLab.LogAgent.Tools
             }
             catch (Exception e)
             {
-                return CreateFailLogRecord(logString.Text, e);
+                return CreateFailLogRecord(logString.Text, e, contextDateTime);
             }
         }
 
-        private LogRecord CreateFailLogRecord(string logString, Exception e)
+        private LogRecord CreateFailLogRecord(string logString, Exception e, DateTime? contextDateTime)
         {
             LogRecord? logRecord;
 
@@ -167,26 +167,9 @@ namespace MyLab.LogAgent.Tools
                 });
             }
 
-            logRecord.Properties ??= new List<LogProperty>();
-
-            logRecord.Properties.Add(new LogProperty
-            {
-                Name = LogPropertyNames.ParsingFailedFlag,
-                Value = "true"
-            });
-            logRecord.Properties.Add(new LogProperty
-            {
-                Name = LogPropertyNames.ParsingFailureReason,
-                Value = "exception"
-            });
-
-            logRecord.Properties.Add(new LogProperty
-            {
-                Name = LogPropertyNames.Exception,
-                Value = ExceptionDto.Create(e).ToYaml() ?? "[no-error-yaml]"
-            });
-
-            logRecord.HasParsingError = true;
+            logRecord.SetParsingErrorState("exception", e);
+            logRecord.Time = contextDateTime ?? DateTime.Now;
+            logRecord.Level = LogLevel.Warning;
 
             return logRecord;
         }

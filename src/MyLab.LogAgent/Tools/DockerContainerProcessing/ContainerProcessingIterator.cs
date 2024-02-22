@@ -26,7 +26,7 @@ namespace MyLab.LogAgent.Tools.DockerContainerProcessing
                 container.LastIteration.DateTime = DateTime.Now;
 
                 using var scope = Logger?.BeginScope(new LabelLogScope("scoped-container", container.Info.Name));
-
+                
                 try
                 {
                     await processor.ProcessAsync(container, cancellationToken);
