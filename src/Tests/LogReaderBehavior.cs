@@ -48,6 +48,7 @@ public class LogReaderBehavior
             "Start log-1",
             " line2",
             " line3",
+            "",
             "Start log-2",
             " line2",
             " line3"

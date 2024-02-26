@@ -7,7 +7,7 @@ namespace MyLab.LogAgent.LogFormats
     {
         public ILogReader CreateReader()
         {
-            return new MultilineLogReader();
+            return new MultilineLogReader(false);
         }
 
         public LogRecord? Parse(string logText, ILogMessageExtractor messageExtractor)

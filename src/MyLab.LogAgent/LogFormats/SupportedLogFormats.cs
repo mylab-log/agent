@@ -11,6 +11,7 @@ namespace MyLab.LogAgent.LogFormats
             : base(new Dictionary<string, ILogFormat>
             {
                 { "default", Default },
+                { "single", new SingleLineLogFormat() },
                 { "mylab", new MyLabLogFormat() },
                 { "mylab-yaml", new MyLabLogFormat() },
                 { "net", new NetLogFormat() },

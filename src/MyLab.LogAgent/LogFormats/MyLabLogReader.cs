@@ -7,9 +7,11 @@ class MyLabLogReader : ILogReader
 {
     private readonly StringBuilder _sb = new();
 
+    public static Func<string, bool> NewRecordPredicate = l => l.StartsWith(nameof(LogEntity.Message) + ": ");
+
     public LogReaderResult ApplyNexLine(string logTextLine)
     {
-        if (_sb.Length != 0 && logTextLine.StartsWith(nameof(LogEntity.Message) + ": "))
+        if (_sb.Length != 0 && NewRecordPredicate(logTextLine))
             return LogReaderResult.NewRecordDetected;
 
         _sb.AppendLine(logTextLine.TrimEnd());

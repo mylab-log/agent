@@ -12,17 +12,7 @@ namespace MyLab.LogAgent.LogFormats
 
         public LogRecord Parse(string logText, ILogMessageExtractor messageExtractor)
         {
-            var props = new List<LogProperty>();
-
-            NetFormatLogic.ExtractCategory(logText, out var category, out var leftText);
-
-            props.Add(new LogProperty
-            {
-                Name = LogPropertyNames.Category,
-                Value = category
-            });
-
-            return messageExtractor.ExtractAndCreateLogRecord(leftText, props);
+            return NetFormatLogic.Parse(logText, messageExtractor);
         }
     }
 }

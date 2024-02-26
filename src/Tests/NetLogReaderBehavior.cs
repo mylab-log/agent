@@ -27,7 +27,7 @@ namespace Tests
 
             //Assert
             Assert.True(readerResults.All(rr => rr == LogReaderResult.Accepted));
-            Assert.Equal(LogLevel.Error, str.ExtractedLogLevel);
+            Assert.Equal(LogLevel.Undefined, str.ExtractedLogLevel);
             Assert.Contains("MyLab.PrometheusAgent.Services.TargetsMetricProvider[0]", str.Text);
             Assert.Contains("Message: Connection refused (infonot-doc-storage-antivirus-processor:80)", str.Text);
         }
@@ -54,7 +54,7 @@ namespace Tests
 
             //Assert
             Assert.True(readerResults.All(rr => rr == LogReaderResult.Accepted));
-            Assert.Equal(LogLevel.Info, str.ExtractedLogLevel);
+            Assert.Equal(LogLevel.Undefined, str.ExtractedLogLevel);
             Assert.Contains("MyApp.Worker[0]", str.Text);
             Assert.Contains(" Hellow!", str.Text);
         }

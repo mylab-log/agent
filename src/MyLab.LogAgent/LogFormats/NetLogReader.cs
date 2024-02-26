@@ -8,45 +8,14 @@ class NetLogReader : ILogReader
     private readonly StringBuilder _sb = new();
     private LogLevel _logLevel;
 
+    public static Func<string, bool> NewRecordPredicate = l => l.StartsWith('\u001b');
+
     public LogReaderResult ApplyNexLine(string logTextLine)
     {
-        if (_sb.Length != 0 && logTextLine.StartsWith('\u001b'))
+        if (_sb.Length != 0 && NewRecordPredicate(logTextLine))
             return LogReaderResult.NewRecordDetected;
 
-        if (logTextLine.StartsWith('\u001b'))
-        {
-            switch (new string(logTextLine.ToCharArray(), 10, 4))
-            {
-                case "info":
-                    _logLevel = LogLevel.Info;
-                    break;
-                case "fail":
-                case "crit":
-                    _logLevel = LogLevel.Error;
-                    break;
-                case "dbug":
-                    _logLevel = LogLevel.Debug;
-                    break;
-                case "warn":
-                    _logLevel = LogLevel.Warning;
-                    break;
-            }
-
-            int indexOfCategory = logTextLine.IndexOf(':');
-
-            if (indexOfCategory != -1 && logTextLine.Length > indexOfCategory+2)
-            {
-                _sb.AppendLine(logTextLine.Substring(indexOfCategory+2).TrimEnd());
-            }
-            else
-            {
-                _sb.AppendLine(logTextLine.Substring(31).TrimEnd());
-            }
-        }
-        else
-        {
-            _sb.AppendLine(logTextLine.TrimEnd());
-        }
+        _sb.AppendLine(logTextLine.TrimEnd());
 
         return LogReaderResult.Accepted;
     }

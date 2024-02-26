@@ -36,7 +36,7 @@ namespace Tests
             Assert.Equal("Connection refused (infonot-doc-storage-antivirus-processor:80)", logRec.Message);
             Assert.Equal(new DateTime(2023, 09, 23, 00, 22, 03).AddMilliseconds(216), logRec.Time);
             Assert.NotNull(logRec.Properties);
-            Assert.Equal(LogLevel.Error, str.ExtractedLogLevel);
+            Assert.Equal(LogLevel.Error, logRec.Level);
             Assert.Contains(logRec.Properties, p => p is { Name: "target", Value: "http://ololo" });
             Assert.Contains(logRec.Properties, p => p is { Name: LogPropertyNames.Category, Value: "MyLab.PrometheusAgent.Services.TargetsMetricProvider" });
         }

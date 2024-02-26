@@ -131,6 +131,75 @@ namespace Tests
             Assert.Equal("foo", rec.Message);
         }
 
+        [Fact]
+        public void ShouldProcessNativeNetLog()
+        {
+            //Arrange
+            var lines = new[]
+            {
+                "\u001b[41m\u001b[30minfo\u001b[41m\u001b[30m: MyApp.Worker[0]",
+                "      Hellow!"
+            };
+
+            var format = new MyLabLogFormat();
+
+            var rdr = format.CreateReader()!;
+
+            foreach (var line in lines)
+                rdr.ApplyNexLine(line);
+
+            var str = rdr.BuildString();
+
+            //Act
+            var logRec = format.Parse(str.Text, TestTools.DefaultMessageExtractor);
+
+            //Assert
+            Assert.NotNull(logRec);
+            Assert.Equal("Hellow!", logRec.Message);
+            Assert.NotNull(logRec.Properties);
+            Assert.Contains(logRec.Properties, p => p is { Name: LogPropertyNames.Category, Value: "MyApp.Worker" });
+        }
+
+        [Fact]
+        public void ShouldProcessUnhandledException()
+        {
+            //Arrange
+            var lines = new[]
+            {
+                """
+                Unhandled exception. System.InvalidOperationException: Remote config loading error
+                 ---> System.Net.WebException: Name or service not known (infonot-config:80)
+                 ---> System.Net.Http.HttpRequestException: Name or service not known (infonot-config:80)
+                 ---> System.Net.Sockets.SocketException (00000005, 0xFFFDFFFF): Name or service not known
+                   at System.Net.Dns.GetHostEntryOrAddressesCore(String hostName, Boolean justAddresses, AddressFamily addressFamily, Int64 startingTimestamp)
+                   at System.Net.Dns.GetHostAddresses(String hostNameOrAddress, AddressFamily family)
+                   at System.Net.Sockets.Socket.Connect(String host, Int32 port)
+                   at System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+                   at System.Net.HttpWebRequest.<>c__DisplayClass219_0.<<CreateHttpClient>b__1>d.MoveNext()
+                --- End of stack trace from previous location ---
+                   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+                   --- End of inner exception stack trace ---
+                """
+            };
+
+            var format = new MyLabLogFormat();
+
+            var rdr = format.CreateReader()!;
+
+            foreach (var line in lines)
+                rdr.ApplyNexLine(line);
+
+            var str = rdr.BuildString();
+
+            //Act
+            var logRec = format.Parse(str.Text, TestTools.DefaultMessageExtractor);
+
+            //Assert
+            Assert.NotNull(logRec);
+            Assert.StartsWith("Unhandled exception. System.InvalidOperationException: Remote config loading error", logRec.Message);
+            Assert.Equal(LogLevel.Error, logRec.Level);
+        }
+
         public static object[][] GetLogLevelCases()
         {
             return new[]

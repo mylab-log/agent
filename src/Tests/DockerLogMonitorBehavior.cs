@@ -39,7 +39,37 @@ namespace Tests
 
             var outgoingLogs = new List<LogRecord>();
 
-            var monitor = CreateSingleLogCase(logLines, outgoingLogs);
+            var containerProvider = CreateDockerContainerProvider(
+                new DockerContainerInfo
+                {
+                    Id = "foo-id", 
+                    Name = "foo-container",
+                    LogFormat = "single"
+                }
+            );
+
+            var filesProvider = ProvideContainerFileProvider(
+                "foo-id",
+                new ContainerFile("foo-id-json.log", 0),
+                () => logLines);
+
+            var registrar = CreateLogRegistrar(outgoingLogs);
+
+            var cMonitoringProcessor = new ContainerMonitoringProcessor(
+                filesProvider.Object,
+                registrar,
+                null,
+                new OptionsWrapper<LogAgentOptions>(new LogAgentOptions { ReadFromEnd = false }),
+                _loggerFactory.CreateLogger<ContainerMonitoringProcessor>());
+
+            var monitor = new DockerLogMonitor
+            (
+                containerProvider,
+                new DockerContainerRegistry(),
+                cMonitoringProcessor,
+                null,
+                _logger
+            );
 
             //Act
             await monitor.ProcessLogsAsync(default);
@@ -65,7 +95,36 @@ namespace Tests
 
             var outgoingLogs = new List<LogRecord>();
 
-            var monitor = CreateSingleLogCase(logLines, outgoingLogs);
+            var containerProvider = CreateDockerContainerProvider(
+                new DockerContainerInfo
+                {
+                    Id = "foo-id", 
+                    Name = "foo-container"
+                }
+            );
+
+            var filesProvider = ProvideContainerFileProvider(
+                "foo-id",
+                new ContainerFile("foo-id-json.log", 0),
+                () => logLines);
+
+            var registrar = CreateLogRegistrar(outgoingLogs);
+
+            var cMonitoringProcessor = new ContainerMonitoringProcessor(
+                filesProvider.Object,
+                registrar,
+                null,
+                new OptionsWrapper<LogAgentOptions>(new LogAgentOptions { ReadFromEnd = false }),
+                _loggerFactory.CreateLogger<ContainerMonitoringProcessor>());
+
+            var monitor = new DockerLogMonitor
+            (
+                containerProvider,
+                new DockerContainerRegistry(),
+                cMonitoringProcessor,
+                null,
+                _logger
+            );
 
             //Act
             await monitor.ProcessLogsAsync(default);
@@ -113,7 +172,8 @@ namespace Tests
                 new DockerContainerInfo
                 {
                     Id = "foo-id",
-                    Name = "foo-container"
+                    Name = "foo-container",
+                    LogFormat = "single"
                 });
 
             var filesProvider = ProvideContainerFileProvider(
