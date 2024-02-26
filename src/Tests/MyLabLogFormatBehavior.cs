@@ -146,7 +146,12 @@ namespace Tests
             var rdr = format.CreateReader()!;
 
             foreach (var line in lines)
-                rdr.ApplyNexLine(line);
+            {
+                var applyRes = rdr.ApplyNexLine(line);
+
+                if (applyRes != LogReaderResult.Accepted)
+                    break;
+            }
 
             var str = rdr.BuildString();
 
@@ -164,8 +169,7 @@ namespace Tests
         public void ShouldProcessUnhandledException()
         {
             //Arrange
-            var lines = new[]
-            {
+            var lines = 
                 """
                 Unhandled exception. System.InvalidOperationException: Remote config loading error
                  ---> System.Net.WebException: Name or service not known (infonot-config:80)
@@ -180,14 +184,19 @@ namespace Tests
                    at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
                    --- End of inner exception stack trace ---
                 """
-            };
+                    .Split("\n");
 
             var format = new MyLabLogFormat();
 
             var rdr = format.CreateReader()!;
 
             foreach (var line in lines)
-                rdr.ApplyNexLine(line);
+            {
+                var applyRes = rdr.ApplyNexLine(line);
+
+                if (applyRes != LogReaderResult.Accepted)
+                    break;
+            }
 
             var str = rdr.BuildString();
 
@@ -198,6 +207,57 @@ namespace Tests
             Assert.NotNull(logRec);
             Assert.StartsWith("Unhandled exception. System.InvalidOperationException: Remote config loading error", logRec.Message);
             Assert.Equal(LogLevel.Error, logRec.Level);
+        }
+
+        [Fact]
+        public void ShouldReadMultilineMessage()
+        {
+            //Arrange
+            string[] lines = """
+                               Message: >-
+                                 409(Conflict). {"error":"Conflict","error_description":"Unable to process the requested resource because of conflict in the current state The consent request was already used and can no longer be changed."}
+                                 .
+                               Time: 2024-02-26T18:29:57.713
+                               Labels:
+                                 exception-trace: 395862094217b69d7617564327feeb3d
+                                 log-level: error
+                                 trace-id: a558cd1ea5c241c56a260738c224b865
+                               Facts:
+                                 log-category: Infonot.Login.Web.Pages.ConsentModel
+                               Exception:
+                                 Message: >-
+                                   409(Conflict). {"error":"Conflict","error_description":"Unable to process the requested resource because of conflict in the current state The consent request was already used and can no longer be changed."}
+                                   .
+                                 ExceptionTrace: 395862094217b69d7617564327feeb3d
+                                 Type: MyLab.ApiClient.ResponseCodeException
+                                 StackTrace: >2-
+                                      at MyLab.ApiClient.CallDetails.ThrowIfUnexpectedStatusCode()
+                                      at MyLab.ApiClient.ApiProxy`1.CallAndObserve[T](MethodInfo targetMethod, Object[] args)
+                                      at Infonot.Login.Web.Services.ConcentService.AutoAcceptConsent(String consentChallenge, ConsentRequestDto consentState) in /builds/triasoft/infonot/account-component/src/Infonot.Login.Web/Services/IConsentService.cs:line 166
+                                      at Infonot.Login.Web.Pages.ConsentModel.OnPostAsync(String consentChallenge) in /builds/triasoft/infonot/account-component/src/Infonot.Login.Web/Pages/Consent.cshtml.cs:line 231
+                               """
+                .Split("\n");
+
+            var format = new MyLabLogFormat();
+
+            var rdr = format.CreateReader()!;
+
+            foreach (var line in lines)
+            {
+                var applyRes = rdr.ApplyNexLine(line);
+
+                if (applyRes != LogReaderResult.Accepted)
+                    break;
+            }
+
+            var str = rdr.BuildString();
+
+            //Act
+            var logRec = format.Parse(str.Text, TestTools.DefaultMessageExtractor);
+
+            //Assert
+            Assert.NotNull(logRec);
+            Assert.Equal("409(Conflict). {\"error\":\"Conflict\",\"error_description\":\"Unable to process the requested resource because of conflict in the current state The consent request was already used and can no longer be changed.\"} .",logRec.Message);
         }
 
         public static object[][] GetLogLevelCases()
