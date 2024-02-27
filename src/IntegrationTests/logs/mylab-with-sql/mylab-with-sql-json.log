@@ -1,0 +1,57 @@
+{"log":"Message: DB query\r\n","stream":"stdout","time":"2024-02-27T12:30:01.59166007Z"}
+{"log":"Time: 2024-02-27T12:30:01.584\r\n","stream":"stdout","time":"2024-02-27T12:30:01.591696272Z"}
+{"log":"Labels:\r\n","stream":"stdout","time":"2024-02-27T12:30:01.591709217Z"}
+{"log":"  log-level: debug\r\n","stream":"stdout","time":"2024-02-27T12:30:01.591719737Z"}
+{"log":"  trace-id: c300bef21768286157116d1feed3f1d2\r\n","stream":"stdout","time":"2024-02-27T12:30:01.591729855Z"}
+{"log":"Facts:\r\n","stream":"stdout","time":"2024-02-27T12:30:01.59174014Z"}
+{"log":"  ExecutionTime: 00:00:00.0009530\r\n","stream":"stdout","time":"2024-02-27T12:30:01.59175082Z"}
+{"log":"  SqlText: \u003e\r\n","stream":"stdout","time":"2024-02-27T12:30:01.591761108Z"}
+{"log":"    --  MySql (asynchronously)\r\n","stream":"stdout","time":"2024-02-27T12:30:01.591771457Z"}
+{"log":"\r\n","stream":"stdout","time":"2024-02-27T12:30:01.591781706Z"}
+{"log":"    DECLARE @Id Guid\r\n","stream":"stdout","time":"2024-02-27T12:30:01.591791573Z"}
+{"log":"\r\n","stream":"stdout","time":"2024-02-27T12:30:01.591801672Z"}
+{"log":"    SET     @Id = 'bf0be379-41b3-4773-ad8a-c14f845e4c2d'\r\n","stream":"stdout","time":"2024-02-27T12:30:01.591811487Z"}
+{"log":"\r\n","stream":"stdout","time":"2024-02-27T12:30:01.591835969Z"}
+{"log":"\r\n","stream":"stdout","time":"2024-02-27T12:30:01.591847562Z"}
+{"log":"    SELECT\r\n","stream":"stdout","time":"2024-02-27T12:30:01.591857721Z"}
+{"log":"    \u0009`t`.`id`,\r\n","stream":"stdout","time":"2024-02-27T12:30:01.591867872Z"}
+{"log":"    \u0009`t`.`name`,\r\n","stream":"stdout","time":"2024-02-27T12:30:01.591878508Z"}
+{"log":"    \u0009`t`.`doc_type`,\r\n","stream":"stdout","time":"2024-02-27T12:30:01.59188877Z"}
+{"log":"    \u0009`t`.`ext_system_id`,\r\n","stream":"stdout","time":"2024-02-27T12:30:01.591899129Z"}
+{"log":"    \u0009`t`.`sent`\r\n","stream":"stdout","time":"2024-02-27T12:30:01.591909471Z"}
+{"log":"    FROM\r\n","stream":"stdout","time":"2024-02-27T12:30:01.591919773Z"}
+{"log":"    \u0009`attachment` `t`\r\n","stream":"stdout","time":"2024-02-27T12:30:01.591930015Z"}
+{"log":"    WHERE\r\n","stream":"stdout","time":"2024-02-27T12:30:01.591940401Z"}
+{"log":"    \u0009`t`.`booking_id` = @Id\r\n","stream":"stdout","time":"2024-02-27T12:30:01.591950529Z"}
+{"log":"  log-category: MyLab.Db.DefaultDbManager\r\n","stream":"stdout","time":"2024-02-27T12:30:01.591960935Z"}
+{"log":"\n","stream":"stdout","time":"2024-02-27T12:30:01.59197114Z"}
+{"log":"Message: DB query\r\n","stream":"stdout","time":"2024-02-27T12:30:01.591981278Z"}
+{"log":"Time: 2024-02-27T12:30:01.585\r\n","stream":"stdout","time":"2024-02-27T12:30:01.59199145Z"}
+{"log":"Labels:\r\n","stream":"stdout","time":"2024-02-27T12:30:01.592001822Z"}
+{"log":"  log-level: debug\r\n","stream":"stdout","time":"2024-02-27T12:30:01.59201191Z"}
+{"log":"  trace-id: c300bef21768286157116d1feed3f1d2\r\n","stream":"stdout","time":"2024-02-27T12:30:01.592022102Z"}
+{"log":"Facts:\r\n","stream":"stdout","time":"2024-02-27T12:30:01.592032368Z"}
+{"log":"  ExecutionTime: 00:00:00.0008839\r\n","stream":"stdout","time":"2024-02-27T12:30:01.592042393Z"}
+{"log":"  SqlText: \u003e\r\n","stream":"stdout","time":"2024-02-27T12:30:01.592052648Z"}
+{"log":"    --  MySql (asynchronously)\r\n","stream":"stdout","time":"2024-02-27T12:30:01.592063074Z"}
+{"log":"\r\n","stream":"stdout","time":"2024-02-27T12:30:01.592073256Z"}
+{"log":"    DECLARE @Id Guid\r\n","stream":"stdout","time":"2024-02-27T12:30:01.592083287Z"}
+{"log":"\r\n","stream":"stdout","time":"2024-02-27T12:30:01.592093519Z"}
+{"log":"    SET     @Id = 'bf0be379-41b3-4773-ad8a-c14f845e4c2d'\r\n","stream":"stdout","time":"2024-02-27T12:30:01.592103541Z"}
+{"log":"\r\n","stream":"stdout","time":"2024-02-27T12:30:01.592113893Z"}
+{"log":"\r\n","stream":"stdout","time":"2024-02-27T12:30:01.592123895Z"}
+{"log":"    SELECT\r\n","stream":"stdout","time":"2024-02-27T12:30:01.59213398Z"}
+{"log":"    \u0009CASE\r\n","stream":"stdout","time":"2024-02-27T12:30:01.592144001Z"}
+{"log":"    \u0009\u0009WHEN EXISTS(\r\n","stream":"stdout","time":"2024-02-27T12:30:01.592154403Z"}
+{"log":"    \u0009\u0009\u0009SELECT\r\n","stream":"stdout","time":"2024-02-27T12:30:01.592164782Z"}
+{"log":"    \u0009\u0009\u0009\u0009*\r\n","stream":"stdout","time":"2024-02-27T12:30:01.592175168Z"}
+{"log":"    \u0009\u0009\u0009FROM\r\n","stream":"stdout","time":"2024-02-27T12:30:01.59218565Z"}
+{"log":"    \u0009\u0009\u0009\u0009`sending_queue` `t`\r\n","stream":"stdout","time":"2024-02-27T12:30:01.592196035Z"}
+{"log":"    \u0009\u0009\u0009WHERE\r\n","stream":"stdout","time":"2024-02-27T12:30:01.592206487Z"}
+{"log":"    \u0009\u0009\u0009\u0009`t`.`booking_id` = @Id\r\n","stream":"stdout","time":"2024-02-27T12:30:01.592216823Z"}
+{"log":"    \u0009\u0009)\r\n","stream":"stdout","time":"2024-02-27T12:30:01.592227345Z"}
+{"log":"    \u0009\u0009\u0009THEN 1\r\n","stream":"stdout","time":"2024-02-27T12:30:01.592237697Z"}
+{"log":"    \u0009\u0009ELSE 0\r\n","stream":"stdout","time":"2024-02-27T12:30:01.59224811Z"}
+{"log":"    \u0009END as `c1`\r\n","stream":"stdout","time":"2024-02-27T12:30:01.592258572Z"}
+{"log":"  log-category: MyLab.Db.DefaultDbManager\r\n","stream":"stdout","time":"2024-02-27T12:30:01.592268934Z"}
+{"log":"\n","stream":"stdout","time":"2024-02-27T12:30:01.592279166Z"}
