@@ -35,35 +35,7 @@ namespace IntegrationTests
                 Name = "multiline"
             };
 
-            var containerProvider = new Mock<IDockerContainerProvider>();
-            containerProvider
-                .Setup(p => p.ProvideContainersAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(() => Enumerable.Repeat(testContainer, 1));
-
-            var srv = new ServiceCollection()
-                .AddLogAgentLogic()
-                .AddEsTools()
-                .AddSingleton(containerProvider.Object)
-                .ConfigureLogAgentLogic(opt =>
-                {
-                    opt.DockerContainersPath = Path.Combine( Directory.GetCurrentDirectory(), "logs");
-                    opt.OutgoingBufferSize = 1;
-                    opt.ReadFromEnd = false;
-                })
-                .ConfigureEsTools(opt =>
-                {
-                    opt.Url = TestStuff.EsUrl;
-                    opt.IndexBindings = new IndexBinding[]
-                    {
-                        new() { Doc = "log", Index = "logs-test" }
-                    };
-                })
-                .AddLogging(b => b.AddFilter(_ => true).AddXUnit(_output))
-                .BuildServiceProvider();
-
-            var monitorService = srv.GetRequiredService<IHostedService>();
-            if (monitorService is not LogMonitorBackgroundService)
-                throw new InvalidOperationException($"Wrong hosted service type: {monitorService.GetType().FullName}");
+            var monitorService = CreateApp(testContainer);
 
             //Act
             var startToken = new CancellationTokenSource(TimeSpan.FromSeconds(1));
@@ -96,6 +68,83 @@ namespace IntegrationTests
                 rec.Any(p => p is { Key: LogPropertyNames.Time, Value: "2023-08-29T20:15:41.3045815Z" }) &&
                 rec.Any(p => p.Key == LogPropertyNames.OriginMessage && p.Value.Contains("Trace ID       : f15bcb09a61119c219067946020cd5a1"))
             );
+        }
+
+        [Fact]
+        public async Task ShouldIndexSqlDockerLogs()
+        {
+            //Arrange
+            var testContainer = new DockerContainerInfo
+            {
+                Id = "mylab-with-sql",
+                Name = "mylab-with-sql",
+                LogFormat = "mylab"
+            };
+
+            var monitorService = CreateApp(testContainer);
+
+            //Act
+            var startToken = new CancellationTokenSource(TimeSpan.FromSeconds(1));
+            await monitorService.StartAsync(startToken.Token);
+
+            await Task.Delay(TimeSpan.FromSeconds(1), default(CancellationToken));
+
+            var stopToken = new CancellationTokenSource(TimeSpan.FromSeconds(1));
+            await monitorService.StopAsync(stopToken.Token);
+
+            await Task.Delay(TimeSpan.FromSeconds(1), default(CancellationToken));
+
+            var searchRes = await _fxt.Searcher.SearchAsync("logs-test",
+                new EsSearchParams<EsLogRecord>(d => d.MatchAll()),
+                default
+                );
+
+            //Assert
+            Assert.Equal(2, searchRes.Count);
+            Assert.Contains(searchRes, rec =>
+                rec.Any(p => p is { Key: LogPropertyNames.Message, Value: "DB query" }) &&
+                rec.Any(p => p is { Key: "trace-id", Value: "c300bef21768286157116d1feed3f1d2" }) &&
+                rec.Any(p => p.Key == "SqlText" && p.Value.Contains("`t`.`ext_system_id`"))
+            );
+            Assert.Contains(searchRes, rec =>
+                rec.Any(p => p is { Key: LogPropertyNames.Message, Value: "DB query" }) &&
+                rec.Any(p => p is { Key: "trace-id", Value: "c300bef21768286157116d1feed3f1d2" }) && 
+                rec.Any(p => p.Key == "SqlText" && p.Value.Contains("WHEN EXISTS("))
+            );
+        }
+
+        private IHostedService CreateApp(DockerContainerInfo testContainer)
+        {
+            var containerProvider = new Mock<IDockerContainerProvider>();
+            containerProvider
+                .Setup(p => p.ProvideContainersAsync(It.IsAny<CancellationToken>()))
+                .ReturnsAsync(() => Enumerable.Repeat(testContainer, 1));
+
+            var srv = new ServiceCollection()
+                .AddLogAgentLogic()
+                .AddEsTools()
+                .AddSingleton(containerProvider.Object)
+                .ConfigureLogAgentLogic(opt =>
+                {
+                    opt.DockerContainersPath = Path.Combine(Directory.GetCurrentDirectory(), "logs");
+                    opt.OutgoingBufferSize = 1;
+                    opt.ReadFromEnd = false;
+                })
+                .ConfigureEsTools(opt =>
+                {
+                    opt.Url = TestStuff.EsUrl;
+                    opt.IndexBindings = new IndexBinding[]
+                    {
+                        new() { Doc = "log", Index = "logs-test" }
+                    };
+                })
+                .AddLogging(b => b.AddFilter(_ => true).AddXUnit(_output))
+                .BuildServiceProvider();
+
+            var monitorService = srv.GetRequiredService<IHostedService>();
+            if (monitorService is not LogMonitorBackgroundService)
+                throw new InvalidOperationException($"Wrong hosted service type: {monitorService.GetType().FullName}");
+            return monitorService;
         }
 
         public Task InitializeAsync()

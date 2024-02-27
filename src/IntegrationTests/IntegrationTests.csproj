@@ -39,6 +39,9 @@
     <None Update="logs\multiline\multiline-json.log">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="logs\mylab-with-sql\mylab-with-sql-json.log">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="logs\mylab.log">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

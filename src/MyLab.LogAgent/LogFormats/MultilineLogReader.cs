@@ -21,7 +21,7 @@ class MultilineLogReader : ILogReader
             {
                 _lastLineIsSpace = true;
             }
-            else if (_lastLineIsSpace)
+            else if (_lastLineIsSpace && !char.IsWhiteSpace(logTextLine[0]))
             {
                 return LogReaderResult.NewRecordDetected;
             }

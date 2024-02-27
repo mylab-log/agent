@@ -260,6 +260,93 @@ namespace Tests
             Assert.Equal("409(Conflict). {\"error\":\"Conflict\",\"error_description\":\"Unable to process the requested resource because of conflict in the current state The consent request was already used and can no longer be changed.\"} .",logRec.Message);
         }
 
+        [Fact]
+        public void ShouldReadSqlQueries()
+        {
+            //Arrange
+            var lines = new string[] {
+                                     "Message: DB query",
+                                     "Time: 2024-02-27T12:30:01.584",
+                                     "Labels:",
+                                     "  log-level: debug",
+                                     "  trace-id: c300bef21768286157116d1feed3f1d2",
+                                     "Facts:",
+                                     "  ExecutionTime: 00:00:00.0009530",
+                                     "  SqlText: \u003e",
+                                     "    --  MySql (asynchronously)",
+                                     "",
+                                     "    DECLARE @Id Guid",
+                                     "",
+                                     "    SET     @Id = 'bf0be379-41b3-4773-ad8a-c14f845e4c2d'",
+                                     "",
+                                     "",
+                                     "    SELECT",
+                                     "    \u0009`t`.`id`,",
+                                     "    \u0009`t`.`name`,",
+                                     "    \u0009`t`.`doc_type`,",
+                                     "    \u0009`t`.`ext_system_id`,",
+                                     "    \u0009`t`.`sent`",
+                                     "    FROM",
+                                     "    \u0009`attachment` `t`",
+                                     "    WHERE",
+                                     "    \u0009`t`.`booking_id` = @Id",
+                                     "  log-category: MyLab.Db.DefaultDbManager",
+                                     "",
+                                     "Message: DB query",
+                                     "Time: 2024-02-27T12:30:01.585",
+                                     "Labels:",
+                                     "  log-level: debug",
+                                     "  trace-id: c300bef21768286157116d1feed3f1d2",
+                                     "Facts:",
+                                     "  ExecutionTime: 00:00:00.0008839",
+                                     "  SqlText: \u003e",
+                                     "    --  MySql (asynchronously)",
+                                     "",
+                                     "    DECLARE @Id Guid",
+                                     "",
+                                     "    SET     @Id = 'bf0be379-41b3-4773-ad8a-c14f845e4c2d'",
+                                     "",
+                                     "",
+                                     "    SELECT",
+                                     "    \u0009CASE",
+                                     "    \u0009\u0009WHEN EXISTS(",
+                                     "    \u0009\u0009\u0009SELECT",
+                                     "    \u0009\u0009\u0009\u0009*",
+                                     "    \u0009\u0009\u0009FROM",
+                                     "    \u0009\u0009\u0009\u0009`sending_queue` `t`",
+                                     "    \u0009\u0009\u0009WHERE",
+                                     "    \u0009\u0009\u0009\u0009`t`.`booking_id` = @Id",
+                                     "    \u0009\u0009)",
+                                     "    \u0009\u0009\u0009THEN 1",
+                                     "    \u0009\u0009ELSE 0",
+                                     "    \u0009END as `c1`",
+                                     "  log-category: MyLab.Db.DefaultDbManager",
+                                     "",
+                                     };
+
+            var format = new MyLabLogFormat();
+
+            var rdr = format.CreateReader()!;
+
+            foreach (var line in lines)
+            {
+                var applyRes = rdr.ApplyNexLine(line);
+
+                if (applyRes != LogReaderResult.Accepted)
+                    break;
+            }
+
+            var str = rdr.BuildString();
+
+            //Act
+            var logRec = format.Parse(str.Text, TestTools.DefaultMessageExtractor);
+
+            //Assert
+            Assert.NotNull(logRec);
+            Assert.Equal("DB query", logRec.Message);
+
+        }
+
         public static object[][] GetLogLevelCases()
         {
             return new[]
