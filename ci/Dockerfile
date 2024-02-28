@@ -19,7 +19,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0
 ARG PROJ 
 ARG VER
 ENV PROJ_FILE=$PROJ
-ENV LogAgent__AddProperties__agent-ver=$VER
+ENV LogAgent__AddProperties__agentver=$VER
 WORKDIR /app
 COPY --from=build /app /app
 EXPOSE 8080
