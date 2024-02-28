@@ -114,7 +114,8 @@ class ContainerMonitoringProcessor : IContainerMonitoringProcessor
 
         var logReader = new LogReader(cState.Format, _logMessageExtractor, srcReader)
         {
-            Buffer = cState.LineBuff
+            Buffer = cState.LineBuff,
+            UseSourceDt = _opts.UseSourceDt
         };
 
         int recordCount = 0;
