@@ -9,7 +9,7 @@ partial class NginxLogFormat
     static class ErrorLogExtractor
     {
         private const string RegexPattern = """
-                                      (?<level>\[\w+\])\s\d+#\d+:\s\*\d+\s(?<message>[^,]+),\s(?<props>[^$]+)
+                                      \[(?<level>\w+)\]\s\d+#\d+:\s\*\d+\s(?<message>[^,]+),\s(?<props>[^$]+)
                                       """;
         public static bool Extract(string logText, List<LogProperty> props, out string message, out LogLevel logLevel)
         {
@@ -63,7 +63,7 @@ partial class NginxLogFormat
                 case "info": 
                 case "notice": return LogLevel.Info;
                 case "warn": return LogLevel.Warning;
-                case "error ":
+                case "error":
                 case "crit": 
                 case "alert": 
                 case "emerg": return LogLevel.Error;
