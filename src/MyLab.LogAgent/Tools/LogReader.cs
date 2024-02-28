@@ -18,6 +18,8 @@ namespace MyLab.LogAgent.Tools
 
         public List<LogSourceLine>? Buffer { get; set; }
 
+        public bool UseSourceDt { get; set; }
+
         public LogReader(
             ILogFormat logFormat, 
             ILogMessageExtractor messageExtractor,
@@ -68,11 +70,12 @@ namespace MyLab.LogAgent.Tools
                         ? _logReader.ApplyNexLine(nextLine.Text)
                         : LogReaderResult.CompleteRecord;
 
+                    contextDateTime ??= nextLine?.Time ?? DateTime.Now;
+                    contextErrorFactor = contextErrorFactor || (nextLine?.IsError ?? false);
 
                     if (applyResult == LogReaderResult.Accepted)
                     {
-                        contextDateTime ??= nextLine?.Time ?? DateTime.Now;
-                        contextErrorFactor = contextErrorFactor || (nextLine?.IsError ?? false);
+                        //nothing
                     }
                     else if (applyResult == LogReaderResult.CompleteRecord)
                     {
@@ -119,7 +122,7 @@ namespace MyLab.LogAgent.Tools
                 var lr = _logFormat.Parse(logString.Text, _messageExtractor);
                 if (lr != null)
                 {
-                    if (lr.Time == default)
+                    if (UseSourceDt || lr.Time == default)
                     {
                         lr.Time = contextDateTime ?? DateTime.Now;
                     }

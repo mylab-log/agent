@@ -8,5 +8,6 @@
         public Dictionary<string,string>? AddProperties { get; set; }
         public bool ReadFromEnd { get; set; } = true;
         public int MessageLenLimit { get; set; } = 500;
+        public bool UseSourceDt { get; set; } = true;
     }
 }

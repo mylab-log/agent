@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Moq;
 using MyLab.LogAgent;
 using MyLab.LogAgent.LogFormats;
 using MyLab.LogAgent.LogSourceReaders;
@@ -37,6 +38,40 @@ public class LogReaderBehavior
         Assert.Equal("Start log", readLogRecord.Message);
         Assert.NotNull(readLogRecord.Properties);
         Assert.Contains(readLogRecord.Properties, p => p.Name == LogPropertyNames.OriginMessage && p.Value == sourceString);
+    }
+
+    [Theory]
+    [MemberData(nameof(GetDtSelectionCases))]
+    public async Task ShouldUseRightDt(DateTime sourceDt, DateTime logRecordDt, bool useSrcDt, DateTime expectedDt)
+    {
+        //Arrange
+
+        var logFormat = new Mock<ILogFormat>();
+        logFormat.Setup(f => f.CreateReader())
+            .Returns(() => new SingleLineLogReader());
+        logFormat.Setup(f => f.Parse(It.IsAny<string>(), It.IsAny<ILogMessageExtractor>()))
+            .Returns<string, ILogMessageExtractor>((s, e) => 
+                new LogRecord
+                {
+                    Message = "Message",
+                    Time = logRecordDt
+                });
+
+        var logSourceReader = new Mock<ILogSourceReader>();
+        logSourceReader.Setup(r => r.ReadLineAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(() => new LogSourceLine("Message"){ Time = sourceDt });
+
+        var reader = new LogReader(logFormat.Object, TestTools.DefaultMessageExtractor, logSourceReader.Object)
+        {
+            UseSourceDt = useSrcDt
+        };
+
+        //Act
+        var readLogRecord = await reader.ReadLogAsync(default);
+
+        //Assert
+        Assert.NotNull(readLogRecord);
+        Assert.Equal(expectedDt, readLogRecord.Time);
     }
 
     [Fact]
@@ -192,6 +227,30 @@ public class LogReaderBehavior
         //Assert
         Assert.NotNull(readLogRecord);
         Assert.Equal(expectedErrorFactor, readLogRecord.Level == LogLevel.Error);
+    }
+
+    public static object[][] GetDtSelectionCases()
+    {
+        var srcDt = DateTime.Now.AddSeconds(1);
+        var logDt = DateTime.Now.AddSeconds(2);
+
+        return new[]
+        {
+            new object[]
+            {
+                srcDt,
+                logDt,
+                true,
+                srcDt
+            },
+            new object[]
+            {
+                srcDt,
+                logDt,
+                false,
+                logDt
+            },
+        };
     }
 
     public static object[][] GetErrorFactorCases()

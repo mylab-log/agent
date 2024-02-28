@@ -1,6 +1,6 @@
 ﻿namespace MyLab.LogAgent.LogSourceReaders
 {
-    interface ILogSourceReader
+    public interface ILogSourceReader
     {
         Task<LogSourceLine?> ReadLineAsync(CancellationToken cancellationToken);
     }
