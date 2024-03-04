@@ -7,5 +7,6 @@
         public string? LogFormat { get; set; }
         public bool IgnoreStreamType { get; set; }
         public bool Enabled { get; set; } = true;
+        public IReadOnlyDictionary<string, string>? Labels { get; set; }
     }
 }

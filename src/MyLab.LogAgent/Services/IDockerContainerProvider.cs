@@ -1,8 +1,10 @@
-﻿using Docker.DotNet;
+﻿using System.Collections.ObjectModel;
+using Docker.DotNet;
 using Docker.DotNet.Models;
 using Microsoft.Extensions.Options;
 using MyLab.LogAgent.Model;
 using MyLab.LogAgent.Options;
+using MyLab.LogAgent.Tools;
 
 namespace MyLab.LogAgent.Services
 {
@@ -13,10 +15,30 @@ namespace MyLab.LogAgent.Services
 
     class DockerContainerProvider(IOptions<LogAgentOptions> opts) : IDockerContainerProvider
     {
+        public string FormatLabelName = "net.mylab.log.format";
+        public string FormatLabelNameOld = "log_format";
+        public string IgnoreStreamLabelName = "net.mylab.log.ignore-stream";
+        public string IgnoreStreamLabelNameOld = "log_ignore_stream";
+        public string ExcludeLabelName = "net.mylab.log.exclude";
+        public string ExcludeLabelNameOld = "log_exclude";
+
         private readonly DockerClient _dockerClient = new DockerClientConfiguration
             (
-                new Uri(opts.Value.DockerUri)
+                new Uri(opts.Value.Docker.SocketUri)
             ).CreateClient();
+
+        private readonly LabelFilter _labelFilter = new (
+            opts.Value.Docker.WhiteLabels,
+            opts.Value.Docker.BlackLabels,
+            new []
+            {
+                
+                "net.mylab.*",
+                "com.docker.*",
+                "io.docker.*",
+                "org.dockerproject.*",
+                "com.docker.compose.*"
+            });
 
         public async Task<IEnumerable<DockerContainerInfo>> ProvideContainersAsync(CancellationToken cancellationToken)
         {
@@ -33,15 +55,33 @@ namespace MyLab.LogAgent.Services
                     {
                         Id = c.ID,
                         Name = c.Names.FirstOrDefault(c.ID).TrimStart('/'),
+                        
                         LogFormat = c.Labels
-                            .Where(kv => kv.Key == "log_format")
+                            .Where(kv => kv.Key == FormatLabelName || kv.Key == FormatLabelNameOld)
                             .Select(kv => kv.Value.ToLower())
                             .FirstOrDefault(),
+                        
                         IgnoreStreamType= c.Labels
-                            .Where(kv => kv.Key == "log_ignore_stream")
-                            .Select(kv => kv.Value.ToLower() == "true")
-                            .FirstOrDefault(),
-                        Enabled = !c.Labels.Any(l => l.Key == "log_exclude" && l.Value.ToLower() == "true")
+                            .Any(kv => 
+                                (
+                                    kv.Key == IgnoreStreamLabelName || 
+                                    kv.Key == IgnoreStreamLabelNameOld
+                                ) && 
+                                kv.Value.ToLower() == "true"),
+                        
+                        Enabled = !c.Labels
+                            .Any(l => 
+                                (
+                                    l.Key == ExcludeLabelName || 
+                                    l.Key == ExcludeLabelNameOld
+                                ) && 
+                                l.Value.ToLower() == "true"),
+                        
+                        Labels = new ReadOnlyDictionary<string, string>(
+                                new Dictionary<string, string>(
+                                    c.Labels.Where(kv => _labelFilter.IsMatch(kv.Key))
+                                )
+                            )
                     }
                 );
         }

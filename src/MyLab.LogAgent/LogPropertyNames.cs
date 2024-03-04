@@ -14,5 +14,6 @@
         public const string ParsingFailureReason = "parsing-failure-reason";
         public const string UnsupportedFormatFlag = "unsupported-format";
         public const string HostAltName = "host-prop";
+        public const string ContainerLabels = "docker-labels";
     }
 }

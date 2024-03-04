@@ -137,6 +137,8 @@ class ContainerMonitoringProcessor : IContainerMonitoringProcessor
                 });
             }
 
+            TryAddContainerLabels(nextLogRecord, cState.Info.Labels);
+
             await _logRegistrar.RegisterAsync(nextLogRecord, cancellationToken);
 
             recordCount++;
@@ -160,5 +162,18 @@ class ContainerMonitoringProcessor : IContainerMonitoringProcessor
             .AndFactIs("new-shift", cState.Shift)
             .AndFactIs("rec-count", recordCount)
             .Write();
+    }
+
+    private void TryAddContainerLabels(LogRecord rec, IReadOnlyDictionary<string, string>? labels)
+    {
+        if(labels == null) return;
+
+        rec.Properties ??= new List<LogProperty>();
+
+        rec.Properties.Add(new LogProperty
+        {
+            Name = LogPropertyNames.ContainerLabels, 
+            Value = new Dictionary<string,string>(labels)
+        });
     }
 }

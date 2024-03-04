@@ -18,7 +18,7 @@ namespace MyLab.LogAgent.Services
         
         public IEnumerable<ContainerFile> EnumerateContainerFiles(string containerId)
         {
-            var containerDirPath = Path.Combine(_opts.DockerContainersPath, containerId);
+            var containerDirPath = Path.Combine(_opts.Docker.ContainersPath, containerId);
             
             return new DirectoryInfo(containerDirPath)
                 .EnumerateFiles()
@@ -27,7 +27,7 @@ namespace MyLab.LogAgent.Services
 
         public ContainerFile? GetActualContainerLogFile(string containerId)
         {
-            var filePath = Path.Combine(_opts.DockerContainersPath, containerId, $"{containerId}-json.log");
+            var filePath = Path.Combine(_opts.Docker.ContainersPath, containerId, $"{containerId}-json.log");
             var file = new FileInfo(filePath);
 
             return file.Exists
@@ -37,7 +37,7 @@ namespace MyLab.LogAgent.Services
 
         public StreamReader OpenContainerFileRead(string containerId, string filename)
         {
-            var filePath = Path.Combine(_opts.DockerContainersPath, containerId, filename);
+            var filePath = Path.Combine(_opts.Docker.ContainersPath, containerId, filename);
 
             return File.OpenText(filePath);
         }
