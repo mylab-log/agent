@@ -22,6 +22,7 @@ class ContainerMonitoringProcessor : IContainerMonitoringProcessor
     private readonly IDslLogger? _log;
     private readonly LogMessageExtractor _logMessageExtractor;
     private readonly LogAgentOptions _opts;
+    private readonly LabelFilter _labelFilter;
 
     public ContainerMonitoringProcessor(
         IDockerContainerFilesProvider containerFilesProvider,
@@ -37,6 +38,18 @@ class ContainerMonitoringProcessor : IContainerMonitoringProcessor
         _log = logger.Dsl();
         _opts = opts.Value;
         _logMessageExtractor = new LogMessageExtractor(_opts.MessageLenLimit);
+
+        _labelFilter = new(
+            opts.Value.Docker.WhiteLabels ?? ["*"],
+            opts.Value.Docker.BlackLabels,
+            new[]
+            {
+                "net.mylab.*",
+                "com.docker.*",
+                "io.docker.*",
+                "org.dockerproject.*",
+                "com.docker.compose.*"
+            });
     }
     
     private void ApplyAddProps(LogRecord nextLogRecord)
@@ -166,6 +179,13 @@ class ContainerMonitoringProcessor : IContainerMonitoringProcessor
         if(labels == null) return;
 
         rec.Properties ??= new LogProperties();
-        rec.Properties.Add(LogPropertyNames.ContainerLabels, new Dictionary<string,string>(labels));
+        rec.Properties.Add
+            (
+                LogPropertyNames.ContainerLabels, 
+                new Dictionary<string,string>
+                    (
+                        labels.Where(kv => _labelFilter.IsMatch(kv.Key))
+                    )
+            );
     }
 }

@@ -98,7 +98,7 @@ namespace Tests
                     LogFormat = "single",
                     Labels = new Dictionary<string, string>
                     {
-                        { "foo", "bar" },
+                        { "ns1.ns2.foo", "bar" },
                         { "baz", "qoz" }
                     }
                 }
@@ -115,7 +115,14 @@ namespace Tests
                 filesProvider.Object,
                 registrar,
                 null,
-                new OptionsWrapper<LogAgentOptions>(new LogAgentOptions { ReadFromEnd = false }),
+                new OptionsWrapper<LogAgentOptions>(new LogAgentOptions
+                {
+                    ReadFromEnd = false,
+                    Docker =
+                    {
+                        WhiteLabels = new [] { "ns1.*" }
+                    }
+                }),
                 _loggerFactory.CreateLogger<ContainerMonitoringProcessor>());
 
             var monitor = new DockerLogMonitor
@@ -140,8 +147,8 @@ namespace Tests
 
             //Assert
             Assert.NotNull(labels);
-            Assert.Contains(labels, kv => kv is { Key: "foo", Value: "bar" });
-            Assert.Contains(labels, kv => kv is { Key: "baz", Value: "qoz" });
+            Assert.Contains(labels, kv => kv is { Key: "ns1.ns2.foo", Value: "bar" });
+            Assert.DoesNotContain(labels, kv => kv is { Key: "baz", Value: "qoz" });
         }
 
         [Fact]

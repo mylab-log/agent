@@ -27,19 +27,6 @@ namespace MyLab.LogAgent.Services
                 new Uri(opts.Value.Docker.SocketUri)
             ).CreateClient();
 
-        private readonly LabelFilter _labelFilter = new (
-            opts.Value.Docker.WhiteLabels,
-            opts.Value.Docker.BlackLabels,
-            new []
-            {
-                
-                "net.mylab.*",
-                "com.docker.*",
-                "io.docker.*",
-                "org.dockerproject.*",
-                "com.docker.compose.*"
-            });
-
         public async Task<IEnumerable<DockerContainerInfo>> ProvideContainersAsync(CancellationToken cancellationToken)
         {
             var containers = await _dockerClient.Containers.ListContainersAsync(
@@ -77,11 +64,7 @@ namespace MyLab.LogAgent.Services
                                 ) && 
                                 l.Value.ToLower() == "true"),
                         
-                        Labels = new ReadOnlyDictionary<string, string>(
-                                new Dictionary<string, string>(
-                                    c.Labels.Where(kv => _labelFilter.IsMatch(kv.Key))
-                                )
-                            )
+                        Labels = new ReadOnlyDictionary<string, string>(c.Labels)
                     }
                 );
         }
