@@ -16,8 +16,10 @@ namespace MyLab.LogAgent.LogFormats
             NetFormatLogic.ExtractAndRemoveLevel(logText, out var level, out var logTextWithoutLevel);
             NetFormatLogic.ExtractCategory(logTextWithoutLevel, out var category, out var leftText);
 
-            var props = new LogProperties();
-            props.Add(LogPropertyNames.Category, category);
+            var props = new LogProperties
+            {
+                { LogPropertyNames.Category, category }
+            };
 
             var rec = MyLabFormatLogic.Parse(leftText, messageExtractor, props);
 

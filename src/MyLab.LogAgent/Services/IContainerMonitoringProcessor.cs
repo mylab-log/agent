@@ -176,7 +176,7 @@ class ContainerMonitoringProcessor : IContainerMonitoringProcessor
 
     private void TryAddContainerLabels(LogRecord rec, IReadOnlyDictionary<string, string>? labels)
     {
-        if(labels == null) return;
+        if(labels == null || labels.Count == 0) return;
 
         rec.Properties ??= new LogProperties();
         rec.Properties.Add
