@@ -60,18 +60,21 @@ namespace MyLab.LogAgent.Tools
 
                     var nextLine = logEnumerator.Current;
 
-                    if (nextLine != null)
-                    {
-                        originLinesCount += nextLine.Text.Count(ch => ch == '\n')+1;
-                        originBytesCount += Encoding.UTF8.GetByteCount(nextLine.Text);
-                    }
-
-                    var applyResult = nextLine != null 
+                    var applyResult = nextLine != null
                         ? _logReader.ApplyNexLine(nextLine.Text)
                         : LogReaderResult.CompleteRecord;
 
-                    contextDateTime ??= nextLine?.Time ?? DateTime.Now;
-                    contextErrorFactor = contextErrorFactor || (nextLine?.IsError ?? false);
+                    if (applyResult != LogReaderResult.NewRecordDetected)
+                    {
+                        if (nextLine != null)
+                        {
+                            originLinesCount += nextLine.Text.Count(ch => ch == '\n') + 1;
+                            originBytesCount += Encoding.UTF8.GetByteCount(nextLine.Text);
+                        }
+
+                        contextDateTime ??= nextLine?.Time ?? DateTime.Now;
+                        contextErrorFactor = contextErrorFactor || (nextLine?.IsError ?? false);
+                    }
 
                     if (applyResult == LogReaderResult.Accepted)
                     {
@@ -86,6 +89,7 @@ namespace MyLab.LogAgent.Tools
                     else if (applyResult == LogReaderResult.NewRecordDetected)
                     {
                         readyLogRecord = GetLogRecord(contextDateTime, contextErrorFactor);
+
                         Buffer?.Clear();
                         if (nextLine != null)
                             Buffer?.Add(nextLine);
@@ -100,7 +104,7 @@ namespace MyLab.LogAgent.Tools
             {
                 readyLogRecord = CreateFailLogRecord(e.SourceText, e, contextDateTime);
             }
-            
+
             if (readyLogRecord != null)
             {
                 readyLogRecord.OriginBytesCount = originBytesCount;

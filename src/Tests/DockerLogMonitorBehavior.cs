@@ -135,7 +135,7 @@ namespace Tests
             Assert.NotNull(outgoingLogs[0].Properties);
             Assert.Contains(outgoingLogs[0].Properties!, p => p is 
             { 
-                Name: LogPropertyNames.OriginMessage, 
+                Key: LogPropertyNames.OriginMessage, 
                 Value: """
                         Start log 1
                          line 1
@@ -146,7 +146,7 @@ namespace Tests
             Assert.NotNull(outgoingLogs[1].Properties);
             Assert.Contains(outgoingLogs[1].Properties!, p => p is
             {
-                Name: LogPropertyNames.OriginMessage,
+                Key: LogPropertyNames.OriginMessage,
                 Value: """
                        Start log 2
                         line 1

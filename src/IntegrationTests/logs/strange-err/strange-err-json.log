@@ -1,0 +1,500 @@
+{"log":"Установка коневых сертификатов. \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.443069095Z"}
+{"log":"Certmgr 1.1 (c) \"Crypto-Pro\", 2007-2020.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.459072296Z"}
+{"log":"Program for managing certificates, CRLs and stores.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.4590894Z"}
+{"log":"Installing: \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.459093622Z"}
+{"log":"=============================================================================\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.459096871Z"}
+{"log":"1-------\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.459102239Z"}
+{"log":"Issuer              : E=dit@minsvyaz.ru, C=RU, S=77 Москва, L=г. Москва, STREET=\"улица Тверская, дом 7\", O=Минкомсвязь России, OGRN=1047702026701, INN=007710474375, CN=Минкомсвязь России\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.459105691Z"}
+{"log":"Subject             : E=dit@minsvyaz.ru, C=RU, S=77 Москва, L=г. Москва, STREET=\"улица Тверская, дом 7\", O=Минкомсвязь России, OGRN=1047702026701, INN=007710474375, CN=Минкомсвязь России\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.459110168Z"}
+{"log":"Serial              : 0x4E6D478B26F27D657F768E025CE3D393\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.459114024Z"}
+{"log":"SHA1 Hash           : 4bc6dc14d97010c41a26e058ad851f81c842415a\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.459117099Z"}
+{"log":"SubjKeyID           : c254f1b46bd44cb7e06d36b42390f1fec33c9b06\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.459120016Z"}
+{"log":"Signature Algorithm : ГОСТ Р 34.11-2012/34.10-2012 256 бит\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.459123062Z"}
+{"log":"PublicKey Algorithm : ГОСТ Р 34.10-2012 (512 bits)\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.459126116Z"}
+{"log":"Not valid before    : 06/07/2018  12:18:06 UTC\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.459129105Z"}
+{"log":"Not valid after     : 01/07/2036  12:18:06 UTC\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.459132003Z"}
+{"log":"PrivateKey Link     : No                  \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.459135012Z"}
+{"log":"=============================================================================\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.459137911Z"}
+{"log":"\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.459140972Z"}
+{"log":"[ErrorCode: 0x00000000]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.459144124Z"}
+{"log":"Certmgr 1.1 (c) \"Crypto-Pro\", 2007-2020.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.473596964Z"}
+{"log":"Program for managing certificates, CRLs and stores.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.473612421Z"}
+{"log":"Installing: \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.473616381Z"}
+{"log":"=============================================================================\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.473619495Z"}
+{"log":"1-------\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.473622717Z"}
+{"log":"Issuer              : E=dit@minsvyaz.ru, C=RU, S=77 Москва, L=г. Москва, STREET=\"улица Тверская, дом 7\", O=Минкомсвязь России, OGRN=1047702026701, INN=007710474375, CN=Минкомсвязь России\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.473651886Z"}
+{"log":"Subject             : E=dit@digital.gov.ru, C=RU, S=77 Москва, L=г. Москва, STREET=\"Пресненская набережная, дом 10, строение 2\", O=Минцифры России, OGRN=1047702026701, 1.2.643.100.4=\"#120A37373130343734333735\", CN=Минцифры России\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.47365919Z"}
+{"log":"Serial              : 0x00F8C9C4040000000005F2\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.473664865Z"}
+{"log":"SHA1 Hash           : 1d13121735dd6e1f59ea58c786b8f7e8b7e6e20f\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.473668222Z"}
+{"log":"SubjKeyID           : c91358b14ca7623a7ed23f3ca6e7147c9d70a386\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.473671144Z"}
+{"log":"Signature Algorithm : ГОСТ Р 34.11-2012/34.10-2012 256 бит\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.473674157Z"}
+{"log":"PublicKey Algorithm : ГОСТ Р 34.10-2012 (512 bits)\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.473677264Z"}
+{"log":"Not valid before    : 08/01/2022  15:44:20 UTC\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.473680364Z"}
+{"log":"Not valid after     : 08/01/2037  15:44:20 UTC\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.473683251Z"}
+{"log":"PrivateKey Link     : No                  \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.473686165Z"}
+{"log":"CA cert URL         : http://reestr-pki.ru/cdp/guc2021.crt\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.473689054Z"}
+{"log":"CDP                 : http://reestr-pki.ru/cdp/guc2021.crl\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.473692118Z"}
+{"log":"CDP                 : http://company.rt.ru/cdp/guc2021.crl\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.47369509Z"}
+{"log":"CDP                 : http://rostelecom.ru/cdp/guc2021.crl\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.473700427Z"}
+{"log":"=============================================================================\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.473703468Z"}
+{"log":"\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.473706674Z"}
+{"log":"[ErrorCode: 0x00000000]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.473709576Z"}
+{"log":"Certmgr 1.1 (c) \"Crypto-Pro\", 2007-2020.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.488645292Z"}
+{"log":"Program for managing certificates, CRLs and stores.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.488658956Z"}
+{"log":"Installing: \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.488662429Z"}
+{"log":"=============================================================================\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.488665467Z"}
+{"log":"1-------\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.488668546Z"}
+{"log":"Issuer              : E=dit@minsvyaz.ru, C=RU, S=77 Москва, L=г. Москва, STREET=\"улица Тверская, дом 7\", O=Минкомсвязь России, OGRN=1047702026701, INN=007710474375, CN=Минкомсвязь России\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.488671638Z"}
+{"log":"Subject             : E=dit@minsvyaz.ru, C=RU, S=77 Москва, L=г. Москва, STREET=\"улица Тверская, дом 7\", O=Минкомсвязь России, OGRN=1047702026701, INN=007710474375, CN=Минкомсвязь России\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.488701967Z"}
+{"log":"Serial              : 0x00EACA32CEF5F979D68D3C4E4F2CC687A4\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.488708644Z"}
+{"log":"SHA1 Hash           : aff05c9e2464941e7ec2ab15c91539360b79aa9d\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.488711659Z"}
+{"log":"SubjKeyID           : 19778fbb82e66fc85f93f0151d9322a1d6ad0c26\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.48871468Z"}
+{"log":"Signature Algorithm : ГОСТ Р 34.11-2012/34.10-2012 256 бит\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.488717806Z"}
+{"log":"PublicKey Algorithm : ГОСТ Р 34.10-2012 (512 bits)\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.488720908Z"}
+{"log":"Not valid before    : 02/07/2021  12:41:47 UTC\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.48872392Z"}
+{"log":"Not valid after     : 02/07/2039  12:41:47 UTC\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.488726935Z"}
+{"log":"PrivateKey Link     : No                  \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.488729894Z"}
+{"log":"=============================================================================\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.488732819Z"}
+{"log":"\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.488736268Z"}
+{"log":"[ErrorCode: 0x00000000]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.488739228Z"}
+{"log":"Certmgr 1.1 (c) \"Crypto-Pro\", 2007-2020.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.502911895Z"}
+{"log":"Program for managing certificates, CRLs and stores.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.50292566Z"}
+{"log":"Installing: \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.502929526Z"}
+{"log":"=============================================================================\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.502932575Z"}
+{"log":"1-------\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.502935642Z"}
+{"log":"Issuer              : E=dit@digital.gov.ru, C=RU, S=77 Москва, L=г. Москва, STREET=\"Пресненская набережная, дом 10, строение 2\", O=Минцифры России, OGRN=1047702026701, 1.2.643.100.4=\"#120A37373130343734333735\", CN=Минцифры России\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.502938731Z"}
+{"log":"Subject             : E=dit@digital.gov.ru, C=RU, S=77 Москва, L=г. Москва, STREET=\"Пресненская набережная, дом 10, строение 2\", O=Минцифры России, OGRN=1047702026701, 1.2.643.100.4=\"#120A37373130343734333735\", CN=Минцифры России\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.502943305Z"}
+{"log":"Serial              : 0x00951FA3477C61043AADFA858627823442\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.502947286Z"}
+{"log":"SHA1 Hash           : 2f0cb09be3550ef17ec4f29c90abd18bfcaad63a\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.502957444Z"}
+{"log":"SubjKeyID           : c91358b14ca7623a7ed23f3ca6e7147c9d70a386\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.502960801Z"}
+{"log":"Signature Algorithm : ГОСТ Р 34.11-2012/34.10-2012 256 бит\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.502963761Z"}
+{"log":"PublicKey Algorithm : ГОСТ Р 34.10-2012 (512 bits)\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.502966919Z"}
+{"log":"Not valid before    : 08/01/2022  13:32:39 UTC\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.502969895Z"}
+{"log":"Not valid after     : 08/01/2040  13:32:39 UTC\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.502972847Z"}
+{"log":"PrivateKey Link     : No                  \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.502975716Z"}
+{"log":"=============================================================================\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.50297863Z"}
+{"log":"\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.502981696Z"}
+{"log":"[ErrorCode: 0x00000000]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.502984612Z"}
+{"log":"Certmgr 1.1 (c) \"Crypto-Pro\", 2007-2020.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.51660685Z"}
+{"log":"Program for managing certificates, CRLs and stores.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.516621445Z"}
+{"log":"Installing: \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.516625161Z"}
+{"log":"=============================================================================\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.516628333Z"}
+{"log":"1-------\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.516631435Z"}
+{"log":"Issuer              : E=dit@minsvyaz.ru, C=RU, S=77 г. Москва, L=Москва, STREET=\"125375 г. Москва, ул. Тверская, д. 7\", O=Минкомсвязь России, OGRN=1047702026701, INN=007710474375, CN=Головной удостоверяющий центр\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.516634558Z"}
+{"log":"Subject             : E=dit@minsvyaz.ru, OGRN=1047702026701, INN=007710474375, C=RU, S=77 Москва, L=г. Москва, STREET=\"ул. Тверская, д. 7\", O=Минкомсвязь России, CN=Минкомсвязь России\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.516639124Z"}
+{"log":"Serial              : 0x00A0D0986100000000022A\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.516642983Z"}
+{"log":"SHA1 Hash           : 9ba648660733ed7a550bcea03a20e14b8f25c99b\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.516646049Z"}
+{"log":"SubjKeyID           : 29b40d88f9a81cc544bf50de656903955b0523d1\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.516664733Z"}
+{"log":"Signature Algorithm : ГОСТ Р 34.11/34.10-2001\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.516669873Z"}
+{"log":"PublicKey Algorithm : ГОСТ Р 34.10-2001 (512 bits)\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.51667312Z"}
+{"log":"Not valid before    : 26/01/2018  09:15:35 UTC\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.516686271Z"}
+{"log":"Not valid after     : 26/01/2027  09:15:35 UTC\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.516689816Z"}
+{"log":"PrivateKey Link     : No                  \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.516692729Z"}
+{"log":"CDP                 : http://rostelecom.ru/cdp/guc.crl\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.51669573Z"}
+{"log":"CDP                 : http://reestr-pki.ru/cdp/guc.crl\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.516698709Z"}
+{"log":"=============================================================================\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.516701692Z"}
+{"log":"\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.51670485Z"}
+{"log":"[ErrorCode: 0x00000000]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.516707823Z"}
+{"log":"Certmgr 1.1 (c) \"Crypto-Pro\", 2007-2020.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.530759281Z"}
+{"log":"Program for managing certificates, CRLs and stores.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.530772068Z"}
+{"log":"Installing: \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.530775299Z"}
+{"log":"=============================================================================\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.530778278Z"}
+{"log":"1-------\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.530781316Z"}
+{"log":"Issuer              : E=dit@minsvyaz.ru, C=RU, S=77 г. Москва, L=Москва, STREET=\"125375 г. Москва, ул. Тверская, д. 7\", O=Минкомсвязь России, OGRN=1047702026701, INN=007710474375, CN=Головной удостоверяющий центр\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.530784295Z"}
+{"log":"Subject             : E=dit@minsvyaz.ru, C=RU, S=77 г. Москва, L=Москва, STREET=\"125375 г. Москва, ул. Тверская, д. 7\", O=Минкомсвязь России, OGRN=1047702026701, INN=007710474375, CN=Головной удостоверяющий центр\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.530788709Z"}
+{"log":"Serial              : 0x34681E40CB41EF33A9A0B7C876929A29\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.530792709Z"}
+{"log":"SHA1 Hash           : 8cae88bbfd404a7a53630864f9033606e1dc45e2\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.530795671Z"}
+{"log":"SubjKeyID           : 8b983b891851e8ef9c0278b8eac8d420b255c95d\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.53079865Z"}
+{"log":"Signature Algorithm : ГОСТ Р 34.11/34.10-2001\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.530817048Z"}
+{"log":"PublicKey Algorithm : ГОСТ Р 34.10-2001 (512 bits)\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.530821416Z"}
+{"log":"Not valid before    : 20/07/2012  12:31:14 UTC\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.530824431Z"}
+{"log":"Not valid after     : 17/07/2027  12:31:14 UTC\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.530827448Z"}
+{"log":"PrivateKey Link     : No                  \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.530830351Z"}
+{"log":"=============================================================================\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.530841056Z"}
+{"log":"\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.530844547Z"}
+{"log":"[ErrorCode: 0x00000000]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.530847493Z"}
+{"log":"Установка CA сертификатов. \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.531558159Z"}
+{"log":"Установка сертифкатов с приватным ключом.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.53286575Z"}
+{"log":"cp: cannot stat '/etc/gost/keys/*': No such file or directory\n","stream":"stderr","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.534005876Z"}
+{"log":"No containers.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.564089339Z"}
+{"log":"Total: SYS: 0.000 sec USR: 0.000 sec UTC: 0.020 sec\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.564104132Z"}
+{"log":"[ErrorCode: 0x00000000]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.564108109Z"}
+{"log":"Установлен файл лицензии.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.567457085Z"}
+{"log":"License validity:\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.569366088Z"}
+{"log":"4040Y-F0000-01W3G-G00D6-H5NF2\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.569377342Z"}
+{"log":"license  - permanent\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.569380619Z"}
+{"log":"License type: Client.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:55.569383568Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: Microsoft.Hosting.Lifetime[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:56.394246223Z"}
+{"log":"      Now listening on: http://[::]:80\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:56.394280055Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: Microsoft.Hosting.Lifetime[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:56.396986341Z"}
+{"log":"      Application started. Press Ctrl+C to shut down.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:56.397003759Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: Microsoft.Hosting.Lifetime[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:56.397007667Z"}
+{"log":"      Hosting environment: Production\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:56.39701141Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: Microsoft.Hosting.Lifetime[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:56.397014518Z"}
+{"log":"      Content root path: /app\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T00:41:56.397017903Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T01:00:00.336012836Z"}
+{"log":"      Message: Task logic has started\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T01:00:00.336026038Z"}
+{"log":"      Time: 2024-02-09T04:00:00.122\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T01:00:00.336029246Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T01:00:00.336032272Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T01:00:00.863872779Z"}
+{"log":"      Message: Task logic has completed\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T01:00:00.863909888Z"}
+{"log":"      Time: 2024-02-09T04:00:00.860\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T01:00:00.863914166Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T01:00:00.863917296Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T01:30:00.009506213Z"}
+{"log":"      Message: Task logic has started\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T01:30:00.009522886Z"}
+{"log":"      Time: 2024-02-09T04:30:00.003\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T01:30:00.009526942Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T01:30:00.009530117Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T01:30:00.221734732Z"}
+{"log":"      Message: Task logic has completed\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T01:30:00.221757127Z"}
+{"log":"      Time: 2024-02-09T04:30:00.221\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T01:30:00.221761742Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T01:30:00.221765183Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T02:00:00.023121774Z"}
+{"log":"      Message: Task logic has started\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T02:00:00.023139899Z"}
+{"log":"      Time: 2024-02-09T05:00:00.022\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T02:00:00.023143332Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T02:00:00.023146391Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T02:00:00.355015478Z"}
+{"log":"      Message: Task logic has completed\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T02:00:00.355043829Z"}
+{"log":"      Time: 2024-02-09T05:00:00.349\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T02:00:00.35504818Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T02:00:00.355051558Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T02:30:00.008000345Z"}
+{"log":"      Message: Task logic has started\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T02:30:00.008018038Z"}
+{"log":"      Time: 2024-02-09T05:30:00.007\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T02:30:00.008021602Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T02:30:00.008024826Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T02:30:00.197648517Z"}
+{"log":"      Message: Task logic has completed\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T02:30:00.197669307Z"}
+{"log":"      Time: 2024-02-09T05:30:00.197\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T02:30:00.197673423Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T02:30:00.197690631Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:00:00.034526938Z"}
+{"log":"      Message: Task logic has started\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:00:00.03456143Z"}
+{"log":"      Time: 2024-02-09T06:00:00.031\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:00:00.034656794Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:00:00.034661499Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:00:00.25605251Z"}
+{"log":"      Message: Task logic has completed\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:00:00.256075249Z"}
+{"log":"      Time: 2024-02-09T06:00:00.253\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:00:00.256079521Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:00:00.256082849Z"}
+{"log":"Установка коневых сертификатов. \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.616193832Z"}
+{"log":"Certmgr 1.1 (c) \"Crypto-Pro\", 2007-2020.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.633504672Z"}
+{"log":"Program for managing certificates, CRLs and stores.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.633522704Z"}
+{"log":"Installing: \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.633527291Z"}
+{"log":"=============================================================================\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.633530497Z"}
+{"log":"1-------\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.633536583Z"}
+{"log":"Issuer              : E=dit@minsvyaz.ru, C=RU, S=77 Москва, L=г. Москва, STREET=\"улица Тверская, дом 7\", O=Минкомсвязь России, OGRN=1047702026701, INN=007710474375, CN=Минкомсвязь России\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.633539706Z"}
+{"log":"Subject             : E=dit@minsvyaz.ru, C=RU, S=77 Москва, L=г. Москва, STREET=\"улица Тверская, дом 7\", O=Минкомсвязь России, OGRN=1047702026701, INN=007710474375, CN=Минкомсвязь России\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.633544413Z"}
+{"log":"Serial              : 0x4E6D478B26F27D657F768E025CE3D393\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.633548486Z"}
+{"log":"SHA1 Hash           : 4bc6dc14d97010c41a26e058ad851f81c842415a\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.633551477Z"}
+{"log":"SubjKeyID           : c254f1b46bd44cb7e06d36b42390f1fec33c9b06\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.633554443Z"}
+{"log":"Signature Algorithm : ГОСТ Р 34.11-2012/34.10-2012 256 бит\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.633557492Z"}
+{"log":"PublicKey Algorithm : ГОСТ Р 34.10-2012 (512 bits)\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.633560763Z"}
+{"log":"Not valid before    : 06/07/2018  12:18:06 UTC\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.633563828Z"}
+{"log":"Not valid after     : 01/07/2036  12:18:06 UTC\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.633566814Z"}
+{"log":"PrivateKey Link     : No                  \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.633578089Z"}
+{"log":"=============================================================================\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.633581573Z"}
+{"log":"\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.633584631Z"}
+{"log":"[ErrorCode: 0x00000000]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.633587549Z"}
+{"log":"Certmgr 1.1 (c) \"Crypto-Pro\", 2007-2020.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.64867885Z"}
+{"log":"Program for managing certificates, CRLs and stores.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.648690942Z"}
+{"log":"Installing: \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.648694243Z"}
+{"log":"=============================================================================\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.648697204Z"}
+{"log":"1-------\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.648700369Z"}
+{"log":"Issuer              : E=dit@minsvyaz.ru, C=RU, S=77 Москва, L=г. Москва, STREET=\"улица Тверская, дом 7\", O=Минкомсвязь России, OGRN=1047702026701, INN=007710474375, CN=Минкомсвязь России\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.648703344Z"}
+{"log":"Subject             : E=dit@digital.gov.ru, C=RU, S=77 Москва, L=г. Москва, STREET=\"Пресненская набережная, дом 10, строение 2\", O=Минцифры России, OGRN=1047702026701, 1.2.643.100.4=\"#120A37373130343734333735\", CN=Минцифры России\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.648707643Z"}
+{"log":"Serial              : 0x00F8C9C4040000000005F2\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.648712895Z"}
+{"log":"SHA1 Hash           : 1d13121735dd6e1f59ea58c786b8f7e8b7e6e20f\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.648715971Z"}
+{"log":"SubjKeyID           : c91358b14ca7623a7ed23f3ca6e7147c9d70a386\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.648718954Z"}
+{"log":"Signature Algorithm : ГОСТ Р 34.11-2012/34.10-2012 256 бит\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.648721909Z"}
+{"log":"PublicKey Algorithm : ГОСТ Р 34.10-2012 (512 bits)\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.648724991Z"}
+{"log":"Not valid before    : 08/01/2022  15:44:20 UTC\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.648728079Z"}
+{"log":"Not valid after     : 08/01/2037  15:44:20 UTC\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.648731113Z"}
+{"log":"PrivateKey Link     : No                  \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.648736219Z"}
+{"log":"CA cert URL         : http://reestr-pki.ru/cdp/guc2021.crt\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.648739189Z"}
+{"log":"CDP                 : http://reestr-pki.ru/cdp/guc2021.crl\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.648742198Z"}
+{"log":"CDP                 : http://company.rt.ru/cdp/guc2021.crl\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.648745129Z"}
+{"log":"CDP                 : http://rostelecom.ru/cdp/guc2021.crl\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.648748048Z"}
+{"log":"=============================================================================\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.648758851Z"}
+{"log":"\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.648762434Z"}
+{"log":"[ErrorCode: 0x00000000]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.648765337Z"}
+{"log":"Certmgr 1.1 (c) \"Crypto-Pro\", 2007-2020.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.66310244Z"}
+{"log":"Program for managing certificates, CRLs and stores.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.663118825Z"}
+{"log":"Installing: \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.663123083Z"}
+{"log":"=============================================================================\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.663126316Z"}
+{"log":"1-------\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.663129557Z"}
+{"log":"Issuer              : E=dit@minsvyaz.ru, C=RU, S=77 Москва, L=г. Москва, STREET=\"улица Тверская, дом 7\", O=Минкомсвязь России, OGRN=1047702026701, INN=007710474375, CN=Минкомсвязь России\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.663132631Z"}
+{"log":"Subject             : E=dit@minsvyaz.ru, C=RU, S=77 Москва, L=г. Москва, STREET=\"улица Тверская, дом 7\", O=Минкомсвязь России, OGRN=1047702026701, INN=007710474375, CN=Минкомсвязь России\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.663137139Z"}
+{"log":"Serial              : 0x00EACA32CEF5F979D68D3C4E4F2CC687A4\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.663140999Z"}
+{"log":"SHA1 Hash           : aff05c9e2464941e7ec2ab15c91539360b79aa9d\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.663144077Z"}
+{"log":"SubjKeyID           : 19778fbb82e66fc85f93f0151d9322a1d6ad0c26\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.663147114Z"}
+{"log":"Signature Algorithm : ГОСТ Р 34.11-2012/34.10-2012 256 бит\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.663150218Z"}
+{"log":"PublicKey Algorithm : ГОСТ Р 34.10-2012 (512 bits)\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.663153336Z"}
+{"log":"Not valid before    : 02/07/2021  12:41:47 UTC\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.663156302Z"}
+{"log":"Not valid after     : 02/07/2039  12:41:47 UTC\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.663159181Z"}
+{"log":"PrivateKey Link     : No                  \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.663162196Z"}
+{"log":"=============================================================================\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.663165143Z"}
+{"log":"\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.663168163Z"}
+{"log":"[ErrorCode: 0x00000000]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.66317105Z"}
+{"log":"Certmgr 1.1 (c) \"Crypto-Pro\", 2007-2020.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.678082478Z"}
+{"log":"Program for managing certificates, CRLs and stores.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.678098159Z"}
+{"log":"Installing: \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.678112348Z"}
+{"log":"=============================================================================\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.678115886Z"}
+{"log":"1-------\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.678119024Z"}
+{"log":"Issuer              : E=dit@digital.gov.ru, C=RU, S=77 Москва, L=г. Москва, STREET=\"Пресненская набережная, дом 10, строение 2\", O=Минцифры России, OGRN=1047702026701, 1.2.643.100.4=\"#120A37373130343734333735\", CN=Минцифры России\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.678122035Z"}
+{"log":"Subject             : E=dit@digital.gov.ru, C=RU, S=77 Москва, L=г. Москва, STREET=\"Пресненская набережная, дом 10, строение 2\", O=Минцифры России, OGRN=1047702026701, 1.2.643.100.4=\"#120A37373130343734333735\", CN=Минцифры России\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.678126769Z"}
+{"log":"Serial              : 0x00951FA3477C61043AADFA858627823442\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.678131075Z"}
+{"log":"SHA1 Hash           : 2f0cb09be3550ef17ec4f29c90abd18bfcaad63a\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.678134104Z"}
+{"log":"SubjKeyID           : c91358b14ca7623a7ed23f3ca6e7147c9d70a386\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.678137107Z"}
+{"log":"Signature Algorithm : ГОСТ Р 34.11-2012/34.10-2012 256 бит\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.678140067Z"}
+{"log":"PublicKey Algorithm : ГОСТ Р 34.10-2012 (512 bits)\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.678143202Z"}
+{"log":"Not valid before    : 08/01/2022  13:32:39 UTC\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.678146294Z"}
+{"log":"Not valid after     : 08/01/2040  13:32:39 UTC\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.678149174Z"}
+{"log":"PrivateKey Link     : No                  \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.6781527Z"}
+{"log":"=============================================================================\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.67815578Z"}
+{"log":"\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.678158942Z"}
+{"log":"[ErrorCode: 0x00000000]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.678161843Z"}
+{"log":"Certmgr 1.1 (c) \"Crypto-Pro\", 2007-2020.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.692200766Z"}
+{"log":"Program for managing certificates, CRLs and stores.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.692211624Z"}
+{"log":"Installing: \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.692214912Z"}
+{"log":"=============================================================================\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.692217851Z"}
+{"log":"1-------\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.692220938Z"}
+{"log":"Issuer              : E=dit@minsvyaz.ru, C=RU, S=77 г. Москва, L=Москва, STREET=\"125375 г. Москва, ул. Тверская, д. 7\", O=Минкомсвязь России, OGRN=1047702026701, INN=007710474375, CN=Головной удостоверяющий центр\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.692223854Z"}
+{"log":"Subject             : E=dit@minsvyaz.ru, OGRN=1047702026701, INN=007710474375, C=RU, S=77 Москва, L=г. Москва, STREET=\"ул. Тверская, д. 7\", O=Минкомсвязь России, CN=Минкомсвязь России\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.692235644Z"}
+{"log":"Serial              : 0x00A0D0986100000000022A\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.692239969Z"}
+{"log":"SHA1 Hash           : 9ba648660733ed7a550bcea03a20e14b8f25c99b\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.692242988Z"}
+{"log":"SubjKeyID           : 29b40d88f9a81cc544bf50de656903955b0523d1\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.692245909Z"}
+{"log":"Signature Algorithm : ГОСТ Р 34.11/34.10-2001\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.692248836Z"}
+{"log":"PublicKey Algorithm : ГОСТ Р 34.10-2001 (512 bits)\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.692251852Z"}
+{"log":"Not valid before    : 26/01/2018  09:15:35 UTC\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.692255133Z"}
+{"log":"Not valid after     : 26/01/2027  09:15:35 UTC\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.692258001Z"}
+{"log":"PrivateKey Link     : No                  \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.692260926Z"}
+{"log":"CDP                 : http://rostelecom.ru/cdp/guc.crl\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.692263808Z"}
+{"log":"CDP                 : http://reestr-pki.ru/cdp/guc.crl\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.69226679Z"}
+{"log":"=============================================================================\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.692269862Z"}
+{"log":"\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.692272887Z"}
+{"log":"[ErrorCode: 0x00000000]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.692275773Z"}
+{"log":"Certmgr 1.1 (c) \"Crypto-Pro\", 2007-2020.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.706316244Z"}
+{"log":"Program for managing certificates, CRLs and stores.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.706330674Z"}
+{"log":"Installing: \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.706334648Z"}
+{"log":"=============================================================================\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.706337673Z"}
+{"log":"1-------\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.706340805Z"}
+{"log":"Issuer              : E=dit@minsvyaz.ru, C=RU, S=77 г. Москва, L=Москва, STREET=\"125375 г. Москва, ул. Тверская, д. 7\", O=Минкомсвязь России, OGRN=1047702026701, INN=007710474375, CN=Головной удостоверяющий центр\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.706343816Z"}
+{"log":"Subject             : E=dit@minsvyaz.ru, C=RU, S=77 г. Москва, L=Москва, STREET=\"125375 г. Москва, ул. Тверская, д. 7\", O=Минкомсвязь России, OGRN=1047702026701, INN=007710474375, CN=Головной удостоверяющий центр\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.706348514Z"}
+{"log":"Serial              : 0x34681E40CB41EF33A9A0B7C876929A29\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.706359801Z"}
+{"log":"SHA1 Hash           : 8cae88bbfd404a7a53630864f9033606e1dc45e2\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.70636327Z"}
+{"log":"SubjKeyID           : 8b983b891851e8ef9c0278b8eac8d420b255c95d\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.70636644Z"}
+{"log":"Signature Algorithm : ГОСТ Р 34.11/34.10-2001\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.706369455Z"}
+{"log":"PublicKey Algorithm : ГОСТ Р 34.10-2001 (512 bits)\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.706372544Z"}
+{"log":"Not valid before    : 20/07/2012  12:31:14 UTC\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.706375611Z"}
+{"log":"Not valid after     : 17/07/2027  12:31:14 UTC\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.706378594Z"}
+{"log":"PrivateKey Link     : No                  \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.706381502Z"}
+{"log":"=============================================================================\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.70638497Z"}
+{"log":"\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.706388191Z"}
+{"log":"[ErrorCode: 0x00000000]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.706391068Z"}
+{"log":"Установка CA сертификатов. \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.707321272Z"}
+{"log":"Установка сертифкатов с приватным ключом.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.708710585Z"}
+{"log":"cp: cannot stat '/etc/gost/keys/*': No such file or directory\n","stream":"stderr","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.709902986Z"}
+{"log":"No containers.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.740340347Z"}
+{"log":"Total: SYS: 0.000 sec USR: 0.000 sec UTC: 0.030 sec\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.740355173Z"}
+{"log":"[ErrorCode: 0x00000000]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.740358993Z"}
+{"log":"Установлен файл лицензии.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.743534953Z"}
+{"log":"License validity:\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.745440188Z"}
+{"log":"4040Y-F0000-01W3G-G00D6-H5NF2\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.745451827Z"}
+{"log":"license  - permanent\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.745455057Z"}
+{"log":"License type: Client.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:12.74545798Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: Microsoft.Hosting.Lifetime[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:13.433422504Z"}
+{"log":"      Now listening on: http://[::]:80\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:13.433439027Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: Microsoft.Hosting.Lifetime[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:13.434287979Z"}
+{"log":"      Application started. Press Ctrl+C to shut down.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:13.43429753Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: Microsoft.Hosting.Lifetime[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:13.434310451Z"}
+{"log":"      Hosting environment: Production\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:13.434314217Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: Microsoft.Hosting.Lifetime[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:13.434317222Z"}
+{"log":"      Content root path: /app\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:25:13.43432045Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:30:00.137805812Z"}
+{"log":"      Message: Task logic has started\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:30:00.137825101Z"}
+{"log":"      Time: 2024-02-09T06:30:00.073\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:30:00.137828852Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:30:00.137831972Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:30:00.375012821Z"}
+{"log":"      Message: Task logic has completed\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:30:00.37502404Z"}
+{"log":"      Time: 2024-02-09T06:30:00.373\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:30:00.375027342Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T03:30:00.375030569Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T04:00:00.00924575Z"}
+{"log":"      Message: Task logic has started\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T04:00:00.009257288Z"}
+{"log":"      Time: 2024-02-09T07:00:00.008\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T04:00:00.009260422Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T04:00:00.009263494Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T04:00:00.235980417Z"}
+{"log":"      Message: Task logic has completed\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T04:00:00.236003434Z"}
+{"log":"      Time: 2024-02-09T07:00:00.235\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T04:00:00.236007315Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T04:00:00.236010569Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T04:30:00.071858429Z"}
+{"log":"      Message: Task logic has started\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T04:30:00.071881616Z"}
+{"log":"      Time: 2024-02-09T07:30:00.069\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T04:30:00.071885836Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T04:30:00.071889155Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T04:30:00.260221592Z"}
+{"log":"      Message: Task logic has completed\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T04:30:00.26024374Z"}
+{"log":"      Time: 2024-02-09T07:30:00.259\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T04:30:00.260257593Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T04:30:00.260261582Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T05:00:00.007851364Z"}
+{"log":"      Message: Task logic has started\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T05:00:00.007869184Z"}
+{"log":"      Time: 2024-02-09T08:00:00.003\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T05:00:00.007872699Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T05:00:00.007875861Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T05:00:00.280865579Z"}
+{"log":"      Message: Task logic has completed\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T05:00:00.280886426Z"}
+{"log":"      Time: 2024-02-09T08:00:00.278\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T05:00:00.280890622Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T05:00:00.280893876Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T05:30:00.010021866Z"}
+{"log":"      Message: Task logic has started\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T05:30:00.010032468Z"}
+{"log":"      Time: 2024-02-09T08:30:00.005\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T05:30:00.01003593Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T05:30:00.010039161Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T05:30:00.213133397Z"}
+{"log":"      Message: Task logic has completed\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T05:30:00.213154497Z"}
+{"log":"      Time: 2024-02-09T08:30:00.211\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T05:30:00.213158896Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T05:30:00.213162298Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T06:00:00.019022036Z"}
+{"log":"      Message: Task logic has started\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T06:00:00.019050539Z"}
+{"log":"      Time: 2024-02-09T09:00:00.012\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T06:00:00.019055097Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T06:00:00.019058762Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T06:00:00.278374954Z"}
+{"log":"      Message: Task logic has completed\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T06:00:00.278394585Z"}
+{"log":"      Time: 2024-02-09T09:00:00.278\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T06:00:00.278398611Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T06:00:00.278401732Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T06:30:00.041250066Z"}
+{"log":"      Message: Task logic has started\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T06:30:00.04126361Z"}
+{"log":"      Time: 2024-02-09T09:30:00.039\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T06:30:00.041277067Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T06:30:00.041280797Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T06:30:15.412067499Z"}
+{"log":"      Message: Task logic has completed\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T06:30:15.412081911Z"}
+{"log":"      Time: 2024-02-09T09:30:15.411\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T06:30:15.412085163Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T06:30:15.41208829Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T07:00:00.004363411Z"}
+{"log":"      Message: Task logic has started\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T07:00:00.00437701Z"}
+{"log":"      Time: 2024-02-09T10:00:00.003\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T07:00:00.004380341Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T07:00:00.004383407Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T07:00:00.343145198Z"}
+{"log":"      Message: Task logic has completed\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T07:00:00.343171213Z"}
+{"log":"      Time: 2024-02-09T10:00:00.342\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T07:00:00.343175319Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T07:00:00.343178464Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T07:30:00.022118978Z"}
+{"log":"      Message: Task logic has started\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T07:30:00.02212993Z"}
+{"log":"      Time: 2024-02-09T10:30:00.021\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T07:30:00.022133255Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T07:30:00.022136303Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T07:30:00.306092699Z"}
+{"log":"      Message: Task logic has completed\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T07:30:00.306110422Z"}
+{"log":"      Time: 2024-02-09T10:30:00.299\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T07:30:00.30611409Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T07:30:00.306117243Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T08:00:00.018388006Z"}
+{"log":"      Message: Task logic has started\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T08:00:00.018422032Z"}
+{"log":"      Time: 2024-02-09T11:00:00.007\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T08:00:00.018427391Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T08:00:00.018430929Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T08:00:00.232615993Z"}
+{"log":"      Message: Task logic has completed\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T08:00:00.232649535Z"}
+{"log":"      Time: 2024-02-09T11:00:00.232\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T08:00:00.232663045Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T08:00:00.232666276Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T08:30:00.010219795Z"}
+{"log":"      Message: Task logic has started\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T08:30:00.010230186Z"}
+{"log":"      Time: 2024-02-09T11:30:00.009\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T08:30:00.010233409Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T08:30:00.010236614Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T08:30:00.247923173Z"}
+{"log":"      Message: Task logic has completed\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T08:30:00.247944447Z"}
+{"log":"      Time: 2024-02-09T11:30:00.245\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T08:30:00.247948766Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T08:30:00.247952078Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T09:00:00.020530188Z"}
+{"log":"      Message: Task logic has started\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T09:00:00.020549063Z"}
+{"log":"      Time: 2024-02-09T12:00:00.018\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T09:00:00.020552642Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T09:00:00.020555775Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T09:00:00.296042376Z"}
+{"log":"      Message: Task logic has completed\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T09:00:00.296070732Z"}
+{"log":"      Time: 2024-02-09T12:00:00.295\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T09:00:00.296074945Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T09:00:00.296078178Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T09:30:00.005653875Z"}
+{"log":"      Message: Task logic has started\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T09:30:00.005664633Z"}
+{"log":"      Time: 2024-02-09T12:30:00.005\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T09:30:00.005667983Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T09:30:00.005671666Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T09:30:00.211905947Z"}
+{"log":"      Message: Task logic has completed\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T09:30:00.211919355Z"}
+{"log":"      Time: 2024-02-09T12:30:00.206\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T09:30:00.211922666Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T09:30:00.211925724Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T10:00:00.006817206Z"}
+{"log":"      Message: Task logic has started\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T10:00:00.006834071Z"}
+{"log":"      Time: 2024-02-09T13:00:00.003\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T10:00:00.006840867Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T10:00:00.006843935Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T10:00:00.261585725Z"}
+{"log":"      Message: Task logic has completed\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T10:00:00.261605513Z"}
+{"log":"      Time: 2024-02-09T13:00:00.261\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T10:00:00.261609446Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T10:00:00.261613005Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T10:30:00.010158333Z"}
+{"log":"      Message: Task logic has started\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T10:30:00.010184131Z"}
+{"log":"      Time: 2024-02-09T13:30:00.008\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T10:30:00.010188828Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T10:30:00.010807798Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T10:30:00.215387342Z"}
+{"log":"      Message: Task logic has completed\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T10:30:00.215405854Z"}
+{"log":"      Time: 2024-02-09T13:30:00.207\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T10:30:00.215409231Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T10:30:00.21541236Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T11:00:00.011235713Z"}
+{"log":"      Message: Task logic has started\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T11:00:00.011254247Z"}
+{"log":"      Time: 2024-02-09T14:00:00.009\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T11:00:00.011257996Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T11:00:00.011261179Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T11:00:00.239410473Z"}
+{"log":"      Message: Task logic has completed\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T11:00:00.239433134Z"}
+{"log":"      Time: 2024-02-09T14:00:00.237\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T11:00:00.239437092Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T11:00:00.239440231Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T11:30:00.014010858Z"}
+{"log":"      Message: Task logic has started\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T11:30:00.014025432Z"}
+{"log":"      Time: 2024-02-09T14:30:00.010\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T11:30:00.014029175Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T11:30:00.014032822Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T11:30:00.191024536Z"}
+{"log":"      Message: Task logic has completed\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T11:30:00.191044258Z"}
+{"log":"      Time: 2024-02-09T14:30:00.190\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T11:30:00.191047774Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T11:30:00.191050961Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:00.007422398Z"}
+{"log":"      Message: Task logic has started\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:00.007440932Z"}
+{"log":"      Time: 2024-02-09T15:00:00.006\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:00.007444575Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:00.007447651Z"}
+{"log":"\u001b[40m\u001b[32minfo\u001b[39m\u001b[22m\u001b[49m: TaskLogic[0]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:00.239511414Z"}
+{"log":"      Message: Task logic has completed\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:00.239533418Z"}
+{"log":"      Time: 2024-02-09T15:00:00.239\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:00.239537415Z"}
+{"log":"      \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:00.239540526Z"}
+{"log":"Установка коневых сертификатов. \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.257573804Z"}
+{"log":"Certmgr 1.1 (c) \"Crypto-Pro\", 2007-2020.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.2758542Z"}
+{"log":"Program for managing certificates, CRLs and stores.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.275870145Z"}
+{"log":"Installing: \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.275874275Z"}
+{"log":"=============================================================================\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.275877422Z"}
+{"log":"1-------\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.275882033Z"}
+{"log":"Issuer              : E=dit@minsvyaz.ru, C=RU, S=77 Москва, L=г. Москва, STREET=\"улица Тверская, дом 7\", O=Минкомсвязь России, OGRN=1047702026701, INN=007710474375, CN=Минкомсвязь России\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.275885157Z"}
+{"log":"Subject             : E=dit@minsvyaz.ru, C=RU, S=77 Москва, L=г. Москва, STREET=\"улица Тверская, дом 7\", O=Минкомсвязь России, OGRN=1047702026701, INN=007710474375, CN=Минкомсвязь России\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.275889603Z"}
+{"log":"Serial              : 0x4E6D478B26F27D657F768E025CE3D393\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.275893391Z"}
+{"log":"SHA1 Hash           : 4bc6dc14d97010c41a26e058ad851f81c842415a\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.275896397Z"}
+{"log":"SubjKeyID           : c254f1b46bd44cb7e06d36b42390f1fec33c9b06\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.275899376Z"}
+{"log":"Signature Algorithm : ГОСТ Р 34.11-2012/34.10-2012 256 бит\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.275902468Z"}
+{"log":"PublicKey Algorithm : ГОСТ Р 34.10-2012 (512 bits)\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.27591495Z"}
+{"log":"Not valid before    : 06/07/2018  12:18:06 UTC\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.275918778Z"}
+{"log":"Not valid after     : 01/07/2036  12:18:06 UTC\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.275921749Z"}
+{"log":"PrivateKey Link     : No                  \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.275924656Z"}
+{"log":"=============================================================================\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.275927648Z"}
+{"log":"\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.275930722Z"}
+{"log":"[ErrorCode: 0x00000000]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.275933589Z"}
+{"log":"Certmgr 1.1 (c) \"Crypto-Pro\", 2007-2020.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.291142489Z"}
+{"log":"Program for managing certificates, CRLs and stores.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.291158627Z"}
+{"log":"Installing: \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.291162412Z"}
+{"log":"=============================================================================\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.291165407Z"}
+{"log":"1-------\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.291168544Z"}
+{"log":"Issuer              : E=dit@minsvyaz.ru, C=RU, S=77 Москва, L=г. Москва, STREET=\"улица Тверская, дом 7\", O=Минкомсвязь России, OGRN=1047702026701, INN=007710474375, CN=Минкомсвязь России\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.291171671Z"}
+{"log":"Subject             : E=dit@digital.gov.ru, C=RU, S=77 Москва, L=г. Москва, STREET=\"Пресненская набережная, дом 10, строение 2\", O=Минцифры России, OGRN=1047702026701, 1.2.643.100.4=\"#120A37373130343734333735\", CN=Минцифры России\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.291176133Z"}
+{"log":"Serial              : 0x00F8C9C4040000000005F2\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.2911858Z"}
+{"log":"SHA1 Hash           : 1d13121735dd6e1f59ea58c786b8f7e8b7e6e20f\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.291188989Z"}
+{"log":"SubjKeyID           : c91358b14ca7623a7ed23f3ca6e7147c9d70a386\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.291191977Z"}
+{"log":"Signature Algorithm : ГОСТ Р 34.11-2012/34.10-2012 256 бит\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.291195279Z"}
+{"log":"PublicKey Algorithm : ГОСТ Р 34.10-2012 (512 bits)\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.291198552Z"}
+{"log":"Not valid before    : 08/01/2022  15:44:20 UTC\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.291201574Z"}
+{"log":"Not valid after     : 08/01/2037  15:44:20 UTC\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.291204555Z"}
+{"log":"PrivateKey Link     : No                  \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.291207516Z"}
+{"log":"CA cert URL         : http://reestr-pki.ru/cdp/guc2021.crt\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.291210534Z"}
+{"log":"CDP                 : http://reestr-pki.ru/cdp/guc2021.crl\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.291223647Z"}
+{"log":"CDP                 : http://company.rt.ru/cdp/guc2021.crl\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.291227204Z"}
+{"log":"CDP                 : http://rostelecom.ru/cdp/guc2021.crl\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.29123014Z"}
+{"log":"=============================================================================\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.291233426Z"}
+{"log":"\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.291236518Z"}
+{"log":"[ErrorCode: 0x00000000]\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.291239464Z"}
+{"log":"Certmgr 1.1 (c) \"Crypto-Pro\", 2007-2020.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.305117151Z"}
+{"log":"Program for managing certificates, CRLs and stores.\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.30513196Z"}
+{"log":"Installing: \n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.305136106Z"}
+{"log":"=============================================================================\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.305139253Z"}
+{"log":"1-------\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.305142398Z"}
+{"log":"Issuer              : E=dit@minsvyaz.ru, C=RU, S=77 Москва, L=г. Москва, STREET=\"улица Тверская, дом 7\", O=Минкомсвязь России, OGRN=1047702026701, INN=007710474375, CN=Минкомсвязь России\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.305145765Z"}
+{"log":"Subject             : E=dit@minsvyaz.ru, C=RU, S=77 Москва, L=г. Москва, STREET=\"улица Тверская, дом 7\", O=Минкомсвязь России, OGRN=1047702026701, INN=007710474375, CN=Минкомсвязь России\n","stream":"stdout","attrs":{"tag":"infonot-crl-update-task"},"time":"2024-02-09T12:00:12.305150317Z"}

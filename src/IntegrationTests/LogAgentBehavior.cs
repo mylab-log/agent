@@ -64,9 +64,9 @@ namespace IntegrationTests
                 rec.Any(p => p is { Key: LogPropertyNames.Time, Value: "2023-08-29T20:15:41.3045745Z" })
             );
             Assert.Contains(searchRes, rec =>
-                rec.Any(p => p.Key == LogPropertyNames.Message && p.Value.Contains("Span #0")) && 
+                rec.Any(p => p.Key == LogPropertyNames.Message && ((string)p.Value).Contains("Span #0")) && 
                 rec.Any(p => p is { Key: LogPropertyNames.Time, Value: "2023-08-29T20:15:41.3045815Z" }) &&
-                rec.Any(p => p.Key == LogPropertyNames.OriginMessage && p.Value.Contains("Trace ID       : f15bcb09a61119c219067946020cd5a1"))
+                rec.Any(p => p.Key == LogPropertyNames.OriginMessage && ((string)p.Value).Contains("Trace ID       : f15bcb09a61119c219067946020cd5a1"))
             );
         }
 
@@ -104,12 +104,55 @@ namespace IntegrationTests
             Assert.Contains(searchRes, rec =>
                 rec.Any(p => p is { Key: LogPropertyNames.Message, Value: "DB query" }) &&
                 rec.Any(p => p is { Key: "trace-id", Value: "c300bef21768286157116d1feed3f1d2" }) &&
-                rec.Any(p => p.Key == "SqlText" && p.Value.Contains("`t`.`ext_system_id`"))
+                rec.Any(p => p.Key == "SqlText" && ((string)p.Value).Contains("`t`.`ext_system_id`"))
             );
             Assert.Contains(searchRes, rec =>
                 rec.Any(p => p is { Key: LogPropertyNames.Message, Value: "DB query" }) &&
                 rec.Any(p => p is { Key: "trace-id", Value: "c300bef21768286157116d1feed3f1d2" }) && 
-                rec.Any(p => p.Key == "SqlText" && p.Value.Contains("WHEN EXISTS("))
+                rec.Any(p => p.Key == "SqlText" && ((string)p.Value).Contains("WHEN EXISTS("))
+            );
+        }
+
+        [Fact]
+        public async Task ShouldIndexDefaultFormatLogs()
+        {
+            //Arrange
+            var testContainer = new DockerContainerInfo
+            {
+                Id = "strange-err",
+                Name = "strange-err"
+            };
+
+            var monitorService = CreateApp(testContainer);
+
+            //Act
+            var startToken = new CancellationTokenSource(TimeSpan.FromSeconds(1));
+            await monitorService.StartAsync(startToken.Token);
+
+            await Task.Delay(TimeSpan.FromSeconds(1), default(CancellationToken));
+
+            var stopToken = new CancellationTokenSource(TimeSpan.FromSeconds(1));
+            await monitorService.StopAsync(stopToken.Token);
+            
+            await Task.Delay(TimeSpan.FromSeconds(3), default(CancellationToken));
+
+            var searchRes = await _fxt.Searcher.SearchAsync("logs-test",
+                new EsSearchParams<EsLogRecord>(d => d.MatchAll())
+                {
+                    Paging = new EsPaging
+                    {
+                        From = 0,
+                        Size = 500
+                    }
+                },
+                default
+            );
+
+            //Assert
+            Assert.Equal(340, searchRes.Count);
+            Assert.Contains(searchRes, rec =>
+                rec.Any(p => p is { Key: LogPropertyNames.Message, Value: "Установка сертифкатов с приватным ключом." }) &&
+                rec.All(p => p is not { Key: LogPropertyNames.Level, Value: "error" })
             );
         }
 
@@ -126,8 +169,8 @@ namespace IntegrationTests
                 .AddSingleton(containerProvider.Object)
                 .ConfigureLogAgentLogic(opt =>
                 {
-                    opt.DockerContainersPath = Path.Combine(Directory.GetCurrentDirectory(), "logs");
-                    opt.OutgoingBufferSize = 1;
+                    opt.Docker.ContainersPath = Path.Combine(Directory.GetCurrentDirectory(), "logs");
+                    opt.OutgoingBufferSize = 500;
                     opt.ReadFromEnd = false;
                 })
                 .ConfigureEsTools(opt =>

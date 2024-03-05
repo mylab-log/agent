@@ -5,6 +5,7 @@ using MyLab.LogAgent.Model;
 using MyLab.LogAgent.Options;
 using MyLab.LogAgent.Tools;
 using MyLab.LogAgent.Tools.LogMessageExtraction;
+using LogLevel = MyLab.LogAgent.Model.LogLevel;
 
 namespace MyLab.LogAgent.Services;
 
@@ -42,14 +43,14 @@ class ContainerMonitoringProcessor : IContainerMonitoringProcessor
     {
         if (_opts.AddProperties != null)
         {
-            var logProps = _opts.AddProperties.Select(p => new LogProperty { Name = p.Key, Value = p.Value });
+            var logProps = _opts.AddProperties.Select(p => new KeyValuePair<string, object>(p.Key, p.Value));
             if (nextLogRecord.Properties != null)
             {
                 nextLogRecord.Properties.AddRange(logProps);
             }
             else
             {
-                nextLogRecord.Properties = new List<LogProperty>(logProps);
+                nextLogRecord.Properties = new LogProperties(new Dictionary<string, object>(logProps));
             }
         }
     }
@@ -129,12 +130,8 @@ class ContainerMonitoringProcessor : IContainerMonitoringProcessor
 
             if (cState.UnsupportedFormatDetected)
             {
-                nextLogRecord.Properties ??= [];
-                nextLogRecord.Properties.Add(new LogProperty
-                {
-                    Name = LogPropertyNames.UnsupportedFormatFlag,
-                    Value = "true"
-                });
+                nextLogRecord.Properties ??= new LogProperties();
+                nextLogRecord.Properties.Add(LogPropertyNames.UnsupportedFormatFlag, "true");
             }
 
             TryAddContainerLabels(nextLogRecord, cState.Info.Labels);
@@ -168,12 +165,7 @@ class ContainerMonitoringProcessor : IContainerMonitoringProcessor
     {
         if(labels == null) return;
 
-        rec.Properties ??= new List<LogProperty>();
-
-        rec.Properties.Add(new LogProperty
-        {
-            Name = LogPropertyNames.ContainerLabels, 
-            Value = new Dictionary<string,string>(labels)
-        });
+        rec.Properties ??= new LogProperties();
+        rec.Properties.Add(LogPropertyNames.ContainerLabels, new Dictionary<string,string>(labels));
     }
 }

@@ -11,7 +11,7 @@ namespace MyLab.LogAgent.Model
         public LogLevel Level { get; set; }
         public string? Format { get; set; }
         public string? Container { get; set; }
-        public List<LogProperty>? Properties { get; set; }
+        public LogProperties? Properties { get; set; }
 
         public int OriginLinesCount { get; set; }
         public int OriginBytesCount { get; set; }
@@ -19,26 +19,17 @@ namespace MyLab.LogAgent.Model
 
         public void SetParsingErrorState(string failureReasonId, Exception? exception = null)
         {
-            Properties ??= new List<LogProperty>();
+            Properties ??= new LogProperties();
 
-            Properties.Add(new LogProperty
-            {
-                Name = LogPropertyNames.ParsingFailedFlag,
-                Value = "true"
-            });
-            Properties.Add(new LogProperty
-            {
-                Name = LogPropertyNames.ParsingFailureReason,
-                Value = failureReasonId
-            });
+            Properties.Add(LogPropertyNames.ParsingFailedFlag, "true");
+            Properties.Add(LogPropertyNames.ParsingFailureReason, failureReasonId);
 
             if (exception != null)
             {
-                Properties.Add(new LogProperty
-                {
-                    Name = LogPropertyNames.Exception,
-                    Value = ExceptionDto.Create(exception).ToYaml() ?? "[no-error-yaml]"
-                });
+                Properties.Add(
+                    LogPropertyNames.Exception,
+                    ExceptionDto.Create(exception).ToYaml() ?? "[no-error-yaml]"
+                    );
             }
 
             HasParsingError = true;

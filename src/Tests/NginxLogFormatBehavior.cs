@@ -27,9 +27,9 @@ namespace Tests
             Assert.NotNull(logRec);
             Assert.NotNull(logRec.Properties);
             Assert.Equal("172.19.0.112: GET /metrics -> 200", logRec.Message);
-            Assert.Contains(logRec.Properties, p => p is {Name: NginxLogFormat.RemoteAddressProp, Value: "172.19.0.112"});
-            Assert.Contains(logRec.Properties, p => p is {Name: NginxLogFormat.RequestProp, Value: "GET /metrics" });
-            Assert.Contains(logRec.Properties, p => p is {Name: NginxLogFormat.StatusProp, Value: "200"});
+            Assert.Contains(logRec.Properties, p => p is {Key: NginxLogFormat.RemoteAddressProp, Value: "172.19.0.112"});
+            Assert.Contains(logRec.Properties, p => p is {Key: NginxLogFormat.RequestProp, Value: "GET /metrics" });
+            Assert.Contains(logRec.Properties, p => p is {Key: NginxLogFormat.StatusProp, Value: "200"});
         }
 
         [Fact]
@@ -52,7 +52,7 @@ namespace Tests
             Assert.Equal("""
                          open() "/usr/local/openresty/nginx/html/passports/v4/check" failed (2: No such file or directory)
                          """, logRec.Message);
-            Assert.Contains(logRec.Properties, p => p is { Name: NginxLogFormat.RequestProp, Value: "POST /passports/v4/check" });
+            Assert.Contains(logRec.Properties, p => p is { Key: NginxLogFormat.RequestProp, Value: "POST /passports/v4/check" });
         }
 
         [Fact]
@@ -75,7 +75,7 @@ namespace Tests
             Assert.Equal("""
                          a client request body is buffered to a temporary file /var/run/openresty/nginx-client-body/0000001092
                          """, logRec.Message);
-            Assert.Contains(logRec.Properties, p => p is { Name: NginxLogFormat.RequestProp, Value: "POST /api/signature-verifier/v1/signature-validation-results/detached" });
+            Assert.Contains(logRec.Properties, p => p is { Key: NginxLogFormat.RequestProp, Value: "POST /api/signature-verifier/v1/signature-validation-results/detached" });
         }
     }
 }

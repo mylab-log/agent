@@ -6,7 +6,7 @@ public class LogSourceLine
 {
     public string Text { get; private set; }
     public DateTime? Time { get; set; }
-    public IEnumerable<LogProperty>? Properties { get; set; }
+    public LogProperties? Properties { get; set; }
     
     public bool IsError { get; set; }
 

@@ -9,7 +9,7 @@ public interface ILogMessageExtractor
 
 static class LogMessageExtractorExtensions
 {
-    public static LogRecord ExtractAndCreateLogRecord(this ILogMessageExtractor extractor, string originMessage, List<LogProperty>? properties = null)
+    public static LogRecord ExtractAndCreateLogRecord(this ILogMessageExtractor extractor, string originMessage, LogProperties? properties = null)
     {
         var msg = extractor.Extract(originMessage);
 
@@ -22,12 +22,8 @@ static class LogMessageExtractorExtensions
             };
         }
 
-        properties ??= [];
-        properties.Add(new()
-        {
-            Name = LogPropertyNames.OriginMessage,
-            Value = msg.Full
-        });
+        properties ??= new();
+        properties.Add(LogPropertyNames.OriginMessage,  msg.Full);
 
         return new LogRecord
         {

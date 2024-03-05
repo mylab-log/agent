@@ -35,7 +35,7 @@ namespace Tests
             Assert.NotNull(readLine.Time);
             Assert.Equal(new DateTime(2024, 01, 09, 8, 44, 44, DateTimeKind.Utc),readLine.Time);
             Assert.NotNull(readLine.Properties);
-            Assert.Contains(readLine.Properties, p => p is { Name: "tag", Value: "redis-monitor" });
+            Assert.Contains(readLine.Properties, p => p is { Key: "tag", Value: "redis-monitor" });
 
 
             _output.WriteLine("Time: " + readLine.Time.Value.ToString("O"));

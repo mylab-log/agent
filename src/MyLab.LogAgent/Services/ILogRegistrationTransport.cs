@@ -30,42 +30,46 @@ namespace MyLab.LogAgent.Services
     }
 
     [EsBindingKey("log")]
-    class EsLogRecord : Dictionary<string, string>
+    class EsLogRecord : Dictionary<string, object>
     {
         public static EsLogRecord FromLogRecord(LogRecord logRecord)
         {
-            var resultProperties = new List<LogProperty>
+            var resultProperties = new LogProperties(new Dictionary<string, object>
             {
-                new() {Name = LogPropertyNames.Message, Value = logRecord.Message},
-                new() {Name = LogPropertyNames.Time, Value = logRecord.Time.ToString("O")},
-                new() {Name = LogPropertyNames.Level, Value = logRecord.Level.ToString().ToLower()},
-                new() {Name = LogPropertyNames.Format, Value = logRecord.Format ?? "undefined" },
-                new() {Name = LogPropertyNames.Container, Value = logRecord.Container ?? "undefined"}
-            };
+                { LogPropertyNames.Message, logRecord.Message},
+                { LogPropertyNames.Time, logRecord.Time.ToString("O")},
+                { LogPropertyNames.Level, logRecord.Level.ToString().ToLower()},
+                { LogPropertyNames.Format, logRecord.Format ?? "undefined" },
+                { LogPropertyNames.Container, logRecord.Container ?? "undefined"}
+            });
 
             if (logRecord.Properties != null)
             {
-                resultProperties.AddRange(logRecord.Properties);
+                resultProperties.AddRange(logRecord.Properties.ToDictionary());
             }
-
-            var pGroups = resultProperties
-                .GroupBy(p => p.Name)
-                .ToDictionary(
-                    pg => NormKey(pg.Key),
-                    pg => pg.Select(pgv => pgv.Value).ToArray()
+            
+            var esLogRecord = new EsLogRecord(
+                new Dictionary<string, object>(
+                    resultProperties.ToDictionary()
+                        .Select(kv => new KeyValuePair<string, object>(
+                                NormKey(kv.Key),
+                                kv.Value
+                            ))
+                    )
                 );
 
-            var esLogRecord = new EsLogRecord();
-
-            foreach (var pGroup in pGroups)
-            {
-                esLogRecord.Add(pGroup.Key, pGroup.Value.Length == 1 
-                    ? pGroup.Value.First() 
-                    : string.Join(", ", pGroup.Value)
-                    );
-            }
-
             return esLogRecord;
+        }
+
+        public EsLogRecord()
+        {
+            
+        }
+
+        public EsLogRecord(IDictionary<string, object>  initial)
+            :base(initial)
+        {
+            
         }
 
         private static string NormKey(string originKey)

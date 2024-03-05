@@ -6,7 +6,7 @@ partial class NginxLogFormat
 {
     static class AssessLogExtractor
     {
-        public static bool Extract(string logText, List<LogProperty> props, out string message)
+        public static bool Extract(string logText, LogProperties props, out string message)
         {
             if (
                 !TryExtractRemoteAddress(logText, props, out var remoteAddress) &
@@ -14,16 +14,8 @@ partial class NginxLogFormat
                 !TryExtractStatus(logText, props, endRequestIndex, out var status)
             )
             {
-                props.Add(new LogProperty
-                {
-                    Name = LogPropertyNames.ParsingFailedFlag,
-                    Value = "true"
-                });
-                props.Add(new LogProperty
-                {
-                    Name = LogPropertyNames.ParsingFailureReason,
-                    Value = "nginx-access-log-parser"
-                });
+                props.Add(LogPropertyNames.ParsingFailedFlag, "true");
+                props.Add(LogPropertyNames.ParsingFailureReason, "nginx-access-log-parser");
 
                 message = logText;
 
@@ -36,7 +28,7 @@ partial class NginxLogFormat
             }
         }
 
-        static bool TryExtractStatus(string logText, List<LogProperty> props, int endRequestIndex, out string status)
+        static bool TryExtractStatus(string logText, LogProperties props, int endRequestIndex, out string status)
         {
             string? statusStr = null;
 
@@ -53,16 +45,12 @@ partial class NginxLogFormat
                 ? statusStr
                 : NotFound;
 
-            props.Add(new LogProperty
-            {
-                Name = StatusProp,
-                Value = status
-            });
+            props.Add(StatusProp, status);
 
             return !string.IsNullOrWhiteSpace(statusStr);
         }
 
-        static bool TryExtractRequest(string logText, List<LogProperty> props, out int endRequestIndex, out string request)
+        static bool TryExtractRequest(string logText, LogProperties props, out int endRequestIndex, out string request)
         {
             endRequestIndex = -1;
             string? requestStr = null;
@@ -84,16 +72,12 @@ partial class NginxLogFormat
                 ? requestStr
                 : NotFound;
 
-            props.Add(new LogProperty
-            {
-                Name = RequestProp,
-                Value = request
-            });
+            props.Add(RequestProp, request);
 
             return !string.IsNullOrWhiteSpace(requestStr);
         }
 
-        static bool TryExtractRemoteAddress(string logText, List<LogProperty> props, out string remoteAddress)
+        static bool TryExtractRemoteAddress(string logText, LogProperties props, out string remoteAddress)
         {
             var remoteAddressDelimiterIndex = logText.IndexOf(' ');
 
@@ -101,11 +85,7 @@ partial class NginxLogFormat
                 ? logText.Remove(remoteAddressDelimiterIndex)
                 : "[not detected]";
 
-            props.Add(new LogProperty
-            {
-                Name = RemoteAddressProp,
-                Value = remoteAddress
-            });
+            props.Add(RemoteAddressProp, remoteAddress);
 
             return remoteAddressDelimiterIndex != -1;
         }

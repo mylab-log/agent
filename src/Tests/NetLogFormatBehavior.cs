@@ -31,7 +31,7 @@ namespace Tests
             Assert.NotNull(logRec);
             Assert.Equal("Hellow!",logRec.Message);
             Assert.NotNull(logRec.Properties);
-            Assert.Contains(logRec.Properties, p => p is { Name: LogPropertyNames.Category, Value: "MyApp.Worker" });
+            Assert.Contains(logRec.Properties, p => p is { Key: LogPropertyNames.Category, Value: "MyApp.Worker" });
         }
     }
 }

@@ -37,7 +37,7 @@ public class LogReaderBehavior
         Assert.NotNull(readLogRecord);
         Assert.Equal("Start log", readLogRecord.Message);
         Assert.NotNull(readLogRecord.Properties);
-        Assert.Contains(readLogRecord.Properties, p => p.Name == LogPropertyNames.OriginMessage && p.Value == sourceString);
+        Assert.Contains(readLogRecord.Properties, p => p.Key == LogPropertyNames.OriginMessage && (string)p.Value == sourceString);
     }
 
     [Theory]
@@ -108,7 +108,7 @@ public class LogReaderBehavior
         Assert.NotNull(readLogRecord);
         Assert.Equal("Start log-1", readLogRecord.Message);
         Assert.NotNull(readLogRecord.Properties);
-        Assert.Contains(readLogRecord.Properties, p => p.Name == LogPropertyNames.OriginMessage && p.Value == fullLog1String );
+        Assert.Contains(readLogRecord.Properties, p => p.Key == LogPropertyNames.OriginMessage && (string)p.Value == fullLog1String );
         Assert.Single(buff);
         Assert.Equal("Start log-2", buff[0].Text);
     }
@@ -150,7 +150,7 @@ public class LogReaderBehavior
         Assert.NotNull(readLogRecord);
         Assert.Equal("Start log-2", readLogRecord.Message);
         Assert.NotNull(readLogRecord.Properties);
-        Assert.Contains(readLogRecord.Properties, p => p.Name == LogPropertyNames.OriginMessage && p.Value == fullLog1String);
+        Assert.Contains(readLogRecord.Properties, p => p.Key == LogPropertyNames.OriginMessage && (string)p.Value == fullLog1String);
         Assert.Empty(buff);
     }
 
@@ -207,9 +207,9 @@ public class LogReaderBehavior
         Assert.NotNull(readLogRecord);
         Assert.Equal("Start log-1", readLogRecord.Message);
         Assert.NotNull(readLogRecord.Properties);
-        Assert.Contains(readLogRecord.Properties, p => p.Name == LogPropertyNames.Exception);
-        Assert.Contains(readLogRecord.Properties, p => p is { Name: LogPropertyNames.ParsingFailedFlag, Value: "true" });
-        Assert.Contains(readLogRecord.Properties, p => p is { Name: LogPropertyNames.ParsingFailureReason, Value: "exception" });
+        Assert.Contains(readLogRecord.Properties, p => p.Key == LogPropertyNames.Exception);
+        Assert.Contains(readLogRecord.Properties, p => p is { Key: LogPropertyNames.ParsingFailedFlag, Value: "true" });
+        Assert.Contains(readLogRecord.Properties, p => p is { Key: LogPropertyNames.ParsingFailureReason, Value: "exception" });
     }
 
     [Theory]

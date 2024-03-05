@@ -12,13 +12,13 @@ namespace MyLab.LogAgent.LogFormats
 {
     static class MyLabFormatLogic
     {
-        public static LogRecord Parse(string logText, ILogMessageExtractor messageExtractor, IEnumerable<LogProperty>? preProps = null)
+        public static LogRecord Parse(string logText, ILogMessageExtractor messageExtractor, LogProperties? preProps = null)
         {
             var logEntity = ParseYaml(logText);
 
             var props = preProps != null
-                ? [..preProps]
-                : new List<LogProperty>();
+                ? new LogProperties(preProps)
+                : new LogProperties();
 
             string? logLevel = null;
 
@@ -48,12 +48,7 @@ namespace MyLab.LogAgent.LogFormats
                         break;
                     case nameof(LogEntity.Exception):
                         {
-                            props.Add(
-                                new LogProperty
-                                {
-                                    Name = LogPropertyNames.Exception,
-                                    Value = ParseException(logEntityChild.Value)
-                                });
+                            props.Add(LogPropertyNames.Exception,  ParseException(logEntityChild.Value));
                         }
                         break;
                 }
@@ -84,7 +79,7 @@ namespace MyLab.LogAgent.LogFormats
             return dt;
         }
 
-        private static void ProcessFacts(YamlMappingNode logFacts, List<LogProperty> props, out string? logLevel)
+        private static void ProcessFacts(YamlMappingNode logFacts, LogProperties props, out string? logLevel)
         {
             logLevel = null;
 
@@ -99,17 +94,11 @@ namespace MyLab.LogAgent.LogFormats
                     continue;
                 }
 
-                props.Add(
-                    new LogProperty
-                    {
-                        Name = factKey,
-                        Value = factVal
-                    }
-                );
+                props.Add(factKey, factVal);
             }
         }
 
-        private static void ProcessLabels(YamlMappingNode logLabels, List<LogProperty> props, out string? logLevel)
+        private static void ProcessLabels(YamlMappingNode logLabels, LogProperties props, out string? logLevel)
         {
             logLevel = null;
 
@@ -124,13 +113,7 @@ namespace MyLab.LogAgent.LogFormats
                     continue;
                 }
 
-                props.Add(
-                    new LogProperty
-                    {
-                        Name = labelKey,
-                        Value = labelVal
-                    }
-                );
+                props.Add(labelKey,labelVal);
             }
         }
 

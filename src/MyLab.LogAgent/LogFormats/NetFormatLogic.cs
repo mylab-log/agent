@@ -8,16 +8,12 @@ namespace MyLab.LogAgent.LogFormats
     {
         public static LogRecord Parse(string logText, ILogMessageExtractor messageExtractor)
         {
-            var props = new List<LogProperty>();
+            var props = new LogProperties();
 
             ExtractAndRemoveLevel(logText, out var level, out var logTextWithoutLevel);
             ExtractCategory(logTextWithoutLevel, out var category, out var leftText);
 
-            props.Add(new LogProperty
-            {
-                Name = LogPropertyNames.Category,
-                Value = category
-            });
+            props.Add(LogPropertyNames.Category, category);
 
             var rec = messageExtractor.ExtractAndCreateLogRecord(leftText, props);
 

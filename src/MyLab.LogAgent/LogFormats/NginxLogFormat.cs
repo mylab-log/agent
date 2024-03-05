@@ -19,7 +19,7 @@ namespace MyLab.LogAgent.LogFormats
 
         public LogRecord Parse(string logText, ILogMessageExtractor messageExtractor)
         {
-            var props = new List<LogProperty>();
+            var props = new LogProperties();
             string message;
             var detectedLogLevel = LogLevel.Undefined;
 

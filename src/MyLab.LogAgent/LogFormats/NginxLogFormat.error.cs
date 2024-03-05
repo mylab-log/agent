@@ -11,23 +11,15 @@ partial class NginxLogFormat
         private const string RegexPattern = """
                                       \[(?<level>\w+)\]\s\d+#\d+:\s\*\d+\s(?<message>[^,]+),\s(?<props>[^$]+)
                                       """;
-        public static bool Extract(string logText, List<LogProperty> props, out string message, out LogLevel logLevel)
+        public static bool Extract(string logText, LogProperties props, out string message, out LogLevel logLevel)
         {
             logLevel = LogLevel.Undefined;
             var m = Regex.Match(logText, RegexPattern);
 
             if (!m.Success)
             {
-                props.Add(new LogProperty
-                {
-                    Name = LogPropertyNames.ParsingFailedFlag,
-                    Value = "true"
-                });
-                props.Add(new LogProperty
-                {
-                    Name = LogPropertyNames.ParsingFailureReason,
-                    Value = "nginx-error-log-parser"
-                });
+                props.Add(LogPropertyNames.ParsingFailedFlag, "true");
+                props.Add(LogPropertyNames.ParsingFailureReason, "nginx-error-log-parser");
 
                 message = logText;
                 return false;
@@ -42,13 +34,12 @@ partial class NginxLogFormat
 
                 var groupProps = TryExtractProperties(m);
 
-                props.Add(new LogProperty
-                {
-                    Name = RequestProp,
-                    Value = groupProps != null && groupProps.TryGetValue("request", out var requestStr)
-                        ? TryCleanupRequest(requestStr.Trim('"'))
-                        : NotFound
-                });
+                props.Add(
+                    RequestProp,
+                    groupProps != null && groupProps.TryGetValue("request", out var requestStr)
+                            ? TryCleanupRequest(requestStr.Trim('"'))
+                            : NotFound
+                );
                 return true;
             }
         }

@@ -43,11 +43,15 @@ namespace MyLab.LogAgent.LogSourceReaders
                 : new LogSourceLine(dockerLine.Log?.TrimEnd('\n', '\r') ?? string.Empty)
             {
                 Time = dockerLine.Time,
-                Properties = dockerLine.Attributes?.Select(a => new LogProperty
-                {
-                    Name = a.Key,
-                    Value = a.Value
-                }),
+                Properties = dockerLine.Attributes != null
+                    ? new LogProperties
+                    (
+                        new Dictionary<string, object>
+                            (
+                                dockerLine.Attributes.Select(a => new KeyValuePair<string, object>(a.Key, a.Value))
+                            )
+                    )
+                    : new LogProperties(),
                 IsError = !IgnoreStreamType && dockerLine.Stream == "stderr"
             };
         }

@@ -1,6 +1,8 @@
 ﻿using MyLab.LogAgent;
 using MyLab.LogAgent.Model;
 using MyLab.LogAgent.Services;
+using Nest;
+using YamlDotNet.Core.Tokens;
 
 namespace Tests
 {
@@ -11,16 +13,19 @@ namespace Tests
         {
             //Arrange
             var dTime = new DateTime(1990, 01, 02, 03, 04, 05, DateTimeKind.Utc);
+
+            var logProps = new LogProperties
+            {
+                { "bar-name", "bar-value-1" },
+                { "bar-name", "bar-value-2" },
+                { "baz-name", "baz-value" }
+            };
+
             var logRecord = new LogRecord
             {
                 Message = "foo",
                 Time = dTime,
-                Properties = new List<LogProperty>
-                {
-                    new() { Name = "bar-name", Value = "bar-value-1" },
-                    new() { Name = "bar-name", Value = "bar-value-2" },
-                    new() { Name = "baz-name", Value = "baz-value" }
-                }
+                Properties = logProps
             };
 
             //Act
@@ -30,7 +35,7 @@ namespace Tests
             Assert.NotNull(esLogRecord);
             Assert.Contains(esLogRecord, p => p is { Key:LogPropertyNames.Message, Value:"foo" });
             Assert.Contains(esLogRecord, p => p is { Key: LogPropertyNames.Time, Value: "1990-01-02T03:04:05.0000000Z" });
-            Assert.Contains(esLogRecord, p => p is { Key:"bar-name", Value:"bar-value-1, bar-value-2" });
+            Assert.Contains(esLogRecord, p => p is { Key:"bar-name", Value:"bar-value-2" });
             Assert.Contains(esLogRecord, p => p is { Key:"baz-name", Value:"baz-value" });
         }
 
@@ -43,10 +48,13 @@ namespace Tests
             {
                 Message = "foo",
                 Time = default,
-                Properties = new List<LogProperty>
-                {
-                    new() { Name = originKey, Value = "some-value" },
-                }
+                Properties = new LogProperties
+                (
+                    new Dictionary<string, object>
+                    {
+                        { originKey, "some-value" },
+                    }
+                )
             };
 
             //Act
@@ -54,7 +62,7 @@ namespace Tests
 
             //Assert
             Assert.NotNull(esLogRecord);
-            Assert.Contains(esLogRecord, p => p.Key == expectedNormalizedKey && p.Value == "some-value");
+            Assert.Contains(esLogRecord, p => p.Key == expectedNormalizedKey && (string)p.Value == "some-value");
         }
 
         public static object[][] GetNormKeyCases()
