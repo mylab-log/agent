@@ -1,12 +1,12 @@
-using Microsoft.Extensions.Configuration;
 using MyLab.HttpMetrics;
 using MyLab.Log;
 using MyLab.LogAgent;
+using MyLab.LogAgent.Tools;
 using MyLab.Search.EsAdapter;
+using MyLab.Search.EsAdapter.Inter;
 using MyLab.StatusProvider;
 using MyLab.WebErrors;
-using System.Reflection;
-using System.Runtime.InteropServices;
+using Newtonsoft.Json;
 using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +16,10 @@ builder.Services
     .AddEsTools()
     .ConfigureLogAgentLogic(builder.Configuration)
     .ConfigureEsTools(builder.Configuration)
+    .ConfigureEsTools(opt =>
+    {
+        opt.SerializerFactory = new CombineEsSerializerFactory(CreateJsonSerializer());
+    })
     .AddUrlBasedHttpMetrics()
     .AddLogging(b => b.AddMyLabConsole())
     .AddAppStatusProviding(builder.Configuration)
@@ -31,3 +35,13 @@ app.MapMetrics();
 
 app.Run();
 
+static JsonSerializer CreateJsonSerializer()
+{
+    return new JsonSerializer
+    {
+        Converters =
+        {
+            new DockerLabelNameJsonConverter()
+        }
+    };
+}

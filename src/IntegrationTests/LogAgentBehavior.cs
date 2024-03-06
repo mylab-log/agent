@@ -32,10 +32,14 @@ namespace IntegrationTests
             var testContainer = new DockerContainerInfo
             {
                 Id = "multiline",
-                Name = "multiline"
+                Name = "multiline",
+                Labels = new Dictionary<DockerLabelName, string>
+                {
+                    {"ns1.ns2.foo", "bar"}
+                }
             };
 
-            var monitorService = CreateApp(testContainer);
+            var monitorService = CreateApp(testContainer, omitLblNs: true);
 
             //Act
             var startToken = new CancellationTokenSource(TimeSpan.FromSeconds(1));
@@ -120,7 +124,11 @@ namespace IntegrationTests
             var testContainer = new DockerContainerInfo
             {
                 Id = "strange-err",
-                Name = "strange-err"
+                Name = "strange-err",
+                Labels = new Dictionary<DockerLabelName, string>
+                {
+                    {"ns1.ns2.foo", "bar"}
+                }
             };
 
             var monitorService = CreateApp(testContainer);
@@ -156,7 +164,7 @@ namespace IntegrationTests
             );
         }
 
-        private IHostedService CreateApp(DockerContainerInfo testContainer)
+        private IHostedService CreateApp(DockerContainerInfo testContainer, bool omitLblNs = false)
         {
             var containerProvider = new Mock<IDockerContainerProvider>();
             containerProvider
@@ -172,6 +180,7 @@ namespace IntegrationTests
                     opt.Docker.ContainersPath = Path.Combine(Directory.GetCurrentDirectory(), "logs");
                     opt.OutgoingBufferSize = 500;
                     opt.ReadFromEnd = false;
+                    opt.Docker.OmitLabelNamespace = omitLblNs;
                 })
                 .ConfigureEsTools(opt =>
                 {

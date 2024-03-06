@@ -173,14 +173,21 @@ class ContainerMonitoringProcessor : IContainerMonitoringProcessor
             .Write();
     }
 
-    private void TryAddContainerLabels(LogRecord rec, IReadOnlyDictionary<string, string>? labels)
+    private void TryAddContainerLabels(LogRecord rec, IReadOnlyDictionary<DockerLabelName, string>? labels)
     {
         if(labels == null || labels.Count == 0) return;
 
-        var lblDict = new Dictionary<string, string>
-        (
-            labels.Where(kv => _labelFilter.IsMatch(kv.Key))
-        );
+        var filteredLabels = labels.Where(kv => _labelFilter.IsMatch(kv.Key));
+
+        if (_opts.Docker.OmitLabelNamespace)
+        {
+            filteredLabels = filteredLabels.Select
+                (
+                    kv => new KeyValuePair<DockerLabelName, string>(kv.Key.Local, kv.Value)
+                );
+        }
+
+        var lblDict = new Dictionary<DockerLabelName, string>(filteredLabels);
 
         if(lblDict.Count != 0)
         {

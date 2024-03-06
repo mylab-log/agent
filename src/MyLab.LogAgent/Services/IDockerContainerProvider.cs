@@ -4,7 +4,6 @@ using Docker.DotNet.Models;
 using Microsoft.Extensions.Options;
 using MyLab.LogAgent.Model;
 using MyLab.LogAgent.Options;
-using MyLab.LogAgent.Tools;
 
 namespace MyLab.LogAgent.Services
 {
@@ -64,7 +63,14 @@ namespace MyLab.LogAgent.Services
                                 ) && 
                                 l.Value.ToLower() == "true"),
                         
-                        Labels = new ReadOnlyDictionary<string, string>(c.Labels)
+                        Labels = new ReadOnlyDictionary<DockerLabelName, string>
+                        (
+                            c.Labels.ToDictionary
+                            (
+                                l => (DockerLabelName)l.Key, 
+                                l => l.Value
+                            )
+                        )
                     }
                 );
         }

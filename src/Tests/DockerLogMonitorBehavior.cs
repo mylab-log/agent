@@ -81,7 +81,7 @@ namespace Tests
         }
 
         [Fact]
-        public async Task ShouldAddContainerLabels()
+        public async Task ShouldAddDockerLabels()
         {
             //Arrange
             const string logLines = """
@@ -96,7 +96,7 @@ namespace Tests
                     Id = "foo-id",
                     Name = "foo-container",
                     LogFormat = "single",
-                    Labels = new Dictionary<string, string>
+                    Labels = new Dictionary<DockerLabelName, string>
                     {
                         { "ns1.ns2.foo", "bar" },
                         { "baz", "qoz" }
@@ -142,13 +142,85 @@ namespace Tests
                 .Properties?
                 .ToDictionary()
                 .Where(p => p.Key == LogPropertyNames.ContainerLabels)
-                .Select(p => (IDictionary<string, string>)p.Value)
+                .Select(p => (IDictionary<DockerLabelName, string>)p.Value)
                 .FirstOrDefault();
 
             //Assert
             Assert.NotNull(labels);
-            Assert.Contains(labels, kv => kv is { Key: "ns1.ns2.foo", Value: "bar" });
-            Assert.DoesNotContain(labels, kv => kv is { Key: "baz", Value: "qoz" });
+            Assert.Contains(labels, kv => kv.Key == "ns1.ns2.foo" && kv.Value == "bar");
+            Assert.DoesNotContain(labels, kv => kv.Key == "baz" && kv.Value == "qoz");
+        }
+
+        [Fact]
+        public async Task ShouldOmitDockerLabelNamespaces()
+        {
+            //Arrange
+            const string logLines = """
+                                    {"log":"Message","stream":"stdout","time":"2023-08-29T20:15:41.304555874Z"}
+                                    """;
+
+            var outgoingLogs = new List<LogRecord>();
+
+            var containerProvider = CreateDockerContainerProvider(
+                new DockerContainerInfo
+                {
+                    Id = "foo-id",
+                    Name = "foo-container",
+                    LogFormat = "single",
+                    Labels = new Dictionary<DockerLabelName, string>
+                    {
+                        { "ns1.ns2.foo", "bar" },
+                        { "ns1.baz", "qoz" }
+                    }
+                }
+            );
+
+            var filesProvider = ProvideContainerFileProvider(
+                "foo-id",
+                new ContainerFile("foo-id-json.log", 0),
+                () => logLines);
+
+            var registrar = CreateLogRegistrar(outgoingLogs);
+
+            var cMonitoringProcessor = new ContainerMonitoringProcessor(
+                filesProvider.Object,
+                registrar,
+                null,
+                new OptionsWrapper<LogAgentOptions>(new LogAgentOptions
+                {
+                    ReadFromEnd = false,
+                    Docker =
+                    {
+                        WhiteLabels = new [] { "ns1.*" },
+                        OmitLabelNamespace = true
+                    }
+                }),
+                _loggerFactory.CreateLogger<ContainerMonitoringProcessor>());
+
+            var monitor = new DockerLogMonitor
+            (
+                containerProvider,
+                new DockerContainerRegistry(),
+                cMonitoringProcessor,
+                null,
+                _logger
+            );
+
+            //Act
+            await monitor.ProcessLogsAsync(default);
+
+            var labels = outgoingLogs
+                .FirstOrDefault()?
+                .Properties?
+                .ToDictionary()
+                .Where(p => p.Key == LogPropertyNames.ContainerLabels)
+                .Select(p => (IDictionary<DockerLabelName, string>)p.Value)
+                .FirstOrDefault();
+
+            //Assert
+            Assert.NotNull(labels);
+            Assert.Contains(labels, kv => kv.Key == "foo" && kv.Value == "bar");
+            Assert.Contains(labels, kv => kv.Key == "baz" && kv.Value == "qoz");
         }
 
         [Fact]
