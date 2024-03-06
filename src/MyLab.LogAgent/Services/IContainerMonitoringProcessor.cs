@@ -5,7 +5,6 @@ using MyLab.LogAgent.Model;
 using MyLab.LogAgent.Options;
 using MyLab.LogAgent.Tools;
 using MyLab.LogAgent.Tools.LogMessageExtraction;
-using LogLevel = MyLab.LogAgent.Model.LogLevel;
 
 namespace MyLab.LogAgent.Services;
 
@@ -178,14 +177,15 @@ class ContainerMonitoringProcessor : IContainerMonitoringProcessor
     {
         if(labels == null || labels.Count == 0) return;
 
-        rec.Properties ??= new LogProperties();
-        rec.Properties.Add
-            (
-                LogPropertyNames.ContainerLabels, 
-                new Dictionary<string,string>
-                    (
-                        labels.Where(kv => _labelFilter.IsMatch(kv.Key))
-                    )
-            );
+        var lblDict = new Dictionary<string, string>
+        (
+            labels.Where(kv => _labelFilter.IsMatch(kv.Key))
+        );
+
+        if(lblDict.Count != 0)
+        {
+            rec.Properties ??= new LogProperties();
+            rec.Properties.Add(LogPropertyNames.ContainerLabels, lblDict);
+        }
     }
 }
