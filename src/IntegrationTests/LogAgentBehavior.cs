@@ -26,6 +26,43 @@ namespace IntegrationTests
         }
 
         [Fact]
+        public async Task ShouldDetectException()
+        {
+            //Arrange
+            var testContainer = new DockerContainerInfo
+            {
+                Id = "lost-exception",
+                Name = "lost-exception",
+                LogFormat = "mylab"
+            };
+
+            var monitorService = CreateApp(testContainer, omitLblNs: true);
+
+            //Act
+            var startToken = new CancellationTokenSource(TimeSpan.FromSeconds(1));
+            await monitorService.StartAsync(startToken.Token);
+
+            await Task.Delay(TimeSpan.FromSeconds(1), default(CancellationToken));
+
+            var stopToken = new CancellationTokenSource(TimeSpan.FromSeconds(1));
+            await monitorService.StopAsync(stopToken.Token);
+
+            await Task.Delay(TimeSpan.FromSeconds(1), default(CancellationToken));
+
+            var searchRes = await _fxt.Searcher.SearchAsync("logs-test",
+                new EsSearchParams<EsLogRecord>(d => d.MatchAll()),
+                default
+            );
+
+            var found = searchRes.FirstOrDefault();
+
+            //Assert
+            Assert.Single(searchRes);
+            Assert.NotNull(found);
+            Assert.Contains(found, kv => kv is { Key: LogPropertyNames.Exception });
+        }
+
+        [Fact]
         public async Task ShouldIndexMultilineDockerLogs()
         {
             //Arrange

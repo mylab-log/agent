@@ -25,6 +25,10 @@ class MultilineLogReader : ILogReader
             {
                 return LogReaderResult.NewRecordDetected;
             }
+            else
+            {
+                _lastLineIsSpace = false;
+            }
         }
         else
         {

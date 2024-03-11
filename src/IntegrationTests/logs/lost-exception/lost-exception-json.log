@@ -1,0 +1,162 @@
+{"log":"Message: Ошибка обработки сообщения из mos-ru\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954355747Z"}
+{"log":"Time: 2024-03-06T11:52:42.839\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954413991Z"}
+{"log":"Labels:\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954425558Z"}
+{"log":"  exception-trace: 1172728024c7fb06deeb3a4bd42d835a\r\n","stream":"stdout","time":"2024-03-06T08:52:42.95443553Z"}
+{"log":"  log-level: error\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954448462Z"}
+{"log":"Facts:\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954462912Z"}
+{"log":"  xml: \u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954479995Z"}
+{"log":"    \u003c?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954495403Z"}
+{"log":"\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954513327Z"}
+{"log":"    \u003cv61:CoordinateMessage xmlns:v61=\"http://asguf.mos.ru/rkis_gu/coordinate/v6_1/\" xmlns:ns2=\"http://www.w3.org/2000/09/xmldsig#\" xmlns:ns3=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd\"\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954523099Z"}
+{"log":"        \u003cv61:CoordinateDataMessage\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954534615Z"}
+{"log":"            \u003cv61:Service\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.95454438Z"}
+{"log":"                \u003cv61:RegNum\u003e1900000780\u003c/v61:RegNum\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954554408Z"}
+{"log":"                \u003cv61:RegDate\u003e2019-09-13T10:05:01.972+03:00\u003c/v61:RegDate\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954564277Z"}
+{"log":"                \u003cv61:ServiceNumber\u003e0001-9300120-111300-00000182/24\u003c/v61:ServiceNumber\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954574422Z"}
+{"log":"                \u003cv61:Responsible\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954584433Z"}
+{"log":"                    \u003cv61:LastName\u003eоператор Портала\u003c/v61:LastName\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954593995Z"}
+{"log":"                    \u003cv61:FirstName\u003eоператор Портала\u003c/v61:FirstName\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954604404Z"}
+{"log":"                    \u003cv61:MiddleName\u003eоператор Портала\u003c/v61:MiddleName\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954614782Z"}
+{"log":"                    \u003cv61:JobTitle\u003eоператор Портала\u003c/v61:JobTitle\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954624901Z"}
+{"log":"                    \u003cv61:Phone\u003e+7 (495) 539-55-55\u003c/v61:Phone\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954635179Z"}
+{"log":"                    \u003cv61:Email\u003ecpgu@mos.ru\u003c/v61:Email\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954645054Z"}
+{"log":"                \u003c/v61:Responsible\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954655059Z"}
+{"log":"                \u003cv61:Department\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954664407Z"}
+{"log":"                    \u003cv61:Name\u003eДепартамент информационных технологий города Москвы\u003c/v61:Name\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954674115Z"}
+{"log":"                    \u003cv61:Code\u003e2043\u003c/v61:Code\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954685061Z"}
+{"log":"                    \u003cv61:Inn\u003e7710878000\u003c/v61:Inn\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954714302Z"}
+{"log":"                    \u003cv61:Ogrn\u003e1107746943347\u003c/v61:Ogrn\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954725388Z"}
+{"log":"                    \u003cv61:RegDate\u003e2019-09-12T00:00:00\u003c/v61:RegDate\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.95473531Z"}
+{"log":"                    \u003cv61:SystemCode\u003e9300003\u003c/v61:SystemCode\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954745301Z"}
+{"log":"                \u003c/v61:Department\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954755123Z"}
+{"log":"                \u003cv61:CreatedByDepartment\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954764644Z"}
+{"log":"                    \u003cv61:Name\u003eПГУ\u003c/v61:Name\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954774252Z"}
+{"log":"                    \u003cv61:Code\u003e1\u003c/v61:Code\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954784223Z"}
+{"log":"                    \u003cv61:Inn\u003e7710878000\u003c/v61:Inn\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954793952Z"}
+{"log":"                    \u003cv61:Ogrn\u003e1107746943347\u003c/v61:Ogrn\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954803713Z"}
+{"log":"                    \u003cv61:RegDate\u003e2019-09-12T00:00:00\u003c/v61:RegDate\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954817052Z"}
+{"log":"                    \u003cv61:SystemCode\u003e1\u003c/v61:SystemCode\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954827617Z"}
+{"log":"                \u003c/v61:CreatedByDepartment\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954837626Z"}
+{"log":"                \u003cv61:OutputKind\u003ePortal\u003c/v61:OutputKind\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.95484717Z"}
+{"log":"                \u003cv61:PortalNum\u003e156178271\u003c/v61:PortalNum\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954857242Z"}
+{"log":"            \u003c/v61:Service\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954867037Z"}
+{"log":"            \u003cv61:SignService Id=\"fbeb4b0a-1374-4495-86d6-e1482c832d09\"\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954876668Z"}
+{"log":"                \u003cv61:ServiceType\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954886823Z"}
+{"log":"                    \u003cv61:Code\u003e111300\u003c/v61:Code\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954896251Z"}
+{"log":"                    \u003cv61:Name\u003eЗапись на прием к нотариусу г. Москвы\u003c/v61:Name\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954906059Z"}
+{"log":"                \u003c/v61:ServiceType\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954916992Z"}
+{"log":"                \u003cv61:Contacts\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954926379Z"}
+{"log":"                    \u003cv61:BaseDeclarant xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"v61:RequestContact\" Id=\"declarant\"\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954936081Z"}
+{"log":"                        \u003cv61:Type\u003eDeclarant\u003c/v61:Type\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954946833Z"}
+{"log":"                        \u003cv61:Documents\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954956778Z"}
+{"log":"                            \u003cv61:ServiceDocument\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954966269Z"}
+{"log":"                                \u003cv61:DocKind\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954976131Z"}
+{"log":"    \u003cv61:Code\u003e20001\u003c/v61:Code\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.954985695Z"}
+{"log":"\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955025592Z"}
+{"log":"    \u003cv61:Name\u003eПаспорт\u003c/v61:Name\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955042929Z"}
+{"log":"                                \u003c/v61:DocKind\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955053865Z"}
+{"log":"                                \u003cv61:DocSerie\u003e4500\u003c/v61:DocSerie\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955064374Z"}
+{"log":"                                \u003cv61:DocNumber\u003e123456\u003c/v61:DocNumber\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955074659Z"}
+{"log":"                                \u003cv61:DocDate\u003e2018-12-08T00:00:00\u003c/v61:DocDate\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955084617Z"}
+{"log":"                                \u003cv61:WhoSign\u003eОВД Якиманка г. Москвы\u003c/v61:WhoSign\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955094536Z"}
+{"log":"                                \u003cv61:DivisionCode\u003e777-123\u003c/v61:DivisionCode\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955104988Z"}
+{"log":"                                \u003cv61:DocFiles\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955115053Z"}
+{"log":"    \u003cv61:CoordinateFileReference\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955124708Z"}
+{"log":"        \u003cv61:Id\u003eB77322C0-F32F-4BEF-B345-BB9D0754D5EF\u003c/v61:Id\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955134242Z"}
+{"log":"        \u003cv61:FileName\u003edocument.pdf\u003c/v61:FileName\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955144387Z"}
+{"log":"        \u003cv61:FileHash\u003eMDFCM0E0MzM5QUY1ODc3REU1NTY5MEFBQzM5NEQxRjhDRjU2Rjc4N0E5NjEwMTU2QjdDMERDMTZDRUU4M0Y4NA==\u003c/v61:FileHash\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955154342Z"}
+{"log":"    \u003c/v61:CoordinateFileReference\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955164497Z"}
+{"log":"                                \u003c/v61:DocFiles\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955174299Z"}
+{"log":"                            \u003c/v61:ServiceDocument\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955183933Z"}
+{"log":"                        \u003c/v61:Documents\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955193554Z"}
+{"log":"                        \u003cv61:LastName\u003eИванов\u003c/v61:LastName\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955204621Z"}
+{"log":"                        \u003cv61:FirstName\u003eИван\u003c/v61:FirstName\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.95521525Z"}
+{"log":"                        \u003cv61:MiddleName\u003eИванович\u003c/v61:MiddleName\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955225318Z"}
+{"log":"                        \u003cv61:Gender\u003eMale\u003c/v61:Gender\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.95523542Z"}
+{"log":"                        \u003cv61:BirthDate\u003e1988-06-01\u003c/v61:BirthDate\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955245218Z"}
+{"log":"                        \u003cv61:Snils\u003e000-099-043 92\u003c/v61:Snils\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.9552551Z"}
+{"log":"                        \u003cv61:MobilePhone\u003e9500142048\u003c/v61:MobilePhone\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955265008Z"}
+{"log":"                        \u003cv61:EMail\u003eivanov@ivan.ru\u003c/v61:EMail\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955274919Z"}
+{"log":"                        \u003cv61:CitizenshipType xsi:nil=\"true\"/\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955284761Z"}
+{"log":"                        \u003cv61:SsoId\u003eDIT2012@mos.ruUUID12345\u003c/v61:SsoId\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955294682Z"}
+{"log":"                    \u003c/v61:BaseDeclarant\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955304541Z"}
+{"log":"                \u003c/v61:Contacts\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955319475Z"}
+{"log":"                \u003cv61:Documents\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955329783Z"}
+{"log":"                    \u003cv61:ServiceDocument\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955339401Z"}
+{"log":"                        \u003cv61:DocKind\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955348919Z"}
+{"log":"                            \u003cv61:Code\u003e20001\u003c/v61:Code\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955358407Z"}
+{"log":"                            \u003cv61:Name\u003eПаспорт\u003c/v61:Name\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955368182Z"}
+{"log":"                        \u003c/v61:DocKind\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955378184Z"}
+{"log":"                        \u003cv61:DocSerie\u003e4500\u003c/v61:DocSerie\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955387581Z"}
+{"log":"                        \u003cv61:DocNumber\u003e123456\u003c/v61:DocNumber\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955397429Z"}
+{"log":"                        \u003cv61:DocDate\u003e2018-12-08T00:00:00\u003c/v61:DocDate\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955407234Z"}
+{"log":"                        \u003cv61:WhoSign\u003eОВД Якиманка г. Москвы\u003c/v61:WhoSign\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955416995Z"}
+{"log":"                        \u003cv61:DivisionCode\u003e777-123\u003c/v61:DivisionCode\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955427314Z"}
+{"log":"                        \u003cv61:DocFiles\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955437329Z"}
+{"log":"                            \u003cv61:CoordinateFileReference\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955450588Z"}
+{"log":"                                \u003cv61:Id\u003eB77322C0-F32F-4BEF-B345-BB9D0754D5EF\u003c/v61:Id\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955469096Z"}
+{"log":"                                \u003cv61:FileName\u003edocument.pdf\u003c/v61:FileName\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955486049Z"}
+{"log":"                                \u003cv61:FileHash\u003eMDFCM0E0MzM5QUY1ODc3REU1NTY5MEFBQzM5NEQxRjhDRjU2Rjc4N0E5NjEwMTU2QjdDMERDMTZDRUU4M0Y4NA==\u003c/v61:FileHash\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955502362Z"}
+{"log":"                            \u003c/v61:CoordinateFileReference\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955517569Z"}
+{"log":"                        \u003c/v61:DocFiles\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955532534Z"}
+{"log":"                    \u003c/v61:ServiceDocument\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.95555267Z"}
+{"log":"                \u003c/v61:Documents\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955569216Z"}
+{"log":"                \u003cv61:CustomAttributes\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955604521Z"}
+{"log":"                    \u003cns5:ServiceProperties xmlns:ns5=\"http://mos.ru/gu/service/111300/\" xmlns:ns4=\"http://asguf.mos.ru/rkis_gu/coordinate/v6_1/\" xmlns:ns6=\"http://mos.ru/gu/status/111300/\"\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955626073Z"}
+{"log":"                        \u003cns5:category1\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955644504Z"}
+{"log":"                            \u003cns5:Code\u003estring\u003c/ns5:Code\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955661618Z"}
+{"log":"                            \u003cns5:Name\u003estring\u003c/ns5:Name\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955678247Z"}
+{"log":"                        \u003c/ns5:category1\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955693515Z"}
+{"log":"                        \u003cns5:category2\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955707331Z"}
+{"log":"                            \u003cns5:Code\u003estring\u003c/ns5:Code\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955743119Z"}
+{"log":"                            \u003cns5:Name\u003estring\u003c/ns5:Name\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955763276Z"}
+{"log":"                        \u003c/ns5:category2\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955778817Z"}
+{"log":"                        \u003cns5:category3\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955794212Z"}
+{"log":"                            \u003cns5:Code\u003estring\u003c/ns5:Code\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955805419Z"}
+{"log":"                            \u003cns5:Name\u003estring\u003c/ns5:Name\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955815154Z"}
+{"log":"                        \u003c/ns5:category3\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955824915Z"}
+{"log":"                        \u003cns5:category4\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955834269Z"}
+{"log":"                            \u003cns5:Code\u003estring\u003c/ns5:Code\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955843887Z"}
+{"log":"                            \u003cns5:Name\u003estring\u003c/ns5:Name\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955853505Z"}
+{"log":"                        \u003c/ns5:category4\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955863356Z"}
+{"log":"                        \u003cns5:notary\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955872807Z"}
+{"log":"                            \u003cns5:id\u003estring\u003c/ns5:id\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955882378Z"}
+{"log":"                            \u003cns5:fio\u003estring\u003c/ns5:fio\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955892123Z"}
+{"log":"                            \u003cns5:address\u003estring\u003c/ns5:address\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955902071Z"}
+{"log":"                            \u003cns5:phone\u003e(123) 456-7890\u003c/ns5:phone\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955911843Z"}
+{"log":"                            \u003cns5:schedule\u003estring\u003c/ns5:schedule\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955921841Z"}
+{"log":"                            \u003cns5:bookid\u003estring\u003c/ns5:bookid\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955931533Z"}
+{"log":"                        \u003c/ns5:notary\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955941434Z"}
+{"log":"                        \u003cns5:confirm1\u003efalse\u003c/ns5:confirm1\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955950905Z"}
+{"log":"                        \u003cns5:confirm2\u003efalse\u003c/ns5:confirm2\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955960814Z"}
+{"log":"                        \u003cns5:confirm3\u003efalse\u003c/ns5:confirm3\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955970595Z"}
+{"log":"                        \u003cns5:confirm4\u003efalse\u003c/ns5:confirm4\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955980326Z"}
+{"log":"                    \u003c/ns5:ServiceProperties\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.955989921Z"}
+{"log":"                \u003c/v61:CustomAttributes\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.95603514Z"}
+{"log":"            \u003c/v61:SignService\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.956045272Z"}
+{"log":"        \u003c/v61:CoordinateDataMessage\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.95605476Z"}
+{"log":"        \u003cv61:Files\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.956064284Z"}
+{"log":"            \u003cv61:CoordinateFile\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.956073682Z"}
+{"log":"                \u003cv61:Id\u003eB77322C0-F32F-4BEF-B345-BB9D0754D5EF\u003c/v61:Id\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.956083293Z"}
+{"log":"                \u003cv61:FileIdInStore\u003eB77322C0-F32F-4BEF-B345-BB9D0754D5EF\u003c/v61:FileIdInStore\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.956101608Z"}
+{"log":"                \u003cv61:StoreName\u003eGU-DOCS\u003c/v61:StoreName\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.956112877Z"}
+{"log":"                \u003cv61:FileName\u003edocument.pdf\u003c/v61:FileName\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.956122903Z"}
+{"log":"                \u003cv61:FileHash\u003eMDFCM0E0MzM5QUY1ODc3REU1NTY5MEFBQzM5NEQxRjhDRjU2Rjc4N0E5NjEwMTU2QjdDMERDMTZDRUU4M0Y4NA==\u003c/v61:FileHash\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.956135397Z"}
+{"log":"            \u003c/v61:CoordinateFile\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.956146166Z"}
+{"log":"        \u003c/v61:Files\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.956155681Z"}
+{"log":"    \u003c/v61:CoordinateMessage\u003e\r\n","stream":"stdout","time":"2024-03-06T08:52:42.956165062Z"}
+{"log":"  log-category: Infonot.FciitBooking.MosRu.Receiver.Listeners.SendingRequestMessageQueueListener\r\n","stream":"stdout","time":"2024-03-06T08:52:42.9561747Z"}
+{"log":"Exception:\r\n","stream":"stdout","time":"2024-03-06T08:52:42.956184628Z"}
+{"log":"  Message: Guid should contain 32 digits with 4 dashes (xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx).\r\n","stream":"stdout","time":"2024-03-06T08:52:42.956194002Z"}
+{"log":"  ExceptionTrace: 1172728024c7fb06deeb3a4bd42d835a\r\n","stream":"stdout","time":"2024-03-06T08:52:42.956203583Z"}
+{"log":"  Type: System.FormatException\r\n","stream":"stdout","time":"2024-03-06T08:52:42.956213038Z"}
+{"log":"  StackTrace: \u003e2-\r\n","stream":"stdout","time":"2024-03-06T08:52:42.956222419Z"}
+{"log":"       at System.Guid.GuidResult.SetFailure(Boolean overflow, String failureMessageID)\r\n","stream":"stdout","time":"2024-03-06T08:52:42.956232374Z"}
+{"log":"       at System.Guid.TryParseExactN(ReadOnlySpan`1 guidString, GuidResult\u0026 result)\r\n","stream":"stdout","time":"2024-03-06T08:52:42.956242112Z"}
+{"log":"       at System.Guid.TryParseGuid(ReadOnlySpan`1 guidString, GuidResult\u0026 result)\r\n","stream":"stdout","time":"2024-03-06T08:52:42.95625179Z"}
+{"log":"       at System.Guid.Parse(ReadOnlySpan`1 input)\r\n","stream":"stdout","time":"2024-03-06T08:52:42.956261478Z"}
+{"log":"       at System.Guid.Parse(String input)\r\n","stream":"stdout","time":"2024-03-06T08:52:42.956270895Z"}
+{"log":"       at Infonot.FciitBooking.MosRu.Receiver.XmlParser.Request.ParseAssignToSendRequest(XmlElement root, XmlNamespaceManager nsManager) in /builds/triasoft/infonot/fciit-booking/src/Infonot.FciitBooking.MosRu.Receiver/XmlParser.cs:line 26\r\n","stream":"stdout","time":"2024-03-06T08:52:42.956280567Z"}
+{"log":"       at Infonot.FciitBooking.MosRu.Receiver.XmlParser.ParseMessage(String xml) in /builds/triasoft/infonot/fciit-booking/src/Infonot.FciitBooking.MosRu.Receiver/XmlParser.cs:line 259\r\n","stream":"stdout","time":"2024-03-06T08:52:42.956290985Z"}
+{"log":"       at Infonot.FciitBooking.MosRu.Receiver.Listeners.MessageQueueListener.ProcessAsync(IConsumer consumer, CancellationToken cancellationToken) in /builds/triasoft/infonot/fciit-booking/src/Infonot.FciitBooking.MosRu.Receiver/Listeners/MessageQueueListener.cs:line 67\r\n","stream":"stdout","time":"2024-03-06T08:52:42.95630339Z"}
+{"log":"\n","stream":"stdout","time":"2024-03-06T08:52:42.956313715Z"}
